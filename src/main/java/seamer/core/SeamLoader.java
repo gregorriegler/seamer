@@ -2,7 +2,7 @@ package seamer.core;
 
 import java.util.Optional;
 
-public interface SeamLoader {
+public interface SeamLoader<T> {
 
-    Optional<Seam> load(String seamId, Object carrier);
+    Optional<Seam<T>> load(String seamId, Object carrier);
 }

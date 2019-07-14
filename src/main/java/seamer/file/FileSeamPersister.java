@@ -30,6 +30,7 @@ public class FileSeamPersister implements SeamPersister {
             createDir(seamId);
             File seamFile = seamFile(seamId);
             if (seamFile.exists()) return;
+            LOG.info("persisting seam at {}", seamFile.getAbsolutePath());
             Output fileOutput = new Output(new FileOutputStream(seamFile));
             kryo.writeClassAndObject(fileOutput, seam);
             fileOutput.flush();
@@ -51,10 +52,6 @@ public class FileSeamPersister implements SeamPersister {
 
     public static String persistentFilePath(String seamId) {
         return DEFAULT_BASE_PATH + File.separator + seamId;
-    }
-
-    public static String idOf(Object carrier) {
-        return carrier.getClass().getName();
     }
 
     public static Kryo createKryo(Object carrier) {

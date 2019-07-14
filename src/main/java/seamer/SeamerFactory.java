@@ -23,8 +23,8 @@ public class SeamerFactory {
     }
 
     public static <T> Seamer<T> load(Object carrier) {
-        FileSeamLoader loader = new FileSeamLoader();
-        return (Seamer<T>) loader.load(Seamer.idOf(carrier), carrier)
+        FileSeamLoader<T> loader = new FileSeamLoader<>();
+        return loader.load(Seamer.idOf(carrier), carrier)
             .map(s -> create(s, carrier))
             .orElseThrow(() -> new FailedToLoad());
     }

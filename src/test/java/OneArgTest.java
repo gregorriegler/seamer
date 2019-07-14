@@ -1,14 +1,18 @@
 import org.junit.jupiter.api.BeforeAll;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import seamer.SeamerFactory;
 import seamer.test.PureSeamTest;
 
 public class OneArgTest extends PureSeamTest {
 
+    private static final Logger LOG = LoggerFactory.getLogger(OneArgTest.class);
+
     @BeforeAll
     public static void setup() {
         OneArgDemo oneArgDemo = new OneArgDemo();
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 5; i++) {
             oneArgDemo.entrypoint(i);
         }
     }
@@ -25,7 +29,7 @@ public class OneArgTest extends PureSeamTest {
                 .createAndPersist(a -> blackbox((Integer) a[0]), new OneArgDemo())
                 .executeAndRecord(arg1);
 
-            System.out.println(result);
+            LOG.info(result + "");
         }
 
         public Integer blackbox(Integer i) {

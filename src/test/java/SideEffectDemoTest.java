@@ -1,17 +1,20 @@
 import org.junit.jupiter.api.BeforeAll;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import seamer.SeamerFactory;
-import seamer.core.Seam;
 import seamer.test.SideEffectSeamTest;
 
 public class SideEffectDemoTest extends SideEffectSeamTest {
 
+    private static final Logger LOG = LoggerFactory.getLogger(SideEffectDemoTest.class);
+
     @BeforeAll
     @Override
     public void setup() {
-        SideEffectDemo sideeffectDemo = new SideEffectDemo();
+        SideEffectDemo sideEffectDemo = new SideEffectDemo();
 
-        for (int i = 0; i < 10; i++) {
-            sideeffectDemo.entrypoint("hello ", i);
+        for (int i = 0; i < 5; i++) {
+            sideEffectDemo.entrypoint("hello ", i);
         }
 
         super.setup();
@@ -25,10 +28,10 @@ public class SideEffectDemoTest extends SideEffectSeamTest {
     public static class SideEffectDemo {
 
         public void entrypoint(String arg1, Integer arg2) {
-            Seam<String> sideEffectSeam = a -> blackbox((String) a[0], (Integer) a[1]);
-            String result = SeamerFactory.createAndPersist(sideEffectSeam, this)
+            String result = SeamerFactory.createAndPersist(a -> blackbox((String) a[0], (Integer) a[1]), this)
                 .executeAndRecord(arg1, arg2);
-            System.out.println(result);
+
+            LOG.info(result);
         }
 
         public String effect = "";
