@@ -1,13 +1,13 @@
 import seamer.Seam;
 import seamer.Seamer;
 
-public class SideEffectSeamerDemo {
+public class SideEffectDemo {
 
     public static void main(String[] args) {
-        SideEffectSeamerDemo sideeffectSeamerDemo = new SideEffectSeamerDemo();
+        SideEffectDemo sideeffectDemo = new SideEffectDemo();
 
         for (int i = 0; i < 50; i++) {
-            sideeffectSeamerDemo.entrypoint("hello ", i);
+            sideeffectDemo.entrypoint("hello ", i);
         }
     }
 

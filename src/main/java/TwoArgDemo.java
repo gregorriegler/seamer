@@ -1,12 +1,12 @@
 import seamer.Seamer;
 
-public class PersistableSeamerDemo {
+public class TwoArgDemo {
 
     public static void main(String[] args) {
-        PersistableSeamerDemo persistableSeamerDemo = new PersistableSeamerDemo();
+        TwoArgDemo twoArgDemo = new TwoArgDemo();
 
         for (int i = 0; i < 50; i++) {
-            persistableSeamerDemo.entrypoint("hello ", i);
+            twoArgDemo.entrypoint("hello ", i);
         }
     }
 

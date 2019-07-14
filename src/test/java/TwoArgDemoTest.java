@@ -1,9 +1,9 @@
 import seamer.test.PureSeamTest;
 
-public class OneArgDemoTest extends PureSeamTest<Integer> {
+public class TwoArgDemoTest extends PureSeamTest<String> {
 
     @Override
     public Object createCarrier() {
-        return new OneArgDemo();
+        return new TwoArgDemo();
     }
 }

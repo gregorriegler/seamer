@@ -12,7 +12,7 @@ public class OneArgDemo {
 
     public void entrypoint(Integer arg1) {
         Integer result = Seamer
-            .create(a -> blackbox((Integer) a[0]))
+            .createAndPersist(a -> blackbox((Integer) a[0]), new OneArgDemo())
             .executeAndRecord(arg1);
 
         System.out.println(result);
