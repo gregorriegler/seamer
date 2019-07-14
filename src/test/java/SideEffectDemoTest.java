@@ -1,6 +1,6 @@
 import org.junit.jupiter.api.BeforeAll;
+import seamer.SeamerFactory;
 import seamer.core.Seam;
-import seamer.core.Seamer;
 import seamer.test.SideEffectSeamTest;
 
 public class SideEffectDemoTest extends SideEffectSeamTest {
@@ -26,7 +26,7 @@ public class SideEffectDemoTest extends SideEffectSeamTest {
 
         public void entrypoint(String arg1, Integer arg2) {
             Seam<String> sideEffectSeam = a -> blackbox((String) a[0], (Integer) a[1]);
-            String result = Seamer.createAndPersist(sideEffectSeam, this)
+            String result = SeamerFactory.createAndPersist(sideEffectSeam, this)
                 .executeAndRecord(arg1, arg2);
             System.out.println(result);
         }

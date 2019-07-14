@@ -5,6 +5,7 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import seamer.SeamerFactory;
 import seamer.core.Call;
 import seamer.core.Seamer;
 import seamer.file.FileCallLoader;
@@ -21,7 +22,7 @@ public abstract class SideEffectSeamTest {
 
     @BeforeAll
     public void setup() {
-        seamer = Seamer.load(createCarrier());
+        seamer = SeamerFactory.load(createCarrier());
     }
 
     public abstract Object createCarrier();

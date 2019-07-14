@@ -17,7 +17,7 @@ This records all invocations and their return values of the blackbox.
 
 ```
 public void entrypoint(String arg1, Integer arg2) {
-    String result = Seamer.createAndPersist(a -> blackbox((String) a[0], (Integer) a[1]), this)
+    String result = SeamerFactory.createAndPersist(a -> blackbox((String) a[0], (Integer) a[1]), this)
                           .executeAndRecord(arg1, arg2);
     // ...
 }

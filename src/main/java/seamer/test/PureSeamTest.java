@@ -4,6 +4,7 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import seamer.SeamerFactory;
 import seamer.core.Call;
 import seamer.core.Seamer;
 import seamer.file.FileCallLoader;
@@ -29,7 +30,7 @@ public abstract class PureSeamTest {
     @ParameterizedTest
     @MethodSource("calls")
     void testAllCalls(Object[] args, Object expected) {
-        Seamer seamer = Seamer.load(createCarrier());
+        Seamer seamer = SeamerFactory.load(createCarrier());
 
         Object actual = seamer.execute(args);
 

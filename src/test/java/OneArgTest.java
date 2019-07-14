@@ -1,5 +1,5 @@
 import org.junit.jupiter.api.BeforeAll;
-import seamer.core.Seamer;
+import seamer.SeamerFactory;
 import seamer.test.PureSeamTest;
 
 public class OneArgTest extends PureSeamTest {
@@ -21,7 +21,7 @@ public class OneArgTest extends PureSeamTest {
     public static class OneArgDemo {
 
         public void entrypoint(Integer arg1) {
-            Integer result = Seamer
+            Integer result = SeamerFactory
                 .createAndPersist(a -> blackbox((Integer) a[0]), new OneArgDemo())
                 .executeAndRecord(arg1);
 

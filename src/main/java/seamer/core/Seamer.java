@@ -1,38 +1,18 @@
 package seamer.core;
 
-import seamer.file.FileCallRecorder;
-import seamer.file.FileSeamLoader;
-import seamer.file.FileSeamPersister;
-
 import java.io.Serializable;
 
 public class Seamer<T> implements Serializable {
 
-    private final SeamPersister persister = new FileSeamPersister();
+    private final SeamPersister persister;
+    private final CallRecorder recorder;
 
     public Seam<T> seam;
-    private CallRecorder recorder;
 
-    public static <T> Seamer<T> create(Seam<T> seam, Object carrier) {
-        return new Seamer<>(seam, carrier);
-    }
-
-    public static <T> Seamer<T> createAndPersist(Seam<T> seam, Object carrier) {
-        Seamer<T> seamer = create(seam, carrier);
-        seamer.persist(carrier);
-        return seamer;
-    }
-
-    public static <T> Seamer<T> load(Object carrier) {
-        FileSeamLoader loader = new FileSeamLoader();
-        return (Seamer<T>) loader.load(idOf(carrier), carrier)
-            .map(s -> create(s, carrier))
-            .orElseThrow(() -> new FailedToLoad());
-    }
-
-    private Seamer(Seam<T> seam, Object carrier) {
+    public Seamer(Seam<T> seam, SeamPersister persister, CallRecorder recorder) {
         this.seam = seam;
-        this.recorder = new FileCallRecorder(idOf(carrier));
+        this.persister = persister;
+        this.recorder = recorder;
     }
 
     public T execute(Object... args) {
@@ -47,7 +27,7 @@ public class Seamer<T> implements Serializable {
     }
 
     public void persist(Object carrier) {
-        persister.persist(FileSeamPersister.idOf(carrier), seam, carrier);
+        persister.persist(idOf(carrier), seam, carrier);
     }
 
     public static String idOf(Object carrier) {
