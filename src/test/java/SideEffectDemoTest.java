@@ -1,6 +1,6 @@
 import org.junit.jupiter.api.BeforeAll;
-import seamer.Seam;
-import seamer.Seamer;
+import seamer.core.Seam;
+import seamer.core.Seamer;
 import seamer.test.SideEffectSeamTest;
 
 public class SideEffectDemoTest extends SideEffectSeamTest {

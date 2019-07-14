@@ -1,5 +1,5 @@
 import org.junit.jupiter.api.BeforeAll;
-import seamer.Seamer;
+import seamer.core.Seamer;
 import seamer.test.PureSeamTest;
 
 public class TwoArgTest extends PureSeamTest {

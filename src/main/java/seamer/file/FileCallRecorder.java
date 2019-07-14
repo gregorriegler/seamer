@@ -4,8 +4,8 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Output;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import seamer.Call;
-import seamer.CallRecorder;
+import seamer.core.Call;
+import seamer.core.CallRecorder;
 
 import java.io.File;
 import java.io.FileNotFoundException;
