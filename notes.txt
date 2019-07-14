@@ -1,4 +1,5 @@
 - degenerate test: file does not contain pair but something else
 - all calls in same file faster?
+- uncomfortable with reset method deleting a folder recursively
 - checkstyle
 - pmd (or sonar?)
