@@ -4,9 +4,9 @@ import org.slf4j.LoggerFactory;
 import seamer.SeamerFactory;
 import seamer.test.SideEffectSeamTest;
 
-public class SideEffectDemoTest extends SideEffectSeamTest {
+public class SideEffectTest extends SideEffectSeamTest {
 
-    private static final Logger LOG = LoggerFactory.getLogger(SideEffectDemoTest.class);
+    private static final Logger LOG = LoggerFactory.getLogger(SideEffectTest.class);
 
     @BeforeAll
     @Override

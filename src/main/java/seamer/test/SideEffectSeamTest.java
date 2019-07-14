@@ -1,6 +1,7 @@
 package seamer.test;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -21,6 +22,11 @@ public abstract class SideEffectSeamTest {
     private static Seamer seamer;
 
     @BeforeAll
+    public void reset() {
+        SeamerFactory.reset();
+    }
+
+    @BeforeEach
     public void setup() {
         seamer = SeamerFactory.load(createCarrier());
     }

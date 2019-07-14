@@ -3,6 +3,7 @@ package seamer;
 import seamer.core.Seam;
 import seamer.core.Seamer;
 import seamer.file.FileCallRecorder;
+import seamer.file.FileResetter;
 import seamer.file.FileSeamLoader;
 import seamer.file.FileSeamPersister;
 
@@ -31,6 +32,10 @@ public class SeamerFactory {
         return loader.load(seamId, carrier)
             .map(s -> create(s, carrier))
             .orElseThrow(() -> new FailedToLoad());
+    }
+
+    public static void reset() {
+        new FileResetter().resetAll();
     }
 
     public static String idOf(Object carrier) {
