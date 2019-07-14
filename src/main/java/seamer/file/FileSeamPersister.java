@@ -42,6 +42,11 @@ public class FileSeamPersister implements SeamPersister {
         }
     }
 
+    @Override
+    public boolean isPersisted() {
+        return seamFile(seamId).exists();
+    }
+
     public static File seamFile(String seamId) {
         return new File(persistentFilePath(seamId) + File.separator + SEAM_FILE);
     }
