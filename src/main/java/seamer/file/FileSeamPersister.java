@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import seamer.core.Seam;
 import seamer.core.SeamPersister;
-import seamer.core.Seamer;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -19,16 +18,17 @@ public class FileSeamPersister implements SeamPersister {
 
     private static final Logger LOG = LoggerFactory.getLogger(FileSeamPersister.class);
     private static final String DEFAULT_BASE_PATH = "target/seamer";
+    public static final String SEAM_FILE = "seam";
 
     public FileSeamPersister() {
     }
 
     @Override
-    public void persist(Seam seam, Object carrier) {
+    public void persist(String seamId, Seam seam, Object carrier) {
         try {
             Kryo kryo = createKryo(carrier);
-            createDir(carrier);
-            File seamFile = Seamer.seamFile(carrier);
+            createDir(seamId);
+            File seamFile = seamFile(seamId);
             if (seamFile.exists()) return;
             Output fileOutput = new Output(new FileOutputStream(seamFile));
             kryo.writeClassAndObject(fileOutput, seam);
@@ -39,21 +39,25 @@ public class FileSeamPersister implements SeamPersister {
         }
     }
 
-    public void createDir(Object carrier) {
-        String seamPath = persistentFilePath(carrier);
+    public static File seamFile(String seamId) {
+        return new File(persistentFilePath(seamId) + File.separator + SEAM_FILE);
+    }
+
+    public void createDir(String seamId) {
+        String seamPath = persistentFilePath(seamId);
         File seamDir = new File(seamPath);
         if(!seamDir.exists()) seamDir.mkdirs();
     }
 
-    public static String persistentFilePath(Object carrier) {
-        return DEFAULT_BASE_PATH + File.separator + idOf(carrier);
+    public static String persistentFilePath(String seamId) {
+        return DEFAULT_BASE_PATH + File.separator + seamId;
     }
 
     public static String idOf(Object carrier) {
         return carrier.getClass().getName();
     }
 
-    private static Kryo createKryo(Object carrier) {
+    public static Kryo createKryo(Object carrier) {
         Kryo kryo = new Kryo();
         kryo.setInstantiatorStrategy(new Kryo.DefaultInstantiatorStrategy(new StdInstantiatorStrategy()));
         kryo.register(Object[].class);
