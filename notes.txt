@@ -1,4 +1,5 @@
-- fix path for mvn test execution
+- maven not running tests
+- fix path for maven test execution
 - degenerate test: file does not contain pair but something else
 - all calls in same file faster?
 - checkstyle
