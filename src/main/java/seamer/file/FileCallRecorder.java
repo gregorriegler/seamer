@@ -21,8 +21,12 @@ public class FileCallRecorder implements CallRecorder {
     private final Kryo kryo = new Kryo();
 
     public FileCallRecorder(String seamId) {
-        this.path = DEFAULT_DIR + File.separator + seamId + File.separator + CALLS_DIR;
+        this.path = pathFromId(seamId);
         createIfNotExists(this.path);
+    }
+
+    public static String pathFromId(String seamId) {
+        return DEFAULT_DIR + File.separator + seamId + File.separator + CALLS_DIR;
     }
 
     @Override
