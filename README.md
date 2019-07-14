@@ -27,7 +27,7 @@ public String blackbox(String arg1, Integer arg2) {
 }
 ```
 
-## Execute the Seam from a pure function in a test-harness
+## Execute the Seam of a pure function in a test-harness
 This reruns all previously recorded invocations, and verifies if the results still match.
 ```
 public class TwoArgTest extends PureSeamTest {
@@ -38,7 +38,7 @@ public class TwoArgTest extends PureSeamTest {
 }
 ```
 
-## Execute the Seam from a function that has side-effects in a test-harness
+## Execute the Seam of a function that has side-effects in a test-harness
 This reruns all previously recorded invocations, and verifies if the results still match.
 ```
 public class TwoArgTest extends SideEffectSeamTest {
