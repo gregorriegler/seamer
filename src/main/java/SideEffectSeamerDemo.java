@@ -1,7 +1,5 @@
+import seamer.Seam;
 import seamer.Seamer;
-
-import java.io.Serializable;
-import java.util.function.Function;
 
 public class SideEffectSeamerDemo {
 
@@ -14,8 +12,8 @@ public class SideEffectSeamerDemo {
     }
 
     public void entrypoint(String arg1, Integer arg2) {
-        Function<Object[], String> sideEffectFunction = (Function<Object[], String> & Serializable)(a -> blackbox((String) a[0], (Integer) a[1]));
-        String result = Seamer.createAndPersist(sideEffectFunction, this)
+        Seam<String> sideEffectSeam = a -> blackbox((String) a[0], (Integer) a[1]);
+        String result = Seamer.createAndPersist(sideEffectSeam, this)
             .executeAndRecord(arg1, arg2);
         System.out.println(result);
     }

@@ -11,21 +11,20 @@ import seamer.file.FileCallRecorder;
 
 import java.io.*;
 import java.lang.invoke.SerializedLambda;
-import java.util.function.Function;
 
 public class Seamer<T> implements Serializable {
 
     private static final Logger LOG = LoggerFactory.getLogger(Seamer.class);
-    private static final String DEFAULT_PERSISTENT_FILE = "seamer/seam";
+    private static final String DEFAULT_PERSISTENT_FILE = "target/seamer/seam";
 
-    public Function<Object[], T> seam;
+    public Seam<T> seam;
     private CallRecorder recorder = new FileCallRecorder();
 
-    public static <T> Seamer<T> create(Function<Object[], T> seam) {
+    public static <T> Seamer<T> create(Seam<T> seam) {
         return new Seamer<>(seam);
     }
 
-    public static <T> Seamer<T> createAndPersist(Function<Object[], T> seam, Object carrier) {
+    public static <T> Seamer<T> createAndPersist(Seam<T> seam, Object carrier) {
         Seamer<T> seamer = create(seam);
         seamer.persist(carrier);
         return seamer;
@@ -36,14 +35,14 @@ public class Seamer<T> implements Serializable {
             Kryo kryo = createKryo(carrier);
             Input fileInput = new Input(new FileInputStream(new File(DEFAULT_PERSISTENT_FILE)));
             Object o = kryo.readClassAndObject(fileInput);
-            return create((Function)o);
+            return create((Seam)o);
         } catch (FileNotFoundException e) {
             LOG.error("failed to load seam", e);
             return null;
         }
     }
 
-    private Seamer(Function<Object[], T> seam) {
+    private Seamer(Seam<T> seam) {
         this.seam = seam;
     }
 

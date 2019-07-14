@@ -1,8 +1,5 @@
 import seamer.Seamer;
 
-import java.io.Serializable;
-import java.util.function.Function;
-
 public class PersistableSeamerDemo {
 
     public static void main(String[] args) {
@@ -14,7 +11,7 @@ public class PersistableSeamerDemo {
     }
 
     public void entrypoint(String arg1, Integer arg2) {
-        String result = Seamer.createAndPersist((Function<Object[], String> & Serializable)(a -> blackbox((String) a[0], (Integer) a[1])), this)
+        String result = Seamer.createAndPersist(a -> blackbox((String) a[0], (Integer) a[1]), this)
             .executeAndRecord(arg1, arg2);
 
         System.out.println(result);

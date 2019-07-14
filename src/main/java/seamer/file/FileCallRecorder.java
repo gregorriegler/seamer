@@ -13,7 +13,7 @@ import java.io.FileOutputStream;
 
 public class FileCallRecorder implements CallRecorder {
 
-    public static final String DEFAULT_DIR = "seamer/calls";
+    public static final String DEFAULT_DIR = "target/seamer/calls";
     private static final Logger LOG = LoggerFactory.getLogger(FileCallRecorder.class);
 
     private final String path;
