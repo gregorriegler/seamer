@@ -25,8 +25,9 @@ public class Seamer<T> implements Serializable {
 
     public static <T> Seamer<T> load(Object carrier) {
         FileSeamLoader loader = new FileSeamLoader();
-        Seam load = loader.load(FileSeamPersister.idOf(carrier), carrier);
-        return create(load, carrier);
+        return (Seamer<T>) loader.load(idOf(carrier), carrier)
+            .map(s -> create(s, carrier))
+            .orElseThrow(() -> new FailedToLoad());
     }
 
     private Seamer(Seam<T> seam, Object carrier) {
@@ -51,5 +52,8 @@ public class Seamer<T> implements Serializable {
 
     public static String idOf(Object carrier) {
         return carrier.getClass().getName();
+    }
+
+    public static class FailedToLoad extends RuntimeException {
     }
 }

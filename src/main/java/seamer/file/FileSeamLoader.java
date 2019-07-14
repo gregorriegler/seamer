@@ -10,6 +10,7 @@ import seamer.core.SeamLoader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.Optional;
 
 import static seamer.file.FileSeamPersister.SEAM_FILE;
 import static seamer.file.FileSeamPersister.persistentFilePath;
@@ -19,15 +20,15 @@ public class FileSeamLoader implements SeamLoader {
     private static final Logger LOG = LoggerFactory.getLogger(FileSeamLoader.class);
 
     @Override
-    public Seam load(String seamId, Object carrier) {
+    public Optional<Seam> load(String seamId, Object carrier) {
         try {
             Kryo kryo = FileSeamPersister.createKryo(carrier);
             Input fileInput = new Input(new FileInputStream(seamFile(seamId)));
             Object seam = kryo.readClassAndObject(fileInput);
-            return (Seam) seam;
+            return Optional.of((Seam) seam);
         } catch (FileNotFoundException e) {
             LOG.error("failed to load seam", e);
-            return null;
+            return Optional.empty();
         }
     }
 
