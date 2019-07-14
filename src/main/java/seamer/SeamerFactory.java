@@ -15,18 +15,26 @@ public class SeamerFactory {
     }
 
     public static <T> Seamer<T> create(Seam<T> seam, Object carrier) {
+        String seamId = idOf(carrier);
+
         return new Seamer<>(
             seam,
-            new FileSeamPersister(),
-            new FileCallRecorder(Seamer.idOf(carrier))
+            new FileSeamPersister(seamId),
+            new FileCallRecorder(seamId)
         );
     }
 
     public static <T> Seamer<T> load(Object carrier) {
+        String seamId = idOf(carrier);
+
         FileSeamLoader<T> loader = new FileSeamLoader<>();
-        return loader.load(Seamer.idOf(carrier), carrier)
+        return loader.load(seamId, carrier)
             .map(s -> create(s, carrier))
             .orElseThrow(() -> new FailedToLoad());
+    }
+
+    public static String idOf(Object carrier) {
+        return carrier.getClass().getName();
     }
 
     public static class FailedToLoad extends RuntimeException {

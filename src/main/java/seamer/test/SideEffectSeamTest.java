@@ -28,7 +28,7 @@ public abstract class SideEffectSeamTest {
     public abstract Object createCarrier();
 
     public Stream<Arguments> calls() {
-        FileCallLoader loader = new FileCallLoader(Seamer.idOf(createCarrier()));
+        FileCallLoader loader = new FileCallLoader(SeamerFactory.idOf(createCarrier()));
 
         List<Call> calls = loader.load();
         return calls.stream()

@@ -27,11 +27,7 @@ public class Seamer<T> implements Serializable {
     }
 
     public void persist(Object carrier) {
-        persister.persist(idOf(carrier), seam, carrier);
-    }
-
-    public static String idOf(Object carrier) {
-        return carrier.getClass().getName();
+        persister.persist(seam, carrier);
     }
 
 }

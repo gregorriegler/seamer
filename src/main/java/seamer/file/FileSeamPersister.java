@@ -19,12 +19,14 @@ public class FileSeamPersister implements SeamPersister {
     private static final Logger LOG = LoggerFactory.getLogger(FileSeamPersister.class);
     private static final String DEFAULT_BASE_PATH = "target/seamer";
     public static final String SEAM_FILE = "seam";
+    private final String seamId;
 
-    public FileSeamPersister() {
+    public FileSeamPersister(String seamId) {
+        this.seamId = seamId;
     }
 
     @Override
-    public void persist(String seamId, Seam seam, Object carrier) {
+    public void persist(Seam seam, Object carrier) {
         try {
             Kryo kryo = createKryo(carrier);
             createDir(seamId);
