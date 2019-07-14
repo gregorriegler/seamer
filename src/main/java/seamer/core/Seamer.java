@@ -2,14 +2,17 @@ package seamer.core;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
-import com.esotericsoftware.kryo.io.Output;
 import com.esotericsoftware.kryo.serializers.ClosureSerializer;
 import org.objenesis.strategy.StdInstantiatorStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import seamer.file.FileCallRecorder;
+import seamer.file.FileSeamPersister;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.Serializable;
 import java.lang.invoke.SerializedLambda;
 
 public class Seamer<T> implements Serializable {
@@ -17,6 +20,7 @@ public class Seamer<T> implements Serializable {
     private static final Logger LOG = LoggerFactory.getLogger(Seamer.class);
     private static final String DEFAULT_BASE_PATH = "target/seamer";
     private static final String SEAM_FILE = "seam";
+    private final SeamPersister persister = new FileSeamPersister();
 
     public Seam<T> seam;
     private CallRecorder recorder;
@@ -64,24 +68,7 @@ public class Seamer<T> implements Serializable {
     }
 
     public void persist(Object carrier) {
-        try {
-            Kryo kryo = createKryo(carrier);
-            createDir(carrier);
-            File seam = seamFile(carrier);
-            if(seam.exists()) return;
-            Output fileOutput = new Output(new FileOutputStream(seam));
-            kryo.writeClassAndObject(fileOutput, this.seam);
-            fileOutput.flush();
-            fileOutput.close();
-        } catch (FileNotFoundException e) {
-            LOG.error("failed to persist seam", e);
-        }
-    }
-
-    public void createDir(Object carrier) {
-        String seamPath = persistentFilePath(carrier);
-        File seamDir = new File(seamPath);
-        if(!seamDir.exists()) seamDir.mkdirs();
+        persister.persist(seam, carrier);
     }
 
     public static String persistentFilePath(Object carrier) {
