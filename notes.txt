@@ -1,3 +1,4 @@
+- hide cast in persistence method
 - all persisted files in same sub dir
 - degenerate test: file does not contain pair but something else
 - all calls in same file faster?
