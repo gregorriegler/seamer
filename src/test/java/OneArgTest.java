@@ -2,7 +2,7 @@ import org.junit.jupiter.api.BeforeAll;
 import seamer.Seamer;
 import seamer.test.PureSeamTest;
 
-public class OneArgTest extends PureSeamTest<Integer> {
+public class OneArgTest extends PureSeamTest {
 
     @BeforeAll
     public static void setup() {

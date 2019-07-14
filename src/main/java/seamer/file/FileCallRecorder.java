@@ -13,19 +13,16 @@ import java.io.FileOutputStream;
 
 public class FileCallRecorder implements CallRecorder {
 
-    public static final String DEFAULT_DIR = "target/seamer/calls";
+    public static final String DEFAULT_DIR = "target/seamer";
+    public static final String CALLS_DIR = "calls";
     private static final Logger LOG = LoggerFactory.getLogger(FileCallRecorder.class);
 
     private final String path;
     private final Kryo kryo = new Kryo();
 
-    public FileCallRecorder() {
-        this(DEFAULT_DIR);
-    }
-
-    public FileCallRecorder(String path) {
-        this.path = path;
-        createIfNotExists(path);
+    public FileCallRecorder(String seamId) {
+        this.path = DEFAULT_DIR + File.separator + seamId + File.separator + CALLS_DIR;
+        createIfNotExists(this.path);
     }
 
     @Override

@@ -18,6 +18,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static seamer.file.FileCallRecorder.CALLS_DIR;
+import static seamer.file.FileCallRecorder.DEFAULT_DIR;
+
 public class FileCallLoader implements CallLoader {
 
     private static final Logger LOG = LoggerFactory.getLogger(FileCallLoader.class);
@@ -25,12 +28,8 @@ public class FileCallLoader implements CallLoader {
     private final String path;
     private final Kryo kryo = new Kryo();
 
-    public FileCallLoader() {
-        this(FileCallRecorder.DEFAULT_DIR);
-    }
-
-    public FileCallLoader(String path) {
-        this.path = path;
+    public FileCallLoader(String seamId) {
+        this.path = DEFAULT_DIR + File.separator + seamId + File.separator + CALLS_DIR;
     }
 
     @Override
