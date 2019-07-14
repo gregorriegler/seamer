@@ -26,6 +26,9 @@ public class SeamerFactory {
         FileSeamLoader loader = new FileSeamLoader();
         return (Seamer<T>) loader.load(Seamer.idOf(carrier), carrier)
             .map(s -> create(s, carrier))
-            .orElseThrow(() -> new Seamer.FailedToLoad());
+            .orElseThrow(() -> new FailedToLoad());
+    }
+
+    public static class FailedToLoad extends RuntimeException {
     }
 }

@@ -34,6 +34,4 @@ public class Seamer<T> implements Serializable {
         return carrier.getClass().getName();
     }
 
-    public static class FailedToLoad extends RuntimeException {
-    }
 }
