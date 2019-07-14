@@ -54,7 +54,7 @@ public class FileSeamPersister implements SeamPersister {
     public void createDir(String seamId) {
         String seamPath = persistentFilePath(seamId);
         File seamDir = new File(seamPath);
-        if(!seamDir.exists()) seamDir.mkdirs();
+        if (!seamDir.exists()) seamDir.mkdirs();
     }
 
     public static String persistentFilePath(String seamId) {
