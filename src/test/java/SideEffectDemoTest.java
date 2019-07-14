@@ -10,7 +10,7 @@ public class SideEffectDemoTest extends SideEffectSeamTest {
     public void setup() {
         SideEffectDemo sideeffectDemo = new SideEffectDemo();
 
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 10; i++) {
             sideeffectDemo.entrypoint("hello ", i);
         }
 

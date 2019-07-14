@@ -8,7 +8,7 @@ public class TwoArgTest extends PureSeamTest {
     public static void setup() {
         TwoArgDemo twoArgDemo = new TwoArgDemo();
 
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 10; i++) {
             twoArgDemo.entrypoint("hello ", i);
         }
     }
