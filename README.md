@@ -27,6 +27,22 @@ public String blackbox(String arg1, Integer arg2) {
 }
 ```
 
+#### Execute the Seam with specific arguments of your choice
+You may record invocations with arguments of your choice, by first providing argument 
+candidates for every argument index (0 is the first argument, and so forth).
+Seamer will then automatically invoke your blackbox with all possible combinations
+of your provided arguments and record the results.
+ 
+```
+SeamerFactory.load(demo)
+            .addArgCandidates(0, null, "hello", "world")
+            .addArgCandidates(1, null, 1, 2, 3)
+            .addArgCandidates(2, new SomeObject("hello", SomeObjectState.READY))
+            .shuffleArgsAndExecute();
+```
+
+These results can then get verified in a test-harness.
+
 #### Execute the Seam of a pure function in a test-harness
 This reruns all previously recorded invocations, and verifies if the results still match.
 ```

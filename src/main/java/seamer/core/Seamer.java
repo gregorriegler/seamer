@@ -35,8 +35,9 @@ public class Seamer<T> implements Serializable {
         persister.persist(seam, carrier);
     }
 
-    public void addArgCandidates(int i, Object... candidates) {
+    public Seamer<T> addArgCandidates(int i, Object... candidates) {
         argCandidates.addCandidates(i, asList(candidates));
+        return this;
     }
 
     public void shuffleArgsAndExecute() {

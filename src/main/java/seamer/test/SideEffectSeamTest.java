@@ -7,10 +7,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import seamer.SeamerFactory;
-import seamer.core.Call;
 import seamer.core.Seamer;
 
-import java.util.List;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -33,8 +31,8 @@ public abstract class SideEffectSeamTest {
     public abstract Object createCarrier();
 
     public Stream<Arguments> calls() {
-        List<Call> calls = SeamerFactory.loadCalls(createCarrier());
-        return calls.stream()
+        return SeamerFactory.loadCalls(createCarrier())
+            .stream()
             .map(c -> Arguments.of(c.getArgs(), c.getResult()));
     }
 

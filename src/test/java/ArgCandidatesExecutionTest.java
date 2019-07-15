@@ -26,11 +26,11 @@ public class ArgCandidatesExecutionTest {
         demo = new ArgCandidatesDemo();
         demo.entrypoint(null, null, null); // persist seam
 
-        Seamer<Object> seamer = SeamerFactory.load(demo);
-        seamer.addArgCandidates(0, null, "hello", "world");
-        seamer.addArgCandidates(1, null, 1, 2, 3);
-        seamer.addArgCandidates(2, new SomeObject("hello", SomeObjectState.READY), new SomeObject("world", SomeObjectState.DONE));
-        seamer.shuffleArgsAndExecute();
+        SeamerFactory.load(demo)
+            .addArgCandidates(0, null, "hello", "world")
+            .addArgCandidates(1, null, 1, 2, 3)
+            .addArgCandidates(2, new SomeObject("hello", SomeObjectState.READY), new SomeObject("world", SomeObjectState.DONE))
+            .shuffleArgsAndExecute();
     }
 
     @ParameterizedTest
@@ -60,7 +60,7 @@ public class ArgCandidatesExecutionTest {
         }
 
         public String blackbox(String arg1, Integer arg2, SomeObject arg3) {
-            if(arg3 != null && SomeObjectState.READY == arg3.state) {
+            if (arg3 != null && SomeObjectState.READY == arg3.state) {
                 return arg1 + arg2 + "r";
             } else {
                 return arg1 + arg2 + "d";

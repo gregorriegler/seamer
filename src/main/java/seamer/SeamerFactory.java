@@ -28,15 +28,13 @@ public class SeamerFactory {
     public static <T> Seamer<T> load(Object carrier) {
         String seamId = idOf(carrier);
 
-        FileSeamLoader<T> loader = new FileSeamLoader<>();
-        return loader.load(seamId, carrier)
+        return new FileSeamLoader<T>().load(seamId, carrier)
             .map(s -> create(s, carrier))
             .orElseThrow(() -> new FailedToLoad());
     }
 
     public static List<Call> loadCalls(Object carrier) {
-        FileCallLoader loader = new FileCallLoader(SeamerFactory.idOf(carrier));
-        return loader.load();
+        return new FileCallLoader(SeamerFactory.idOf(carrier)).load();
     }
 
     public static void reset() {
