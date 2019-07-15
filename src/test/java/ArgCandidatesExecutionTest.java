@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import seamer.SeamerFactory;
 import seamer.core.Call;
 import seamer.core.Seamer;
-import seamer.file.FileCallLoader;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -45,9 +44,7 @@ public class ArgCandidatesExecutionTest {
     }
 
     public Stream<Arguments> calls() {
-        FileCallLoader loader = new FileCallLoader(SeamerFactory.idOf(demo));
-
-        List<Call> calls = loader.load();
+        List<Call> calls = SeamerFactory.loadCalls(demo);
         return calls.stream()
             .map(c -> Arguments.of(c.getArgs(), c.getResult()));
     }

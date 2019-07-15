@@ -8,7 +8,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 import seamer.SeamerFactory;
 import seamer.core.Call;
 import seamer.core.Seamer;
-import seamer.file.FileCallLoader;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -26,9 +25,7 @@ public abstract class PureSeamTest {
     public abstract Object createCarrier();
 
     public Stream<Arguments> calls() {
-        FileCallLoader loader = new FileCallLoader(SeamerFactory.idOf(createCarrier()));
-
-        List<Call> calls = loader.load();
+        List<Call> calls = SeamerFactory.loadCalls(createCarrier());
         return calls.stream()
             .map(c -> Arguments.of(c.getArgs(), c.getResult()));
     }

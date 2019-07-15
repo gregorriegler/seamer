@@ -1,11 +1,11 @@
 package seamer;
 
+import seamer.core.Call;
 import seamer.core.Seam;
 import seamer.core.Seamer;
-import seamer.file.FileCallRecorder;
-import seamer.file.FileResetter;
-import seamer.file.FileSeamLoader;
-import seamer.file.FileSeamPersister;
+import seamer.file.*;
+
+import java.util.List;
 
 public class SeamerFactory {
 
@@ -32,6 +32,11 @@ public class SeamerFactory {
         return loader.load(seamId, carrier)
             .map(s -> create(s, carrier))
             .orElseThrow(() -> new FailedToLoad());
+    }
+
+    public static List<Call> loadCalls(Object carrier) {
+        FileCallLoader loader = new FileCallLoader(SeamerFactory.idOf(carrier));
+        return loader.load();
     }
 
     public static void reset() {
