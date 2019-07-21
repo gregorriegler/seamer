@@ -1,7 +1,8 @@
+package seamer;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import seamer.SeamerFactory;
 import seamer.test.PureSeamTest;
 
 public class TwoArgTest extends PureSeamTest {
