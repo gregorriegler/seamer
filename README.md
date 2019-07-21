@@ -1,10 +1,10 @@
 Seamer - fun with seams
 -----------------------
 
-Inspired by https://github.com/testdouble/suture
-
 A refactoring tool for Java, designed to help and get _blackboxes_ under test to enable safe refactorings.
 Works with pure functions as well with those with side-effects. One seam per class is currently supported. 
+
+Inspired by https://github.com/testdouble/suture
 
 >A seam is a place where you can alter behavior in your program without editing in that place.
 > 
