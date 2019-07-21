@@ -12,8 +12,21 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ArgCandidatesTest {
 
     @Test
-    void shuffleSingleArg() {
+    void addCandidatesAndshuffle() {
         candidates.addCandidates(0, asList("hello", "world"));
+
+        List<Object[]> result = candidates.shuffle();
+
+        assertThat(result).containsExactlyInAnyOrder(
+            new Object[]{"hello"},
+            new Object[]{"world"}
+        );
+    }
+
+    @Test
+    void addCandidatesThroughSupplier() {
+        candidates.addCandidates(0, () -> asList("hello", "world"));
+
         List<Object[]> result = candidates.shuffle();
 
         assertThat(result).containsExactlyInAnyOrder(
@@ -26,6 +39,7 @@ public class ArgCandidatesTest {
     void shuffleTwoArgs() {
         candidates.addCandidates(0, asList("hello", "world"));
         candidates.addCandidates(1, asList(1, 2, 3));
+
         List<Object[]> result = candidates.shuffle();
 
         assertThat(result).containsExactlyInAnyOrder(
