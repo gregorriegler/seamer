@@ -35,8 +35,8 @@ of your provided arguments and record the results.
  
 ```
 SeamerFactory.load(demo)
-            .addArgCandidates(0, null, "hello", "world")
-            .addArgCandidates(1, null, 1, 2, 3)
+            .addArgCandidates(0, "hello", "world", null)
+            .addArgCandidates(1, () -> asList(1, 2, 3))
             .addArgCandidates(2, new SomeObject("hello", SomeObjectState.READY))
             .shuffleArgsAndExecute();
 ```
