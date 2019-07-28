@@ -2,5 +2,5 @@ package seamer.core;
 
 public interface SeamResetter {
 
-    void resetAll();
+    void reset(String seamId);
 }

@@ -37,8 +37,8 @@ public class SeamerFactory {
         return new FileInvocationLoader(seamId).load();
     }
 
-    public static void reset() {
-        new FileResetter().resetAll();
+    public static void reset(String seamId) {
+        new FileResetter().reset(seamId);
     }
 
     public static class FailedToLoad extends RuntimeException {

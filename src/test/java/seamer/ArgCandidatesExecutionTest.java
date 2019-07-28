@@ -25,7 +25,7 @@ public class ArgCandidatesExecutionTest {
 
     @BeforeAll
     void setUp() {
-        SeamerFactory.reset();
+        SeamerFactory.reset(SEAM_ID);
         demo = new ArgCandidatesDemo();
         demo.entrypoint(null, null, null); // persist seam
 

@@ -20,7 +20,7 @@ public abstract class SideEffectSeamTest {
 
     @BeforeAll
     public void reset() {
-        SeamerFactory.reset();
+        SeamerFactory.reset(seamId());
     }
 
     @BeforeEach

@@ -16,7 +16,7 @@ public abstract class PureSeamTest {
 
     @BeforeAll
     void setUp() {
-        SeamerFactory.reset();
+        SeamerFactory.reset(seamId());
     }
 
     public abstract Class carriersClass();
