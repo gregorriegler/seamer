@@ -41,6 +41,5 @@ public class SideEffectTest extends SideEffectSeamTest {
             effect += arg2;
             return arg1 + effect;
         }
-
     }
 }

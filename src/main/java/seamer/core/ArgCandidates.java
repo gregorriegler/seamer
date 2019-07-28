@@ -10,17 +10,17 @@ import java.util.function.Supplier;
 import static org.apache.commons.lang3.ArrayUtils.addAll;
 
 public class ArgCandidates implements Serializable {
-    private Map<Integer, List<Object>> argCandidates = new HashMap<>();
+    private final Map<Integer, List<Object>> argCandidates = new HashMap<>();
 
     public ArgCandidates() {
     }
 
-    public void addCandidates(int i, List candidates) {
+    public void addCandidates(int i, List<Object> candidates) {
         if (!argCandidates.containsKey(i)) argCandidates.put(i, new ArrayList<>());
         argCandidates.get(i).addAll(candidates);
     }
 
-    public void addCandidates(int i, Supplier<List> supplier) {
+    public void addCandidates(int i, Supplier<List<Object>> supplier) {
         argCandidates.put(i, supplier.get());
     }
 

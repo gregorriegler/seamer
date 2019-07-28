@@ -13,51 +13,42 @@ import java.io.FileOutputStream;
 
 public class FileInvocationRecorder implements InvocationRecorder {
 
-    public static final String DEFAULT_DIR = "target/seamer";
-    public static final String INVOCATIONS_DIR = "invocations";
     private static final Logger LOG = LoggerFactory.getLogger(FileInvocationRecorder.class);
+    public static final String DEFAULT_DIR = "target/seamer";
+    public static final String INVOCATIONS_FILE = "invocations";
 
-    private final String path;
     private final Kryo kryo = new Kryo();
 
-    public FileInvocationRecorder(String seamId) {
-        this.path = pathFromId(seamId);
-        createIfNotExists(this.path);
+    private final String seamId;
+
+    public static File invocationsFile(String seamId) {
+        return new File(seamDir(seamId) + File.separator + INVOCATIONS_FILE);
     }
 
-    public static String pathFromId(String seamId) {
-        return DEFAULT_DIR + File.separator + seamId + File.separator + INVOCATIONS_DIR;
+    private static String seamDir(String seamId) {
+        return DEFAULT_DIR + File.separator + seamId;
+    }
+
+    public FileInvocationRecorder(String seamId) {
+        this.seamId = seamId;
+        createIfNotExists(seamDir(seamId));
     }
 
     @Override
     public void record(Invocation invocation) {
-        File file = nextFile();
-        writeInvocationToFile(invocation, file);
+        Output fileOutput = createOutput(seamId);
+        kryo.writeClassAndObject(fileOutput, invocation);
+        fileOutput.flush();
+        fileOutput.close();
     }
 
-    public void writeInvocationToFile(Invocation invocation, File file) {
+    public Output createOutput(String seamId) {
         try {
-            Output fileOutput = new Output(new FileOutputStream(file));
-            kryo.writeClassAndObject(fileOutput, invocation);
-            fileOutput.flush();
-            fileOutput.close();
+            return new Output(new FileOutputStream(invocationsFile(seamId), true));
         } catch (FileNotFoundException e) {
-            LOG.error("failed to record invocation", e);
+            LOG.error("failed to initialize output", e);
+            return new Output();
         }
-    }
-
-    private File nextFile() {
-        int n = 0;
-        File file;
-        do {
-            file = fileFrom(n);
-            n++;
-        } while (file.exists());
-        return file;
-    }
-
-    private File fileFrom(int n) {
-        return new File(path + File.separator + String.format("%05d", n));
     }
 
     private void createIfNotExists(String path) {
