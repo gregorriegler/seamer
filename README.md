@@ -18,10 +18,10 @@ This records all invocations and their return values of the blackbox.
 ```
 public void entrypoint(String arg1, Integer arg2) {
     String result = SeamerFactory.createAndPersist(
-        a -> blackbox((String) a[0], (Integer) a[1]), 
+        arg -> blackbox((String) arg[0], (Integer) arg[1]), 
         this.getClass(), 
         "UserDefinedIdOfSeam"
-    ) .executeAndRecord(arg1, arg2);
+    ).executeAndRecord(arg1, arg2);
     // ...
 }
 
@@ -51,7 +51,7 @@ This reruns all previously recorded invocations, and verifies if the results sti
 ```
 public class TwoArgTest extends PureSeamTest {
     @Override
-    public Class<?> createCarrier() {
+    public Class carrierClass() {
         return YourClassCarryingTheSeam.class;
     }
 
@@ -67,7 +67,7 @@ This reruns all previously recorded invocations, and verifies if the results sti
 ```
 public class TwoArgTest extends SideEffectSeamTest {
     @Override
-    public Class<?> createCarrier() {
+    public Class carrierClass() {
         return YourClassCarryingTheSeam.class;
     }
 

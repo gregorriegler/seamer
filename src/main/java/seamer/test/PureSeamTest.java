@@ -19,7 +19,7 @@ public abstract class PureSeamTest {
         SeamerFactory.reset(seamId());
     }
 
-    public abstract Class carriersClass();
+    public abstract Class carrierClass();
 
     public abstract String seamId();
 
@@ -32,7 +32,7 @@ public abstract class PureSeamTest {
     @ParameterizedTest
     @MethodSource("invocations")
     void testAllInvocations(Object[] args, Object expected) {
-        Object actual = SeamerFactory.load(seamId(), carriersClass())
+        Object actual = SeamerFactory.load(seamId(), carrierClass())
             .execute(args);
 
         assertEquals(expected, actual);
