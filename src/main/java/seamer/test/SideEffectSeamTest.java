@@ -28,7 +28,7 @@ public abstract class SideEffectSeamTest {
         seamer = SeamerFactory.load(seamId(), carriersClass());
     }
 
-    public abstract Class<?> carriersClass();
+    public abstract Class carriersClass();
 
     public abstract String seamId();
 

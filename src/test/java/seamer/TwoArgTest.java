@@ -20,7 +20,7 @@ public class TwoArgTest extends PureSeamTest {
     }
 
     @Override
-    public Class<?> carriersClass() {
+    public Class carriersClass() {
         return TwoArgDemo.class;
     }
 

@@ -19,7 +19,7 @@ public abstract class PureSeamTest {
         SeamerFactory.reset();
     }
 
-    public abstract Class<?> carriersClass();
+    public abstract Class carriersClass();
 
     public abstract String seamId();
 

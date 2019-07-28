@@ -23,7 +23,7 @@ public class SideEffectTest extends SideEffectSeamTest {
     }
 
     @Override
-    public Class<?> carriersClass() {
+    public Class carriersClass() {
         return SideEffectDemo.class;
     }
 

@@ -26,7 +26,7 @@ public class FileSeamPersister implements SeamPersister {
     }
 
     @Override
-    public void persist(Seam seam, Class<?> carrierClass) {
+    public void persist(Seam seam, Class carrierClass) {
         try {
             Kryo kryo = createKryo(carrierClass);
             createDir(seamId);
@@ -61,7 +61,7 @@ public class FileSeamPersister implements SeamPersister {
         return DEFAULT_BASE_PATH + File.separator + seamId;
     }
 
-    public static Kryo createKryo(Class<?> carrierClass) {
+    public static Kryo createKryo(Class carrierClass) {
         Kryo kryo = new Kryo();
         kryo.setInstantiatorStrategy(new Kryo.DefaultInstantiatorStrategy(new StdInstantiatorStrategy()));
         kryo.register(Object[].class);
