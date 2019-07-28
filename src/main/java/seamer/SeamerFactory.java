@@ -13,9 +13,9 @@ import java.util.List;
 
 public class SeamerFactory {
 
-    public static <T> Seamer<T> createAndPersist(Seam<T> seam, Object carrier, final String seamId) {
+    public static <T> Seamer<T> createAndPersist(Seam<T> seam, Class<?> carrierClass, final String seamId) {
         Seamer<T> seamer = create(seam, seamId);
-        seamer.persist(carrier);
+        seamer.persist(carrierClass);
         return seamer;
     }
 
@@ -27,8 +27,8 @@ public class SeamerFactory {
         );
     }
 
-    public static <T> Seamer<T> load(Object carrier, final String seamId) {
-        return new FileSeamLoader<T>().load(seamId, carrier)
+    public static <T> Seamer<T> load(final String seamId, Class<?> carrierClass) {
+        return new FileSeamLoader<T>().load(seamId, carrierClass)
             .map(s -> create(s, seamId))
             .orElseThrow(() -> new FailedToLoad());
     }

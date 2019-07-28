@@ -17,9 +17,9 @@ public class FileSeamLoader<T> implements SeamLoader<T> {
 
     @SuppressWarnings("unchecked")
     @Override
-    public Optional<Seam<T>> load(String seamId, Object carrier) {
+    public Optional<Seam<T>> load(String seamId, Class<?> carrierClass) {
         try {
-            Kryo kryo = FileSeamPersister.createKryo(carrier);
+            Kryo kryo = FileSeamPersister.createKryo(carrierClass);
             Input fileInput = new Input(new FileInputStream(FileSeamPersister.seamFile(seamId)));
             Object object = kryo.readClassAndObject(fileInput);
             return Optional.of((Seam) object);

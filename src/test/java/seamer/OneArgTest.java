@@ -20,8 +20,8 @@ public class OneArgTest extends PureSeamTest {
     }
 
     @Override
-    public Object createCarrier() {
-        return new OneArgDemo();
+    public Class<?> carriersClass() {
+        return OneArgDemo.class;
     }
 
     @Override
@@ -32,9 +32,11 @@ public class OneArgTest extends PureSeamTest {
     public static class OneArgDemo {
 
         public void entrypoint(Integer arg1) {
-            Integer result = SeamerFactory
-                .createAndPersist(a -> blackbox((Integer) a[0]), this, SEAM_ID)
-                .executeAndRecord(arg1);
+            Integer result = SeamerFactory.createAndPersist(
+                a -> blackbox((Integer) a[0]),
+                this.getClass(),
+                SEAM_ID
+            ).executeAndRecord(arg1);
 
             LOG.info(result + "");
         }

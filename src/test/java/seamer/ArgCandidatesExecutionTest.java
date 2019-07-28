@@ -29,7 +29,7 @@ public class ArgCandidatesExecutionTest {
         demo = new ArgCandidatesDemo();
         demo.entrypoint(null, null, null); // persist seam
 
-        SeamerFactory.load(demo, SEAM_ID)
+        SeamerFactory.load(SEAM_ID, demo.getClass())
             .addArgCandidates(0, null, "hello", "world")
             .addArgCandidates(1, null, 1, 2, 3)
             .addArgCandidates(2, new SomeObject("hello", SomeObjectState.READY), new SomeObject("world", SomeObjectState.DONE))
@@ -39,7 +39,7 @@ public class ArgCandidatesExecutionTest {
     @ParameterizedTest
     @MethodSource("invocations")
     void testAllInvocations(Object[] args, Object expected) {
-        Seamer seamer = SeamerFactory.load(demo, SEAM_ID);
+        Seamer seamer = SeamerFactory.load(SEAM_ID, demo.getClass());
 
         Object actual = seamer.execute(args);
 
@@ -56,8 +56,9 @@ public class ArgCandidatesExecutionTest {
     public static class ArgCandidatesDemo {
 
         public void entrypoint(String arg1, Integer arg2, SomeObject arg3) {
-            String result = SeamerFactory.createAndPersist(a -> blackbox((String) a[0], (Integer) a[1], (SomeObject) a[2]), this, SEAM_ID)
-                .executeAndRecord(arg1, arg2, arg3);
+            String result = SeamerFactory.createAndPersist(
+                a -> blackbox((String) a[0], (Integer) a[1], (SomeObject) a[2]), this.getClass(), SEAM_ID
+            ).executeAndRecord(arg1, arg2, arg3);
 
             LOG.info(result);
         }

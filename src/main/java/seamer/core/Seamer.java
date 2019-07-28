@@ -30,9 +30,9 @@ public class Seamer<T> implements Serializable {
         return result;
     }
 
-    public void persist(Object carrier) {
+    public void persist(Class<?> carrierClass) {
         if (persister.isPersisted()) return;
-        persister.persist(seam, carrier);
+        persister.persist(seam, carrierClass);
     }
 
     public Seamer<T> addArgCandidates(int i, Object... candidates) {

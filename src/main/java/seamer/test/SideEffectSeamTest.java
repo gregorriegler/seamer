@@ -25,10 +25,10 @@ public abstract class SideEffectSeamTest {
 
     @BeforeEach
     public void setup() {
-        seamer = SeamerFactory.load(createCarrier(), seamId());
+        seamer = SeamerFactory.load(seamId(), carriersClass());
     }
 
-    public abstract Object createCarrier();
+    public abstract Class<?> carriersClass();
 
     public abstract String seamId();
 
