@@ -7,7 +7,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import seamer.core.Call;
+import seamer.core.Invocation;
 import seamer.core.Seamer;
 
 import java.util.List;
@@ -35,8 +35,8 @@ public class ArgCandidatesExecutionTest {
     }
 
     @ParameterizedTest
-    @MethodSource("calls")
-    void testAllCalls(Object[] args, Object expected) {
+    @MethodSource("invocations")
+    void testAllInvocations(Object[] args, Object expected) {
         Seamer seamer = SeamerFactory.load(demo);
 
         Object actual = seamer.execute(args);
@@ -44,9 +44,9 @@ public class ArgCandidatesExecutionTest {
         assertEquals(expected, actual);
     }
 
-    public Stream<Arguments> calls() {
-        List<Call> calls = SeamerFactory.loadCalls(demo);
-        return calls.stream()
+    public Stream<Arguments> invocations() {
+        List<Invocation> invocations = SeamerFactory.loadInvocations(demo);
+        return invocations.stream()
             .map(c -> Arguments.of(c.getArgs(), c.getResult()));
     }
 

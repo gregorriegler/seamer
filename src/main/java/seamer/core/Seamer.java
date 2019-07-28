@@ -8,12 +8,12 @@ import static java.util.Arrays.asList;
 public class Seamer<T> implements Serializable {
 
     private final SeamPersister persister;
-    private final CallRecorder recorder;
+    private final InvocationRecorder recorder;
     private final ArgCandidates argCandidates = new ArgCandidates();
 
     public Seam<T> seam;
 
-    public Seamer(Seam<T> seam, SeamPersister persister, CallRecorder recorder) {
+    public Seamer(Seam<T> seam, SeamPersister persister, InvocationRecorder recorder) {
         this.seam = seam;
         this.persister = persister;
         this.recorder = recorder;
@@ -26,7 +26,7 @@ public class Seamer<T> implements Serializable {
 
     public T executeAndRecord(Object... args) {
         T result = execute(args);
-        recorder.record(Call.of(args, result));
+        recorder.record(Invocation.of(args, result));
         return result;
     }
 

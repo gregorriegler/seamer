@@ -3,19 +3,19 @@ package seamer.core;
 import java.io.Serializable;
 import java.util.Arrays;
 
-public class Call implements Serializable {
+public class Invocation implements Serializable {
 
     private Object[] args;
     private Object result;
 
-    public static Call of(Object[] args, Object result) {
-        return new Call(args, result);
+    public static Invocation of(Object[] args, Object result) {
+        return new Invocation(args, result);
     }
 
-    private Call() {
+    private Invocation() {
     }
 
-    private Call(Object[] args, Object result) {
+    private Invocation(Object[] args, Object result) {
         this.args = args;
         this.result = result;
     }

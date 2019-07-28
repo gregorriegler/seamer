@@ -1,9 +1,13 @@
 package seamer;
 
-import seamer.core.Call;
+import seamer.core.Invocation;
 import seamer.core.Seam;
 import seamer.core.Seamer;
-import seamer.file.*;
+import seamer.file.FileInvocationLoader;
+import seamer.file.FileInvocationRecorder;
+import seamer.file.FileResetter;
+import seamer.file.FileSeamLoader;
+import seamer.file.FileSeamPersister;
 
 import java.util.List;
 
@@ -21,7 +25,7 @@ public class SeamerFactory {
         return new Seamer<>(
             seam,
             new FileSeamPersister(seamId),
-            new FileCallRecorder(seamId)
+            new FileInvocationRecorder(seamId)
         );
     }
 
@@ -33,8 +37,8 @@ public class SeamerFactory {
             .orElseThrow(() -> new FailedToLoad());
     }
 
-    public static List<Call> loadCalls(Object carrier) {
-        return new FileCallLoader(SeamerFactory.idOf(carrier)).load();
+    public static List<Invocation> loadInvocations(Object carrier) {
+        return new FileInvocationLoader(SeamerFactory.idOf(carrier)).load();
     }
 
     public static void reset() {

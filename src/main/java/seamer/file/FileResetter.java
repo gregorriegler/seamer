@@ -12,8 +12,8 @@ public class FileResetter implements SeamResetter {
 
     @Override
     public void resetAll() {
-        deleteFolder(new File(FileCallRecorder.DEFAULT_DIR));
-        LOG.info("reset seamers data");
+        deleteFolder(new File(FileInvocationRecorder.DEFAULT_DIR));
+        LOG.info("reset seamer's data");
     }
 
     public static void deleteFolder(File folder) {

@@ -21,15 +21,15 @@ public abstract class PureSeamTest {
 
     public abstract Object createCarrier();
 
-    public Stream<Arguments> calls() {
-        return SeamerFactory.loadCalls(createCarrier())
+    public Stream<Arguments> invocations() {
+        return SeamerFactory.loadInvocations(createCarrier())
             .stream()
             .map(c -> Arguments.of(c.getArgs(), c.getResult()));
     }
 
     @ParameterizedTest
-    @MethodSource("calls")
-    void testAllCalls(Object[] args, Object expected) {
+    @MethodSource("invocations")
+    void testAllInvocations(Object[] args, Object expected) {
         Object actual = SeamerFactory.load(createCarrier())
             .execute(args);
 
