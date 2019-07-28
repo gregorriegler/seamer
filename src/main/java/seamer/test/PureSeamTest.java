@@ -21,8 +21,10 @@ public abstract class PureSeamTest {
 
     public abstract Object createCarrier();
 
+    public abstract String seamId();
+
     public Stream<Arguments> invocations() {
-        return SeamerFactory.loadInvocations(createCarrier())
+        return SeamerFactory.loadInvocations(seamId())
             .stream()
             .map(c -> Arguments.of(c.getArgs(), c.getResult()));
     }
@@ -30,7 +32,7 @@ public abstract class PureSeamTest {
     @ParameterizedTest
     @MethodSource("invocations")
     void testAllInvocations(Object[] args, Object expected) {
-        Object actual = SeamerFactory.load(createCarrier())
+        Object actual = SeamerFactory.load(createCarrier(), seamId())
             .execute(args);
 
         assertEquals(expected, actual);

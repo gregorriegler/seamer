@@ -8,6 +8,7 @@ import seamer.test.SideEffectSeamTest;
 public class SideEffectTest extends SideEffectSeamTest {
 
     private static final Logger LOG = LoggerFactory.getLogger(SideEffectTest.class);
+    private static final String SEAM_ID = SideEffectTest.class.getName();
 
     @BeforeAll
     @Override
@@ -26,10 +27,15 @@ public class SideEffectTest extends SideEffectSeamTest {
         return new SideEffectDemo();
     }
 
+    @Override
+    public String seamId() {
+        return SEAM_ID;
+    }
+
     public static class SideEffectDemo {
 
         public void entrypoint(String arg1, Integer arg2) {
-            String result = SeamerFactory.createAndPersist(a -> blackbox((String) a[0], (Integer) a[1]), this)
+            String result = SeamerFactory.createAndPersist(a -> blackbox((String) a[0], (Integer) a[1]), this, SEAM_ID)
                 .executeAndRecord(arg1, arg2);
 
             LOG.info(result);

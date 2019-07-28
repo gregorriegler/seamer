@@ -8,6 +8,7 @@ import seamer.test.PureSeamTest;
 public class OneArgTest extends PureSeamTest {
 
     private static final Logger LOG = LoggerFactory.getLogger(OneArgTest.class);
+    private static final String SEAM_ID = OneArgTest.class.getName();
 
     @BeforeAll
     public static void setup() {
@@ -23,11 +24,16 @@ public class OneArgTest extends PureSeamTest {
         return new OneArgDemo();
     }
 
+    @Override
+    public String seamId() {
+        return SEAM_ID;
+    }
+
     public static class OneArgDemo {
 
         public void entrypoint(Integer arg1) {
             Integer result = SeamerFactory
-                .createAndPersist(a -> blackbox((Integer) a[0]), new OneArgDemo())
+                .createAndPersist(a -> blackbox((Integer) a[0]), this, SEAM_ID)
                 .executeAndRecord(arg1);
 
             LOG.info(result + "");

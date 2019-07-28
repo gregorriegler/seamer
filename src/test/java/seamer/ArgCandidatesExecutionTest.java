@@ -19,6 +19,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class ArgCandidatesExecutionTest {
 
     private static final Logger LOG = LoggerFactory.getLogger(ArgCandidatesExecutionTest.class);
+    public static final String SEAM_ID = ArgCandidatesExecutionTest.class.getName();
+
     private ArgCandidatesDemo demo;
 
     @BeforeAll
@@ -27,7 +29,7 @@ public class ArgCandidatesExecutionTest {
         demo = new ArgCandidatesDemo();
         demo.entrypoint(null, null, null); // persist seam
 
-        SeamerFactory.load(demo)
+        SeamerFactory.load(demo, SEAM_ID)
             .addArgCandidates(0, null, "hello", "world")
             .addArgCandidates(1, null, 1, 2, 3)
             .addArgCandidates(2, new SomeObject("hello", SomeObjectState.READY), new SomeObject("world", SomeObjectState.DONE))
@@ -37,7 +39,7 @@ public class ArgCandidatesExecutionTest {
     @ParameterizedTest
     @MethodSource("invocations")
     void testAllInvocations(Object[] args, Object expected) {
-        Seamer seamer = SeamerFactory.load(demo);
+        Seamer seamer = SeamerFactory.load(demo, SEAM_ID);
 
         Object actual = seamer.execute(args);
 
@@ -45,7 +47,7 @@ public class ArgCandidatesExecutionTest {
     }
 
     public Stream<Arguments> invocations() {
-        List<Invocation> invocations = SeamerFactory.loadInvocations(demo);
+        List<Invocation> invocations = SeamerFactory.loadInvocations(SEAM_ID);
         return invocations.stream()
             .map(c -> Arguments.of(c.getArgs(), c.getResult()));
     }
@@ -54,7 +56,7 @@ public class ArgCandidatesExecutionTest {
     public static class ArgCandidatesDemo {
 
         public void entrypoint(String arg1, Integer arg2, SomeObject arg3) {
-            String result = SeamerFactory.createAndPersist(a -> blackbox((String) a[0], (Integer) a[1], (SomeObject) a[2]), this)
+            String result = SeamerFactory.createAndPersist(a -> blackbox((String) a[0], (Integer) a[1], (SomeObject) a[2]), this, SEAM_ID)
                 .executeAndRecord(arg1, arg2, arg3);
 
             LOG.info(result);

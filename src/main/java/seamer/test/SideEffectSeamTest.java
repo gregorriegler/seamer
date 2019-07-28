@@ -25,13 +25,15 @@ public abstract class SideEffectSeamTest {
 
     @BeforeEach
     public void setup() {
-        seamer = SeamerFactory.load(createCarrier());
+        seamer = SeamerFactory.load(createCarrier(), seamId());
     }
 
     public abstract Object createCarrier();
 
+    public abstract String seamId();
+
     public Stream<Arguments> invocations() {
-        return SeamerFactory.loadInvocations(createCarrier())
+        return SeamerFactory.loadInvocations(seamId())
             .stream()
             .map(c -> Arguments.of(c.getArgs(), c.getResult()));
     }

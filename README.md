@@ -17,7 +17,7 @@ This records all invocations and their return values of the blackbox.
 
 ```
 public void entrypoint(String arg1, Integer arg2) {
-    String result = SeamerFactory.createAndPersist(a -> blackbox((String) a[0], (Integer) a[1]), this)
+    String result = SeamerFactory.createAndPersist(a -> blackbox((String) a[0], (Integer) a[1]), this, "UserDefinedIdOfSeam")
                           .executeAndRecord(arg1, arg2);
     // ...
 }
@@ -34,7 +34,7 @@ Seamer will then automatically invoke your blackbox with all possible combinatio
 of your provided arguments and record the results.
  
 ```
-SeamerFactory.load(demo)
+SeamerFactory.load(demo, "UserDefinedIdOfSeam")
             .addArgCandidates(0, "hello", "world", null)
             .addArgCandidates(1, () -> asList(1, 2, 3))
             .addArgCandidates(2, new SomeObject("hello", SomeObjectState.READY))
@@ -51,6 +51,11 @@ public class TwoArgTest extends PureSeamTest {
     public Object createCarrier() {
         return new YourClassCarryingTheSeam();
     }
+
+    @Override
+    public String seamId() {
+        return "UserDefinedIdOfSeam";
+    }
 }
 ```
 
@@ -61,6 +66,11 @@ public class TwoArgTest extends SideEffectSeamTest {
     @Override
     public Object createCarrier() {
         return new YourClassCarryingTheSeam();
+    }
+
+    @Override
+    public String seamId() {
+        return "UserDefinedIdOfSeam";
     }
 }
 ```
