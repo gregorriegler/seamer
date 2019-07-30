@@ -3,25 +3,28 @@ package seamer;
 import org.junit.jupiter.api.BeforeAll;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import seamer.test.PureSeamTest;
+import seamer.test.SideEffectSeamTest;
 
-public class TwoArgTest extends PureSeamTest {
+public class SideEffectIT extends SideEffectSeamTest {
 
-    private static final Logger LOG = LoggerFactory.getLogger(TwoArgTest.class);
-    private static final String SEAM_ID = TwoArgTest.class.getName();
+    private static final Logger LOG = LoggerFactory.getLogger(SideEffectIT.class);
+    private static final String SEAM_ID = SideEffectIT.class.getName();
 
     @BeforeAll
-    public static void setup() {
-        TwoArgDemo twoArgDemo = new TwoArgDemo();
+    @Override
+    public void setup() {
+        SideEffectDemo sideEffectDemo = new SideEffectDemo();
 
         for (int i = 0; i < 5; i++) {
-            twoArgDemo.entrypoint("hello ", i);
+            sideEffectDemo.entrypoint("hello ", i);
         }
+
+        super.setup();
     }
 
     @Override
     public Class carrierClass() {
-        return TwoArgDemo.class;
+        return SideEffectDemo.class;
     }
 
     @Override
@@ -29,7 +32,7 @@ public class TwoArgTest extends PureSeamTest {
         return SEAM_ID;
     }
 
-    public static class TwoArgDemo {
+    public static class SideEffectDemo {
 
         public void entrypoint(String arg1, Integer arg2) {
             String result = SeamerFactory.createAndPersist(
@@ -41,9 +44,11 @@ public class TwoArgTest extends PureSeamTest {
             LOG.info(result);
         }
 
-        public String blackbox(String arg1, Integer arg2) {
-            return arg1 + arg2;
-        }
+        public String effect = "";
 
+        public String blackbox(String arg1, Integer arg2) {
+            effect += arg2;
+            return arg1 + effect;
+        }
     }
 }
