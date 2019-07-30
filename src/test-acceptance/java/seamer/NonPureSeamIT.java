@@ -3,12 +3,12 @@ package seamer;
 import org.junit.jupiter.api.BeforeAll;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import seamer.test.SideEffectSeamTest;
+import seamer.test.ClosureSeamTest;
 
-public class SideEffectIT extends SideEffectSeamTest {
+public class NonPureSeamIT extends ClosureSeamTest {
 
-    private static final Logger LOG = LoggerFactory.getLogger(SideEffectIT.class);
-    private static final String SEAM_ID = SideEffectIT.class.getName();
+    private static final Logger LOG = LoggerFactory.getLogger(NonPureSeamIT.class);
+    private static final String SEAM_ID = NonPureSeamIT.class.getName();
 
     @BeforeAll
     @Override

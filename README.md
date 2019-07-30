@@ -62,10 +62,11 @@ public class TwoArgTest extends PureSeamTest {
 }
 ```
 
-#### Execute the Seam of a function that has side-effects in a test-harness
+#### Execute the Seam of a non-pure function in a test-harness
+Use this route if your seam relies on state within the carrying class (fields).
 This reruns all previously recorded invocations, and verifies if the results still match.
 ```
-public class TwoArgTest extends SideEffectSeamTest {
+public class TwoArgTest extends ClosureSeamTest {
     @Override
     public Class carrierClass() {
         return YourClassCarryingTheSeam.class;

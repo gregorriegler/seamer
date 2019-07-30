@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ArgCandidatesTest {
 
     @Test
-    void addCandidatesAndshuffle() {
+    void addCandidatesAndShuffle() {
         candidates.addCandidates(0, asList("hello", "world"));
 
         List<Object[]> result = candidates.shuffle();

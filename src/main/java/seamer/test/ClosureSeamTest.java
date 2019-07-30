@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public abstract class SideEffectSeamTest {
+public abstract class ClosureSeamTest {
 
     private static Seamer seamer;
 
