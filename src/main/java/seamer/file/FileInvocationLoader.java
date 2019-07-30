@@ -36,7 +36,7 @@ public class FileInvocationLoader implements InvocationLoader {
 
     public Input createInput(String seamId) {
         try {
-            return new Input(new FileInputStream(FileInvocationRecorder.invocationsFile(seamId)));
+            return new Input(new FileInputStream(FileLocation.invocationsFile(seamId)));
         } catch (FileNotFoundException e) {
             LOG.error("failed to initialize input", e);
             return new Input();

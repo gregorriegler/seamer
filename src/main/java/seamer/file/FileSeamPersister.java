@@ -17,8 +17,6 @@ import java.lang.invoke.SerializedLambda;
 public class FileSeamPersister implements SeamPersister {
 
     private static final Logger LOG = LoggerFactory.getLogger(FileSeamPersister.class);
-    private static final String DEFAULT_BASE_PATH = "target/seamer";
-    public static final String SEAM_FILE = "seam";
     private final String seamId;
 
     public FileSeamPersister(String seamId) {
@@ -29,8 +27,8 @@ public class FileSeamPersister implements SeamPersister {
     public void persist(Seam seam, Class carrierClass) {
         try {
             Kryo kryo = createKryo(carrierClass);
-            createDir(seamId);
-            File seamFile = seamFile(seamId);
+            FileLocation.createSeamDir(seamId);
+            File seamFile = FileLocation.seamFile(seamId);
             if (seamFile.exists()) return;
             LOG.info("persisting seam at {}", seamFile.getAbsolutePath());
             Output fileOutput = new Output(new FileOutputStream(seamFile));
@@ -44,21 +42,7 @@ public class FileSeamPersister implements SeamPersister {
 
     @Override
     public boolean isPersisted() {
-        return seamFile(seamId).exists();
-    }
-
-    public static File seamFile(String seamId) {
-        return new File(persistentFilePath(seamId) + File.separator + SEAM_FILE);
-    }
-
-    public void createDir(String seamId) {
-        String seamPath = persistentFilePath(seamId);
-        File seamDir = new File(seamPath);
-        if (!seamDir.exists()) seamDir.mkdirs();
-    }
-
-    public static String persistentFilePath(String seamId) {
-        return DEFAULT_BASE_PATH + File.separator + seamId;
+        return FileLocation.seamFile(seamId).exists();
     }
 
     public static Kryo createKryo(Class carrierClass) {

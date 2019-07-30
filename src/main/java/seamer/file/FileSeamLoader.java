@@ -20,7 +20,7 @@ public class FileSeamLoader<T> implements SeamLoader<T> {
     public Optional<Seam<T>> load(String seamId, Class carrierClass) {
         try {
             Kryo kryo = FileSeamPersister.createKryo(carrierClass);
-            Input fileInput = new Input(new FileInputStream(FileSeamPersister.seamFile(seamId)));
+            Input fileInput = new Input(new FileInputStream(FileLocation.seamFile(seamId)));
             Object object = kryo.readClassAndObject(fileInput);
             return Optional.of((Seam) object);
         } catch (FileNotFoundException e) {
