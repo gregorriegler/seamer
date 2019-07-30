@@ -13,10 +13,10 @@ public class NonPureSeamIT extends ClosureSeamTest {
     @BeforeAll
     @Override
     public void setup() {
-        SideEffectDemo sideEffectDemo = new SideEffectDemo();
+        ClosureDemo closureDemo = new ClosureDemo();
 
         for (int i = 0; i < 5; i++) {
-            sideEffectDemo.entrypoint("hello ", i);
+            closureDemo.entrypoint("hello ", i);
         }
 
         super.setup();
@@ -24,7 +24,7 @@ public class NonPureSeamIT extends ClosureSeamTest {
 
     @Override
     public Class carrierClass() {
-        return SideEffectDemo.class;
+        return ClosureDemo.class;
     }
 
     @Override
@@ -32,7 +32,7 @@ public class NonPureSeamIT extends ClosureSeamTest {
         return SEAM_ID;
     }
 
-    public static class SideEffectDemo {
+    public static class ClosureDemo {
 
         public void entrypoint(String arg1, Integer arg2) {
             String result = SeamerFactory.createAndPersist(
@@ -44,11 +44,11 @@ public class NonPureSeamIT extends ClosureSeamTest {
             LOG.info(result);
         }
 
-        public String effect = "";
+        public String state = "";
 
         public String blackbox(String arg1, Integer arg2) {
-            effect += arg2;
-            return arg1 + effect;
+            state += arg2;
+            return arg1 + state;
         }
     }
 }
