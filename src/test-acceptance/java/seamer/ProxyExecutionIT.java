@@ -1,21 +1,13 @@
 package seamer;
 
-import net.sf.cglib.proxy.Enhancer;
-import net.sf.cglib.proxy.MethodInterceptor;
-import net.sf.cglib.proxy.MethodProxy;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import seamer.core.Invocation;
-import seamer.core.ProxySeam;
-import seamer.core.Seam;
 import seamer.core.Seamer;
-import seamer.file.FileInvocationRecorder;
-import seamer.file.FileSeamPersister;
 
-import java.lang.reflect.Method;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -30,35 +22,7 @@ public class ProxyExecutionIT {
     void setUp() {
         SeamerFactory.reset(SEAM_ID);
 
-        Enhancer enhancer = new Enhancer();
-        enhancer.setSuperclass(ProxyDemo.class);
-        enhancer.setCallback(new MethodInterceptor() {
-
-            private boolean record = false;
-
-            @Override
-            public Object intercept(Object target, Method method, Object[] args, MethodProxy proxy) throws Throwable {
-                if (record == true) {
-                    Object result = proxy.invokeSuper(target, args);
-                    new FileInvocationRecorder(SEAM_ID).record(Invocation.of(args, result));
-                    return result;
-                }
-
-                Seam<String> seam = new ProxySeam(target, method.getName());
-
-                Seamer<String> seamer = new Seamer<>(
-                    seam,
-                    new FileSeamPersister(SEAM_ID),
-                    new FileInvocationRecorder(SEAM_ID)
-                );
-                seamer.persist(target.getClass());
-
-                record = true;
-                String result = seamer.execute(args);
-                return result;
-            }
-        });
-        ProxyDemo proxyDemo = (ProxyDemo) enhancer.create();
+        ProxyDemo proxyDemo = SeamerFactory.createProxySeam(ProxyDemo.class, SEAM_ID);
         proxyDemo.blackbox("hello", 1);
         proxyDemo.blackbox("world", 2);
         proxyDemo.blackbox("hello", 3);
@@ -85,7 +49,6 @@ public class ProxyExecutionIT {
 
         public String blackbox(String arg1, Integer arg2) {
             String result = arg1 + arg2 + "r";
-            System.out.println(result);
             return result;
         }
     }

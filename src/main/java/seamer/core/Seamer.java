@@ -19,15 +19,18 @@ public class Seamer<T> implements Serializable {
         this.recorder = recorder;
     }
 
-    public T execute(Object... args) {
-        T result = seam.apply(args);
+    public T executeAndRecord(Object... args) {
+        T result = execute(args);
+        record(args, result);
         return result;
     }
 
-    public T executeAndRecord(Object... args) {
-        T result = execute(args);
+    public T execute(Object[] args) {
+        return seam.apply(args);
+    }
+
+    public void record(Object[] args, T result) {
         recorder.record(Invocation.of(args, result));
-        return result;
     }
 
     public void persist(Class carrierClass) {

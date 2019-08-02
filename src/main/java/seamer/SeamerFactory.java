@@ -1,7 +1,9 @@
 package seamer;
 
+import net.sf.cglib.proxy.Enhancer;
 import seamer.core.Invocation;
 import seamer.core.Seam;
+import seamer.core.SeamInterceptor;
 import seamer.core.Seamer;
 import seamer.file.FileInvocationLoader;
 import seamer.file.FileInvocationRecorder;
@@ -12,6 +14,13 @@ import seamer.file.FileSeamPersister;
 import java.util.List;
 
 public class SeamerFactory {
+
+    public static  <T> T createProxySeam(Class<T> clazz, String seamId) {
+        Enhancer enhancer = new Enhancer();
+        enhancer.setSuperclass(clazz);
+        enhancer.setCallback(new SeamInterceptor(seamId));
+        return (T) enhancer.create();
+    }
 
     public static <T> Seamer<T> createAndPersist(Seam<T> seam, Class carrierClass, final String seamId) {
         Seamer<T> seamer = create(seam, seamId);
