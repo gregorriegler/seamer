@@ -4,8 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import seamer.core.SeamResetter;
 
-import java.io.File;
-
 public class FileResetter implements SeamResetter {
 
     private static final Logger LOG = LoggerFactory.getLogger(FileResetter.class);
@@ -14,8 +12,7 @@ public class FileResetter implements SeamResetter {
     public void reset(String seamId) {
         FileLocation.invocationsFile(seamId).delete();
         FileLocation.seamFile(seamId).delete();
-        File file = FileLocation.seamDirAsFile(seamId);
-        file.delete();
+        FileLocation.seamDirAsFile(seamId).delete();
         LOG.info("reset seamer's data for seam id: {}", seamId);
     }
 

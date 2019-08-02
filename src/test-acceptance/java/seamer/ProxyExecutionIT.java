@@ -9,12 +9,12 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import seamer.core.Invocation;
+import seamer.core.ProxySeam;
 import seamer.core.Seam;
 import seamer.core.Seamer;
 import seamer.file.FileInvocationRecorder;
 import seamer.file.FileSeamPersister;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.stream.Stream;
@@ -44,34 +44,15 @@ public class ProxyExecutionIT {
                     return result;
                 }
 
-                Seam<String> seam = new Seam<String>() {
-
-                    private final String methodName = method.getName();
-                    private final Object targetTarget = target;
-
-                    @Override
-                    public String apply(Object[] args) {
-                        try {
-                            Method method1 = targetTarget.getClass().getMethod(methodName, String.class, Integer.class);
-                            return (String) method1.invoke(targetTarget, args);
-                        } catch (IllegalAccessException e) {
-                            e.printStackTrace();
-                        } catch (InvocationTargetException e) {
-                            e.printStackTrace();
-                        } catch (NoSuchMethodException e) {
-                            e.printStackTrace();
-                        }
-                        return "failed";
-                    }
-                };
+                Seam<String> seam = new ProxySeam(target, method.getName());
 
                 Seamer<String> seamer = new Seamer<>(
                     seam,
                     new FileSeamPersister(SEAM_ID),
                     new FileInvocationRecorder(SEAM_ID)
                 );
-
                 seamer.persist(target.getClass());
+
                 record = true;
                 String result = seamer.execute(args);
                 return result;
@@ -100,7 +81,6 @@ public class ProxyExecutionIT {
             .map(c -> Arguments.of(c.getArgs(), c.getResult()));
     }
 
-
     public static class ProxyDemo {
 
         public String blackbox(String arg1, Integer arg2) {
@@ -109,5 +89,6 @@ public class ProxyExecutionIT {
             return result;
         }
     }
+
 
 }
