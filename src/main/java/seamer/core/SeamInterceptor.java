@@ -17,9 +17,9 @@ public class SeamInterceptor<T> implements MethodInterceptor {
 
     @Override
     public Object intercept(Object target, Method method, Object[] args, MethodProxy proxy) throws Throwable {
-        if(seamer == null) {
+        if (seamer == null) {
             seamer = SeamerFactory.createAndPersist(
-                new ProxySeam(target, method.getName()),
+                new ProxySeam<>(target, method.getName()),
                 target.getClass(),
                 seamId
             );

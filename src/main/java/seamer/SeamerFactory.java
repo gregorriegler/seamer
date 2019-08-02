@@ -15,6 +15,7 @@ import java.util.List;
 
 public class SeamerFactory {
 
+    @SuppressWarnings("unchecked")
     public static  <T> T createProxySeam(Class<T> clazz, String seamId) {
         Enhancer enhancer = new Enhancer();
         enhancer.setSuperclass(clazz);
