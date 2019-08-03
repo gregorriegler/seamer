@@ -1,0 +1,8 @@
+<aspectj>
+    <aspects>
+        <aspect name="seamer.core.SeamerAspect"/>
+        <weaver options="-verbose -showWeaveInfo">
+            <include within="seamer..*"/>
+        </weaver>
+    </aspects>
+</aspectj>

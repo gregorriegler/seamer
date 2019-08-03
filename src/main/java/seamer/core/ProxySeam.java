@@ -14,9 +14,13 @@ public class ProxySeam<T> implements Seam<T> {
     private final Object target;
     private final String methodName;
 
-    public ProxySeam(Object target, String methodName) {
+    private ProxySeam(Object target, String methodName) {
         this.target = target;
         this.methodName = methodName;
+    }
+
+    public static <T> ProxySeam<T> of(Object target, String methodName) {
+        return new ProxySeam<>(target, methodName);
     }
 
     @Override

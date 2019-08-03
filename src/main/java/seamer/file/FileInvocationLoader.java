@@ -38,7 +38,7 @@ public class FileInvocationLoader implements InvocationLoader {
         try {
             return new Input(new FileInputStream(FileLocation.invocationsFile(seamId)));
         } catch (FileNotFoundException e) {
-            LOG.error("failed to initialize input", e);
+            LOG.error("found no recorded invocations for seam '{}'", seamId, e);
             return new Input();
         }
     }
