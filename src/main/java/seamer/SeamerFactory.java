@@ -16,10 +16,10 @@ import java.util.List;
 public class SeamerFactory {
 
     @SuppressWarnings("unchecked")
-    public static  <T> T createProxySeam(Class<T> clazz, String seamId) {
+    public static  <T> T createProxySeam(Class<T> clazz, String methodName, String seamId) {
         Enhancer enhancer = new Enhancer();
         enhancer.setSuperclass(clazz);
-        enhancer.setCallback(new SeamInterceptor(seamId));
+        enhancer.setCallback(new SeamInterceptor(methodName, seamId));
         return (T) enhancer.create();
     }
 

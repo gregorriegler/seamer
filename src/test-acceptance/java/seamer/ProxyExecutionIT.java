@@ -22,9 +22,10 @@ public class ProxyExecutionIT {
     void setUp() {
         SeamerFactory.reset(SEAM_ID);
 
-        ProxyDemo proxyDemo = SeamerFactory.createProxySeam(ProxyDemo.class, SEAM_ID);
+        ProxyDemo proxyDemo = SeamerFactory.createProxySeam(ProxyDemo.class, "blackbox", SEAM_ID);
         proxyDemo.blackbox("hello", 1);
         proxyDemo.blackbox("world", 2);
+        proxyDemo.doNotProxyThis("don't seam me!");
         proxyDemo.blackbox("hello", 3);
         proxyDemo.blackbox("world", 4);
     }
@@ -46,6 +47,10 @@ public class ProxyExecutionIT {
     }
 
     public static class ProxyDemo {
+
+        public String doNotProxyThis(String arg1) {
+            return arg1;
+        }
 
         public String blackbox(String arg1, Integer arg2) {
             String result = arg1 + arg2 + "r";

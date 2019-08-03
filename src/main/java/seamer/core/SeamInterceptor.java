@@ -8,18 +8,24 @@ import java.lang.reflect.Method;
 
 public class SeamInterceptor<T> implements MethodInterceptor {
 
+    private final String methodName;
     private final String seamId;
     private Seamer<T> seamer;
 
-    public SeamInterceptor(String seamId) {
+    public SeamInterceptor(String methodName, String seamId) {
+        this.methodName = methodName;
         this.seamId = seamId;
     }
 
     @Override
     public Object intercept(Object target, Method method, Object[] args, MethodProxy proxy) throws Throwable {
+        if (!methodName.equals(method.getName())) {
+            return proxy.invokeSuper(target, args);
+        }
+
         if (seamer == null) {
             seamer = SeamerFactory.createAndPersist(
-                new ProxySeam<>(target, method.getName()),
+                new ProxySeam<>(target, methodName),
                 target.getClass(),
                 seamId
             );
