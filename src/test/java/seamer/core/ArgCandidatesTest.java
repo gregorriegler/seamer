@@ -1,8 +1,7 @@
-package seamer;
+package seamer.core;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import seamer.core.ArgCandidates;
 
 import java.util.List;
 

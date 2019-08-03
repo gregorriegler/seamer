@@ -16,10 +16,10 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class ArgCandidatesExecutionIT {
+public class ArgCandidatesExecutionTest {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ArgCandidatesExecutionIT.class);
-    public static final String SEAM_ID = ArgCandidatesExecutionIT.class.getName();
+    private static final Logger LOG = LoggerFactory.getLogger(ArgCandidatesExecutionTest.class);
+    public static final String SEAM_ID = ArgCandidatesExecutionTest.class.getName();
 
     private ArgCandidatesDemo demo;
 
