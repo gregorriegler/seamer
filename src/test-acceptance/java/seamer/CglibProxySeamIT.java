@@ -5,6 +5,7 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import seamer.cglib.SeamerCglibFactory;
 import seamer.core.Invocation;
 import seamer.core.Seamer;
 
@@ -14,16 +15,16 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class ProxyExecutionIT {
+public class CglibProxySeamIT {
 
-    public static final String SEAM_ID = ProxyExecutionIT.class.getName();
+    public static final String SEAM_ID = CglibProxySeamIT.class.getName();
     private Seamer seamer;
 
     @BeforeAll
     void setUp() {
         SeamerFactory.reset(SEAM_ID);
 
-        ProxyDemo proxyDemo = SeamerFactory.createProxySeam(ProxyDemo.class, "blackbox", SEAM_ID);
+        ProxyDemo proxyDemo = SeamerCglibFactory.createProxySeam(ProxyDemo.class, "blackbox", SEAM_ID);
         proxyDemo.blackbox("hello", 1);
         proxyDemo.blackbox("world", 2);
         proxyDemo.doNotProxyThis("don't seam me!");

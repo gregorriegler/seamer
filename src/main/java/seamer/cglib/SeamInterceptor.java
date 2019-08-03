@@ -1,8 +1,10 @@
-package seamer.core;
+package seamer.cglib;
 
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
 import seamer.SeamerFactory;
+import seamer.core.ProxySeam;
+import seamer.core.Seamer;
 
 import java.lang.reflect.Method;
 

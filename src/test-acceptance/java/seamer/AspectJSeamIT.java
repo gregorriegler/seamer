@@ -15,7 +15,7 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class AspectJIT {
+public class AspectJSeamIT {
 
     public static final String SEAM_ID = "AspectJ";
 
