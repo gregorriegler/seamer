@@ -3,28 +3,25 @@ package seamer;
 import org.junit.jupiter.api.BeforeAll;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import seamer.test.ClosureSeamTest;
+import seamer.test.PureSeamTest;
 
-public class NonPureSeamTest extends ClosureSeamTest {
+public class TwoArgSeamTest extends PureSeamTest {
 
-    private static final Logger LOG = LoggerFactory.getLogger(NonPureSeamTest.class);
-    private static final String SEAM_ID = NonPureSeamTest.class.getName();
+    private static final Logger LOG = LoggerFactory.getLogger(TwoArgSeamTest.class);
+    private static final String SEAM_ID = TwoArgSeamTest.class.getName();
 
     @BeforeAll
-    @Override
-    public void setup() {
-        ClosureDemo closureDemo = new ClosureDemo();
+    public static void setup() {
+        TwoArgDemo twoArgDemo = new TwoArgDemo();
 
         for (int i = 0; i < 5; i++) {
-            closureDemo.entrypoint("hello ", i);
+            twoArgDemo.entrypoint("hello ", i);
         }
-
-        super.setup();
     }
 
     @Override
     public Class carrierClass() {
-        return ClosureDemo.class;
+        return TwoArgDemo.class;
     }
 
     @Override
@@ -32,7 +29,7 @@ public class NonPureSeamTest extends ClosureSeamTest {
         return SEAM_ID;
     }
 
-    public static class ClosureDemo {
+    public static class TwoArgDemo {
 
         public void entrypoint(String arg1, Integer arg2) {
             String result = SeamerFactory.createAndPersist(
@@ -44,11 +41,9 @@ public class NonPureSeamTest extends ClosureSeamTest {
             LOG.info(result);
         }
 
-        public String state = "state";
-
         public String blackbox(String arg1, Integer arg2) {
-            state += arg2;
-            return arg1 + state;
+            return arg1 + arg2;
         }
+
     }
 }

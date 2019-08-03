@@ -5,10 +5,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import seamer.test.PureSeamTest;
 
-public class OneArgTest extends PureSeamTest {
+public class OneArgSeamTest extends PureSeamTest {
 
-    private static final Logger LOG = LoggerFactory.getLogger(OneArgTest.class);
-    private static final String SEAM_ID = OneArgTest.class.getName();
+    private static final Logger LOG = LoggerFactory.getLogger(OneArgSeamTest.class);
+    private static final String SEAM_ID = OneArgSeamTest.class.getName();
 
     @BeforeAll
     public static void setup() {
