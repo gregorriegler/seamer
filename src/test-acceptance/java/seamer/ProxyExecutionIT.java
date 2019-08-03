@@ -17,6 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class ProxyExecutionIT {
 
     public static final String SEAM_ID = ProxyExecutionIT.class.getName();
+    private Seamer seamer;
 
     @BeforeAll
     void setUp() {
@@ -28,13 +29,13 @@ public class ProxyExecutionIT {
         proxyDemo.doNotProxyThis("don't seam me!");
         proxyDemo.blackbox("hello", 3);
         proxyDemo.blackbox("world", 4);
+
+        seamer = SeamerFactory.load(SEAM_ID, ProxyDemo.class);
     }
 
     @ParameterizedTest
     @MethodSource("invocations")
     void testAllInvocations(Object[] args, Object expected) {
-        Seamer seamer = SeamerFactory.load(SEAM_ID, ProxyDemo.class);
-
         Object actual = seamer.execute(args);
 
         assertEquals(expected, actual);
@@ -53,7 +54,7 @@ public class ProxyExecutionIT {
         }
 
         public String blackbox(String arg1, Integer arg2) {
-            String result = arg1 + arg2 + "r";
+            String result = arg1 + arg2;
             return result;
         }
     }

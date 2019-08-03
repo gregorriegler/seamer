@@ -44,7 +44,7 @@ public class NonPureSeamIT extends ClosureSeamTest {
             LOG.info(result);
         }
 
-        public String state = "";
+        public String state = "state";
 
         public String blackbox(String arg1, Integer arg2) {
             state += arg2;
