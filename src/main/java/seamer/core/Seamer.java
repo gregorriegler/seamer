@@ -2,6 +2,7 @@ package seamer.core;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.function.Supplier;
 
 import static java.util.Arrays.asList;
 
@@ -40,6 +41,11 @@ public class Seamer<T> implements Serializable {
 
     public Seamer<T> addArgCandidates(int i, Object... candidates) {
         argCandidates.addCandidates(i, asList(candidates));
+        return this;
+    }
+
+    public Seamer<T> addArgCandidates(int i, Supplier<List<Object>> supplier) {
+        argCandidates.addCandidates(i, supplier);
         return this;
     }
 
