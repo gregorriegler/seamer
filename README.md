@@ -91,3 +91,24 @@ public static class AspectJDemo {
 }
 ```
 
+#####Run with Spring 
+```
+@RunWith(SpringRunner.class)
+public class MissionStateEngineTest {
+
+    @EnableAspectJAutoProxy
+    @TestConfiguration
+    static class TestConfig {
+
+        @Bean
+        public SeamerAspect seamerAspect() {
+            return new SeamerAspect();
+        }
+     
+        ...   
+    }
+    
+    ...
+}
+```
+

@@ -5,19 +5,23 @@ import java.util.List;
 import java.util.function.Supplier;
 
 import static java.util.Arrays.asList;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 public class Seamer<T> implements Serializable {
 
     private final SeamPersister persister;
     private final InvocationRecorder recorder;
+    private final InvocationLoader loader;
     private final ArgCandidates argCandidates = new ArgCandidates();
 
     public Seam<T> seam;
 
-    public Seamer(Seam<T> seam, SeamPersister persister, InvocationRecorder recorder) {
+    public Seamer(Seam<T> seam, SeamPersister persister, InvocationRecorder recorder, InvocationLoader loader) {
         this.seam = seam;
         this.persister = persister;
         this.recorder = recorder;
+        this.loader = loader;
     }
 
     public T executeAndRecord(Object... args) {
@@ -26,7 +30,15 @@ public class Seamer<T> implements Serializable {
         return result;
     }
 
-    public T execute(Object[] args) {
+    public void verify() {
+        List<Invocation> invocations = loader.load();
+        for (Invocation invocation : invocations) {
+            T actual = execute(invocation.getArgs());
+            assertThat(actual, equalTo(invocation.getResult()));
+        }
+    }
+
+    public T execute(Object... args) {
         return seam.apply(args);
     }
 

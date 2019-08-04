@@ -20,15 +20,16 @@ public class SeamerFactory {
     }
 
     public static <T> Seamer<T> create(Seam<T> seam, final String seamId) {
-        return new Seamer<>(
+        return new Seamer<T>(
             seam,
             new FileSeamPersister(seamId),
-            new FileInvocationRecorder(seamId)
+            new FileInvocationRecorder(seamId),
+            new FileInvocationLoader(seamId)
         );
     }
 
     public static <T> Seamer<T> load(final String seamId, Class carrierClass) {
-        return new FileSeamLoader<T>().load(seamId, carrierClass)
+        return new FileSeamLoader<T>(seamId).load(carrierClass)
             .map(s -> create(s, seamId))
             .orElseThrow(() -> new FailedToLoad());
     }

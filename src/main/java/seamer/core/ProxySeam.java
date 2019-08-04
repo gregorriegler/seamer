@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.Optional;
 
 public class ProxySeam<T> implements Seam<T> {
 
@@ -30,7 +31,11 @@ public class ProxySeam<T> implements Seam<T> {
             Class<?>[] argsClasses = Arrays.stream(args)
                 .map(arg -> arg.getClass())
                 .toArray(Class<?>[]::new);
-            Method method = target.getClass().getMethod(methodName, argsClasses);
+            Method[] declaredMethods = target.getClass().getDeclaredMethods();
+            Optional<Method> optionalMethod = Arrays.stream(declaredMethods)
+                .filter(m -> m.getName().equals(methodName))
+                .findFirst();
+            Method method = optionalMethod.orElseThrow(() -> new NoSuchMethodException());
             return (T) method.invoke(target, args);
         } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             LOG.error("failed to invoke seam", e);

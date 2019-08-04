@@ -1,6 +1,7 @@
 package seamer;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -29,6 +30,12 @@ public class AspectJDemoTest {
         aspectJDemo.doNotProxyThis("don't seam me!");
         aspectJDemo.blackbox("hello", 3);
         aspectJDemo.blackbox("world", 4);
+    }
+
+    @Test
+    void verify() {
+        SeamerFactory.load(SEAM_ID, AspectJDemo.class)
+            .verify();
     }
 
     @ParameterizedTest
