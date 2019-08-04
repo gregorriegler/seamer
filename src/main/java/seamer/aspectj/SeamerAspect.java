@@ -14,7 +14,7 @@ public class SeamerAspect {
 
     private Seamer seamer;
 
-    @Pointcut("@annotation(seam)  && execution(* *(..))")
+    @Pointcut("@annotation(seam) && execution(* *(..))")
     public void callAt(Seam seam) {
     }
  
