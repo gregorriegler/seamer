@@ -58,6 +58,4 @@ public class AspectJDemoTest {
             return arg1 + arg2;
         }
     }
-
-
 }

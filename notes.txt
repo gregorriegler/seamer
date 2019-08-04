@@ -1,3 +1,3 @@
 - cglib and aspectj proxy variant does not work with closures like lambdas do.
-- SRP: split seamer into seamer into two parts, one of which will persist seam and record invocations, and another one that will just execute recorded invocations?
+- SRP: split seamer into two parts, one of which will persist seam and record invocations, and another one that will just execute recorded invocations?
 - degenerate test: file does not contain pair but something else

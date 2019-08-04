@@ -79,3 +79,15 @@ public class TwoArgTest extends ClosureSeamTest {
 }
 ```
 
+#### Create a seam via annotation through AspectJ
+This solution only works for pure functions though.
+```
+public static class AspectJDemo {
+
+    @Seam(SEAM_ID)
+    public String blackbox(String arg1, Integer arg2) {
+        return arg1 + arg2;
+    }
+}
+```
+
