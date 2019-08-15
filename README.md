@@ -2,7 +2,7 @@ Seamer - fun with seams
 -----------------------
 
 A refactoring tool for Java, designed to help and get _blackboxes_ under test to enable safe refactorings.
-Works with pure functions as well with those with side-effects. One seam per class is currently supported. 
+Works with pure functions as well as with impure ones. One seam per class is currently supported. 
 
 Inspired by https://github.com/testdouble/suture
 
