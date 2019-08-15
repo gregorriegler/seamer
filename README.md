@@ -31,8 +31,7 @@ public String blackbox(String arg1, Integer arg2) {
 ```
 
 #### Execute the Seam with specific arguments of your choice
-You may record invocations with arguments of your choice, by first providing argument 
-candidates for every argument index (0 is the first argument, and so forth).
+You may record invocations with arguments of your choice by first providing argument candidates for every argument index (0 is the first argument, and so forth).
 Seamer will then automatically invoke your blackbox with all possible combinations
 of your provided arguments and record the results.
  
