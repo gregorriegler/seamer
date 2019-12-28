@@ -10,16 +10,14 @@ import static org.hamcrest.Matchers.equalTo;
 
 public class Seamer<T> implements Serializable {
 
-    private final SeamPersister persister;
     private final InvocationRecorder recorder;
     private final InvocationLoader loader;
     private final ArgCandidates argCandidates = new ArgCandidates();
 
     public Seam<T> seam;
 
-    public Seamer(Seam<T> seam, SeamPersister persister, InvocationRecorder recorder, InvocationLoader loader) {
+    public Seamer(Seam<T> seam, InvocationRecorder recorder, InvocationLoader loader) {
         this.seam = seam;
-        this.persister = persister;
         this.recorder = recorder;
         this.loader = loader;
     }
@@ -44,11 +42,6 @@ public class Seamer<T> implements Serializable {
 
     public void record(Object[] args, T result) {
         recorder.record(Invocation.of(args, result));
-    }
-
-    public void persist(String seamId) {
-        if (persister.isPersisted(seamId)) return;
-        persister.persist(seam, seamId);
     }
 
     public Seamer<T> addArgCandidates(int i, Object... candidates) {

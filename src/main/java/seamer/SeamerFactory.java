@@ -15,24 +15,23 @@ import java.util.List;
 public class SeamerFactory {
 
     public static <T> Seamer<T> createAndPersist(Seam<T> seam, Class<?> carrierClass, final String seamId) {
-        Seamer<T> seamer = create(seam, carrierClass, seamId);
-        seamer.persist(seamId);
+        Seamer<T> seamer = create(seam, seamId);
+        new FileSeamPersister(new KryoSerializer(carrierClass)).persist(seam, seamId);
         return seamer;
     }
 
-    public static <T> Seamer<T> create(Seam<T> seam, Class<?> carrierClass, final String seamId) {
+    public static <T> Seamer<T> create(Seam<T> seam, final String seamId) {
         return new Seamer<>(
             seam,
-            new FileSeamPersister(new KryoSerializer(carrierClass)),
             new FileInvocationRecorder(seamId),
             new FileInvocationLoader(seamId)
         );
     }
 
     public static <T> Seamer<T> load(Class<?> carrierClass, final String seamId) {
-        final FileSeamLoader<T> fileSeamLoader = new FileSeamLoader<>(new KryoSerializer(carrierClass));
-        return fileSeamLoader.load(seamId)
-            .map(s -> create(s, carrierClass, seamId))
+        return new FileSeamLoader<T>(new KryoSerializer(carrierClass))
+            .load(seamId)
+            .map(seam -> create(seam, seamId))
             .orElseThrow(FailedToLoad::new);
     }
 
