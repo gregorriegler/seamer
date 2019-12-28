@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import seamer.core.Seam;
 import seamer.core.SeamLoader;
-import seamer.kryo.KryoSerializer;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -15,8 +14,8 @@ public class FileSeamLoader<T> implements SeamLoader<T> {
     private static final Logger LOG = LoggerFactory.getLogger(FileSeamLoader.class);
     private final Serializer serializer;
 
-    public FileSeamLoader(Class<?> carrierClass) {
-        serializer = new KryoSerializer(carrierClass);
+    public FileSeamLoader(Serializer serializer) {
+        this.serializer = serializer;
     }
 
     @SuppressWarnings("unchecked")

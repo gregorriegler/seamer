@@ -5,7 +5,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import seamer.core.Seam;
 import seamer.core.SeamPersister;
-import seamer.kryo.KryoSerializer;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -16,8 +15,8 @@ public class FileSeamPersister implements SeamPersister {
     private static final Logger LOG = LoggerFactory.getLogger(FileSeamPersister.class);
     private final Serializer serializer;
 
-    public FileSeamPersister(Class<?> carrierClass) {
-        serializer = new KryoSerializer(carrierClass);
+    public FileSeamPersister(Serializer serializer) {
+        this.serializer = serializer;
     }
 
     @Override

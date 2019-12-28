@@ -8,6 +8,7 @@ import seamer.file.FileInvocationRecorder;
 import seamer.file.FileResetter;
 import seamer.file.FileSeamLoader;
 import seamer.file.FileSeamPersister;
+import seamer.kryo.KryoSerializer;
 
 import java.util.List;
 
@@ -22,14 +23,14 @@ public class SeamerFactory {
     public static <T> Seamer<T> create(Seam<T> seam, Class<?> carrierClass, final String seamId) {
         return new Seamer<>(
             seam,
-            new FileSeamPersister(carrierClass),
+            new FileSeamPersister(new KryoSerializer(carrierClass)),
             new FileInvocationRecorder(seamId),
             new FileInvocationLoader(seamId)
         );
     }
 
     public static <T> Seamer<T> load(Class<?> carrierClass, final String seamId) {
-        final FileSeamLoader<T> fileSeamLoader = new FileSeamLoader<>(carrierClass);
+        final FileSeamLoader<T> fileSeamLoader = new FileSeamLoader<>(new KryoSerializer(carrierClass));
         return fileSeamLoader.load(seamId)
             .map(s -> create(s, carrierClass, seamId))
             .orElseThrow(FailedToLoad::new);
