@@ -11,12 +11,17 @@ public class OneArgSeamTest extends PureSeamTest {
     private static final String SEAM_ID = OneArgSeamTest.class.getName();
 
     @BeforeAll
-    public static void setup() {
+    @Override
+    public void setup() {
+        SeamerFactory.reset(SEAM_ID);
+
         OneArgDemo oneArgDemo = new OneArgDemo();
 
         for (int i = 0; i < 5; i++) {
             oneArgDemo.entrypoint(i);
         }
+
+        super.setup();
     }
 
     @Override

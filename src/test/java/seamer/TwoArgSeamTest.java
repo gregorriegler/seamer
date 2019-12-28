@@ -11,7 +11,8 @@ public class TwoArgSeamTest extends PureSeamTest {
     private static final String SEAM_ID = TwoArgSeamTest.class.getName();
 
     @BeforeAll
-    public static void setup() {
+    @Override
+    public void setup() {
         SeamerFactory.reset(SEAM_ID);
 
         TwoArgDemo twoArgDemo = new TwoArgDemo();
@@ -19,6 +20,8 @@ public class TwoArgSeamTest extends PureSeamTest {
         for (int i = 0; i < 5; i++) {
             twoArgDemo.entryPoint("hello ", i);
         }
+
+        super.setup();
     }
 
     @Override

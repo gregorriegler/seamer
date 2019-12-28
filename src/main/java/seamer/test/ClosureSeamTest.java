@@ -34,7 +34,7 @@ public abstract class ClosureSeamTest {
 
     @ParameterizedTest
     @MethodSource("invocations")
-    void testAllinvocations(Object[] args, Object expected) {
+    void testAllInvocations(Object[] args, Object expected) {
         Object actual = seamer.execute(args);
         assertEquals(expected, actual);
     }
