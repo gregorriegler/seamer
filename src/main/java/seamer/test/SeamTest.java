@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public abstract class PureSeamTest {
+public abstract class SeamTest {
 
     private static Seamer<?> seamer;
 

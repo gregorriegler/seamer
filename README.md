@@ -45,12 +45,12 @@ SeamerFactory.load("UserDefinedIdOfSeam", classCarryingTheSeam.getClass())
 
 These results can then get verified in a test-harness.
 
-#### Execute the Seam of a pure function in a test-harness
+#### Execute the Seam in a test-harness
 This reruns all previously recorded invocations, and verifies if the results still match.
 ```java
-public class TwoArgTest extends PureSeamTest {
+public class TwoArgTest extends SeamTest {
     @Override
-    public Class carrierClass() {
+    public Class<?> carrierClass() {
         return YourClassCarryingTheSeam.class;
     }
 
@@ -60,25 +60,12 @@ public class TwoArgTest extends PureSeamTest {
     }
 }
 ```
-
-#### Execute the Seam of a non-pure function in a test-harness
-Use this route if your seam relies on state within the carrying class (fields).
-This reruns all previously recorded invocations, and verifies if the results still match.
+or just verify all recorded invocations
 ```java
-public class TwoArgTest extends ClosureSeamTest {
-    @Override
-    public Class carrierClass() {
-        return YourClassCarryingTheSeam.class;
-    }
-
-    @Override
-    public String seamId() {
-        return "UserDefinedIdOfSeam";
-    }
-}
+SeamerFactory.load(demo.getClass(), SEAM_ID).verify()
 ```
 
-#### Create a seam via annotation through AspectJ
+#### Create a Seam via annotation through AspectJ
 This solution only works for pure functions though.
 ```java
 public static class AspectJDemo {

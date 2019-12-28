@@ -3,9 +3,9 @@ package seamer;
 import org.junit.jupiter.api.BeforeAll;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import seamer.test.PureSeamTest;
+import seamer.test.SeamTest;
 
-public class TwoArgSeamTest extends PureSeamTest {
+public class TwoArgSeamTest extends SeamTest {
 
     private static final Logger LOG = LoggerFactory.getLogger(TwoArgSeamTest.class);
     private static final String SEAM_ID = TwoArgSeamTest.class.getName();
