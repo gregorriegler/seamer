@@ -41,6 +41,10 @@ public class Seamer<T> implements Serializable {
         invocations.record(Invocation.of(args, result));
     }
 
+    public List<Invocation> getInvocations() {
+        return invocations.getAll();
+    }
+
     public Seamer<T> addArgCandidates(int i, Object... candidates) {
         argCandidates.addCandidates(i, asList(candidates));
         return this;

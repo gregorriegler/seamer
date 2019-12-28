@@ -28,12 +28,12 @@ public abstract class ClosureSeamTest {
         seamer = SeamerFactory.load(carrierClass(), seamId());
     }
 
-    public abstract Class carrierClass();
+    public abstract Class<?> carrierClass();
 
     public abstract String seamId();
 
     public Stream<Arguments> invocations() {
-        return SeamerFactory.loadInvocations(seamId())
+        return seamer.getInvocations()
             .stream()
             .map(c -> Arguments.of(c.getArgs(), c.getResult()));
     }
