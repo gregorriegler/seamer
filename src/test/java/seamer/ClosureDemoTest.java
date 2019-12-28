@@ -3,15 +3,18 @@ package seamer;
 import org.junit.jupiter.api.BeforeAll;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import seamer.test.ClosureSeamTest;
 
-public class ClosureSeamTest extends seamer.test.ClosureSeamTest {
+public class ClosureDemoTest extends ClosureSeamTest {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ClosureSeamTest.class);
-    private static final String SEAM_ID = ClosureSeamTest.class.getName();
+    private static final Logger LOG = LoggerFactory.getLogger(ClosureDemoTest.class);
+    private static final String SEAM_ID = ClosureDemoTest.class.getName();
 
     @BeforeAll
     @Override
     public void setup() {
+        SeamerFactory.reset(seamId());
+
         ClosureDemo closureDemo = new ClosureDemo();
 
         for (int i = 0; i < 5; i++) {
@@ -22,7 +25,7 @@ public class ClosureSeamTest extends seamer.test.ClosureSeamTest {
     }
 
     @Override
-    public Class carrierClass() {
+    public Class<?> carrierClass() {
         return ClosureDemo.class;
     }
 

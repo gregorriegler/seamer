@@ -1,6 +1,5 @@
 package seamer.test;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -17,11 +16,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public abstract class ClosureSeamTest {
 
     private static Seamer<?> seamer;
-
-    @BeforeAll
-    public void reset() {
-        SeamerFactory.reset(seamId());
-    }
 
     @BeforeEach
     public void setup() {
