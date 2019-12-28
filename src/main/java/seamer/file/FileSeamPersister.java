@@ -1,12 +1,11 @@
 package seamer.file;
 
-import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Output;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import seamer.core.Seam;
 import seamer.core.SeamPersister;
-import seamer.kryo.KryoFactory;
+import seamer.kryo.KryoSerializer;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -15,10 +14,10 @@ import java.io.FileOutputStream;
 public class FileSeamPersister implements SeamPersister {
 
     private static final Logger LOG = LoggerFactory.getLogger(FileSeamPersister.class);
-    private final Kryo kryo;
+    private final Serializer serializer;
 
     public FileSeamPersister(Class<?> carrierClass) {
-        this.kryo = KryoFactory.createKryo(carrierClass);
+        serializer = new KryoSerializer(carrierClass);
     }
 
     @Override
@@ -28,8 +27,7 @@ public class FileSeamPersister implements SeamPersister {
             File seamFile = FileLocation.seamFile(seamId);
             if (seamFile.exists()) return;
             LOG.info("persisting seam at {}", seamFile.getAbsolutePath());
-            Output fileOutput = new Output(new FileOutputStream(seamFile));
-            kryo.writeClassAndObject(fileOutput, seam);
+            Output fileOutput = serializer.serialize(seam, new FileOutputStream(seamFile));
             fileOutput.flush();
             fileOutput.close();
         } catch (FileNotFoundException e) {
