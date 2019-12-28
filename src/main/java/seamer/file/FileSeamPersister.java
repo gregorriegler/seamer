@@ -15,16 +15,14 @@ import java.io.FileOutputStream;
 public class FileSeamPersister implements SeamPersister {
 
     private static final Logger LOG = LoggerFactory.getLogger(FileSeamPersister.class);
-    private final String seamId;
     private final Kryo kryo;
 
-    public FileSeamPersister(Class<?> carrierClass, String seamId) {
-        this.seamId = seamId;
+    public FileSeamPersister(Class<?> carrierClass) {
         this.kryo = KryoFactory.createKryo(carrierClass);
     }
 
     @Override
-    public void persist(Seam<?> seam, Class<?> carrierClass) {
+    public void persist(Seam<?> seam, String seamId) {
         try {
             FileLocation.createSeamDir(seamId);
             File seamFile = FileLocation.seamFile(seamId);
@@ -40,7 +38,7 @@ public class FileSeamPersister implements SeamPersister {
     }
 
     @Override
-    public boolean isPersisted() {
+    public boolean isPersisted(String seamId) {
         return FileLocation.seamFile(seamId).exists();
     }
 

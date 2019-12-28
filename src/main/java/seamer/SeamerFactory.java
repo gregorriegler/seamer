@@ -15,14 +15,14 @@ public class SeamerFactory {
 
     public static <T> Seamer<T> createAndPersist(Seam<T> seam, Class<?> carrierClass, final String seamId) {
         Seamer<T> seamer = create(seam, carrierClass, seamId);
-        seamer.persist(carrierClass);
+        seamer.persist(seamId);
         return seamer;
     }
 
     public static <T> Seamer<T> create(Seam<T> seam, Class<?> carrierClass, final String seamId) {
         return new Seamer<>(
             seam,
-            new FileSeamPersister(carrierClass, seamId),
+            new FileSeamPersister(carrierClass),
             new FileInvocationRecorder(seamId),
             new FileInvocationLoader(seamId)
         );

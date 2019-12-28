@@ -46,9 +46,9 @@ public class Seamer<T> implements Serializable {
         recorder.record(Invocation.of(args, result));
     }
 
-    public void persist(Class carrierClass) {
-        if (persister.isPersisted()) return;
-        persister.persist(seam, carrierClass);
+    public void persist(String seamId) {
+        if (persister.isPersisted(seamId)) return;
+        persister.persist(seam, seamId);
     }
 
     public Seamer<T> addArgCandidates(int i, Object... candidates) {
