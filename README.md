@@ -62,7 +62,7 @@ public class TwoArgTest extends SeamTest {
 ```
 or just verify all recorded invocations
 ```java
-SeamerFactory.load(demo.getClass(), SEAM_ID).verify()
+SeamerFactory.load(demo.getClass(), SEAM_ID).verify();
 ```
 
 #### Create a Seam via annotation through AspectJ
