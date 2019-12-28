@@ -23,7 +23,7 @@ public class SeamerFactory {
     public static <T> Seamer<T> create(Seam<T> seam, final String seamId) {
         return new Seamer<>(
             seam,
-            new FileInvocationRecorder(seamId),
+            new FileInvocationRecorder(new KryoSerializer(), seamId),
             new FileInvocationLoader(seamId)
         );
     }

@@ -17,4 +17,8 @@ public class KryoFactory {
         kryo.register(ClosureSerializer.Closure.class, new ClosureSerializer());
         return kryo;
     }
+
+    public static Kryo createKryo() {
+        return new Kryo();
+    }
 }
