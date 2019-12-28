@@ -25,7 +25,7 @@ public abstract class ClosureSeamTest {
 
     @BeforeEach
     public void setup() {
-        seamer = SeamerFactory.load(seamId(), carrierClass());
+        seamer = SeamerFactory.load(carrierClass(), seamId());
     }
 
     public abstract Class carrierClass();

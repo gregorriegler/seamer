@@ -13,25 +13,26 @@ import java.util.List;
 
 public class SeamerFactory {
 
-    public static <T> Seamer<T> createAndPersist(Seam<T> seam, Class carrierClass, final String seamId) {
-        Seamer<T> seamer = create(seam, seamId);
+    public static <T> Seamer<T> createAndPersist(Seam<T> seam, Class<?> carrierClass, final String seamId) {
+        Seamer<T> seamer = create(seam, carrierClass, seamId);
         seamer.persist(carrierClass);
         return seamer;
     }
 
-    public static <T> Seamer<T> create(Seam<T> seam, final String seamId) {
-        return new Seamer<T>(
+    public static <T> Seamer<T> create(Seam<T> seam, Class<?> carrierClass, final String seamId) {
+        return new Seamer<>(
             seam,
-            new FileSeamPersister(seamId),
+            new FileSeamPersister(carrierClass, seamId),
             new FileInvocationRecorder(seamId),
             new FileInvocationLoader(seamId)
         );
     }
 
-    public static <T> Seamer<T> load(final String seamId, Class carrierClass) {
-        return new FileSeamLoader<T>(seamId).load(carrierClass)
-            .map(s -> create(s, seamId))
-            .orElseThrow(() -> new FailedToLoad());
+    public static <T> Seamer<T> load(Class<?> carrierClass, final String seamId) {
+        final FileSeamLoader<T> fileSeamLoader = new FileSeamLoader<>(carrierClass);
+        return fileSeamLoader.load(seamId)
+            .map(s -> create(s, carrierClass, seamId))
+            .orElseThrow(FailedToLoad::new);
     }
 
     public static List<Invocation> loadInvocations(final String seamId) {

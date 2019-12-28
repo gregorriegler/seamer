@@ -34,14 +34,14 @@ public class AspectJDemoTest {
 
     @Test
     void verify() {
-        SeamerFactory.load(SEAM_ID, AspectJDemo.class)
+        SeamerFactory.load(AspectJDemo.class, SEAM_ID)
             .verify();
     }
 
     @ParameterizedTest
     @MethodSource("invocations")
     void testAllInvocations(Object[] args, Object expected) {
-        Seamer seamer = SeamerFactory.load(SEAM_ID, AspectJDemo.class);
+        Seamer seamer = SeamerFactory.load(AspectJDemo.class, SEAM_ID);
 
         Object actual = seamer.execute(args);
 

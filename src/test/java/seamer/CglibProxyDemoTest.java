@@ -31,7 +31,7 @@ public class CglibProxyDemoTest {
         proxyDemo.blackbox("hello", 3);
         proxyDemo.blackbox("world", 4);
 
-        seamer = SeamerFactory.load(SEAM_ID, ProxyDemo.class);
+        seamer = SeamerFactory.load(ProxyDemo.class, SEAM_ID);
     }
 
     @ParameterizedTest
