@@ -20,7 +20,7 @@ public class OneArgSeamTest extends PureSeamTest {
     }
 
     @Override
-    public Class carrierClass() {
+    public Class<?> carrierClass() {
         return OneArgDemo.class;
     }
 
