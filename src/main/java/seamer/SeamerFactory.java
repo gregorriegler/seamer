@@ -3,8 +3,7 @@ package seamer;
 import seamer.core.Invocation;
 import seamer.core.Seam;
 import seamer.core.Seamer;
-import seamer.file.FileInvocationLoader;
-import seamer.file.FileInvocationRecorder;
+import seamer.file.FileInvocationRepository;
 import seamer.file.FileResetter;
 import seamer.file.FileSeamLoader;
 import seamer.file.FileSeamPersister;
@@ -23,8 +22,7 @@ public class SeamerFactory {
     public static <T> Seamer<T> create(Seam<T> seam, final String seamId) {
         return new Seamer<>(
             seam,
-            new FileInvocationRecorder(new KryoSerializer(), seamId),
-            new FileInvocationLoader(new KryoSerializer(), seamId)
+            new FileInvocationRepository(new KryoSerializer(), seamId)
         );
     }
 
@@ -36,7 +34,7 @@ public class SeamerFactory {
     }
 
     public static List<Invocation> loadInvocations(final String seamId) {
-        return new FileInvocationLoader(new KryoSerializer(), seamId).load();
+        return new FileInvocationRepository(new KryoSerializer(), seamId).getAll();
     }
 
     public static void reset(String seamId) {

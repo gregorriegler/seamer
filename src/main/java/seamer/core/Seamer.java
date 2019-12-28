@@ -10,16 +10,14 @@ import static org.hamcrest.Matchers.equalTo;
 
 public class Seamer<T> implements Serializable {
 
-    private final InvocationRecorder recorder;
-    private final InvocationLoader loader;
+    private final InvocationRepository invocations;
     private final ArgCandidates argCandidates = new ArgCandidates();
 
     public Seam<T> seam;
 
-    public Seamer(Seam<T> seam, InvocationRecorder recorder, InvocationLoader loader) {
+    public Seamer(Seam<T> seam, InvocationRepository invocations) {
         this.seam = seam;
-        this.recorder = recorder;
-        this.loader = loader;
+        this.invocations = invocations;
     }
 
     public T executeAndRecord(Object... args) {
@@ -29,8 +27,7 @@ public class Seamer<T> implements Serializable {
     }
 
     public void verify() {
-        List<Invocation> invocations = loader.load();
-        for (Invocation invocation : invocations) {
+        for (Invocation invocation : invocations.getAll()) {
             T actual = execute(invocation.getArgs());
             assertThat(actual, equalTo(invocation.getResult()));
         }
@@ -41,7 +38,7 @@ public class Seamer<T> implements Serializable {
     }
 
     public void record(Object[] args, T result) {
-        recorder.record(Invocation.of(args, result));
+        invocations.record(Invocation.of(args, result));
     }
 
     public Seamer<T> addArgCandidates(int i, Object... candidates) {
