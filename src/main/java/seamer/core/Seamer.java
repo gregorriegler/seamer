@@ -20,17 +20,17 @@ public class Seamer<T> implements Serializable {
         this.invocations = invocations;
     }
 
-    public T executeAndRecord(Object... args) {
-        T result = execute(args);
-        record(args, result);
-        return result;
-    }
-
     public void verify() {
         for (Invocation invocation : invocations.getAll()) {
             T actual = execute(invocation.getArgs());
             assertThat(actual, equalTo(invocation.getResult()));
         }
+    }
+
+    public T executeAndRecord(Object... args) {
+        T result = execute(args);
+        record(args, result);
+        return result;
     }
 
     public T execute(Object... args) {

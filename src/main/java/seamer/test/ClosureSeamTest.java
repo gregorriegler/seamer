@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public abstract class ClosureSeamTest {
 
-    private static Seamer seamer;
+    private static Seamer<?> seamer;
 
     @BeforeAll
     public void reset() {

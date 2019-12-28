@@ -1,6 +1,7 @@
 package seamer;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -39,11 +40,16 @@ public class ArgCandidatesDemoTest {
     @ParameterizedTest
     @MethodSource("invocations")
     void testAllInvocations(Object[] args, Object expected) {
-        Seamer seamer = SeamerFactory.load(demo.getClass(), SEAM_ID);
+        Seamer<?> seamer = SeamerFactory.load(demo.getClass(), SEAM_ID);
 
         Object actual = seamer.execute(args);
 
         assertEquals(expected, actual);
+    }
+
+    @Test
+    void shouldVerify() {
+        SeamerFactory.load(demo.getClass(), SEAM_ID).verify();
     }
 
     public Stream<Arguments> invocations() {
