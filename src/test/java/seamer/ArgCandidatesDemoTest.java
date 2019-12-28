@@ -53,7 +53,7 @@ public class ArgCandidatesDemoTest {
     }
 
     public Stream<Arguments> invocations() {
-        List<Invocation> invocations = SeamerFactory.loadInvocations(SEAM_ID);
+        List<Invocation> invocations = SeamerFactory.load(demo.getClass(), SEAM_ID).getInvocations();
         return invocations.stream()
             .map(c -> Arguments.of(c.getArgs(), c.getResult()));
     }

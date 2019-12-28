@@ -43,7 +43,7 @@ public class CglibProxyDemoTest {
     }
 
     public Stream<Arguments> invocations() {
-        List<Invocation> invocations = SeamerFactory.loadInvocations(SEAM_ID);
+        List<Invocation> invocations = SeamerFactory.load(ProxyDemo.class, SEAM_ID).getInvocations();
         return invocations.stream()
             .map(c -> Arguments.of(c.getArgs(), c.getResult()));
     }

@@ -41,7 +41,7 @@ public class AspectJDemoTest {
     @ParameterizedTest
     @MethodSource("invocations")
     void testAllInvocations(Object[] args, Object expected) {
-        Seamer seamer = SeamerFactory.load(AspectJDemo.class, SEAM_ID);
+        Seamer<?> seamer = SeamerFactory.load(AspectJDemo.class, SEAM_ID);
 
         Object actual = seamer.execute(args);
 
@@ -49,7 +49,7 @@ public class AspectJDemoTest {
     }
 
     public Stream<Arguments> invocations() {
-        List<Invocation> invocations = SeamerFactory.loadInvocations(SEAM_ID);
+        List<Invocation> invocations = SeamerFactory.load(AspectJDemo.class, SEAM_ID).getInvocations();
         return invocations.stream()
             .map(c -> Arguments.of(c.getArgs(), c.getResult()));
     }

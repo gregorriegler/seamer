@@ -1,14 +1,11 @@
 package seamer;
 
-import seamer.core.Invocation;
 import seamer.core.Seam;
 import seamer.core.Seamer;
 import seamer.file.FileInvocationRepository;
 import seamer.file.FileResetter;
 import seamer.file.FileSeamRepository;
 import seamer.kryo.KryoSerializer;
-
-import java.util.List;
 
 public class SeamerFactory {
 
@@ -30,10 +27,6 @@ public class SeamerFactory {
             seam,
             new FileInvocationRepository(new KryoSerializer(), seamId)
         );
-    }
-
-    public static List<Invocation> loadInvocations(final String seamId) {
-        return new FileInvocationRepository(new KryoSerializer(), seamId).getAll();
     }
 
     public static void reset(String seamId) {

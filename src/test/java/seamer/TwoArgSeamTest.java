@@ -12,15 +12,17 @@ public class TwoArgSeamTest extends PureSeamTest {
 
     @BeforeAll
     public static void setup() {
+        SeamerFactory.reset(SEAM_ID);
+
         TwoArgDemo twoArgDemo = new TwoArgDemo();
 
         for (int i = 0; i < 5; i++) {
-            twoArgDemo.entrypoint("hello ", i);
+            twoArgDemo.entryPoint("hello ", i);
         }
     }
 
     @Override
-    public Class carrierClass() {
+    public Class<?> carrierClass() {
         return TwoArgDemo.class;
     }
 
@@ -31,7 +33,7 @@ public class TwoArgSeamTest extends PureSeamTest {
 
     public static class TwoArgDemo {
 
-        public void entrypoint(String arg1, Integer arg2) {
+        public void entryPoint(String arg1, Integer arg2) {
             String result = SeamerFactory.createAndPersist(
                 a -> blackbox((String) a[0], (Integer) a[1]),
                 this.getClass(),
