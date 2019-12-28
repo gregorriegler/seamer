@@ -17,10 +17,10 @@ public class KryoSerializer implements Serializer {
     }
 
     @Override
-    public Output serialize(Seam<?> seam, OutputStream outputStream) {
+    public void serialize(Seam<?> seam, OutputStream outputStream) {
         Output fileOutput = new Output(outputStream);
         kryo.writeClassAndObject(fileOutput, seam);
-        return fileOutput;
+        fileOutput.close();
     }
 
     @Override

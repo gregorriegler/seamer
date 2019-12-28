@@ -1,6 +1,5 @@
 package seamer.file;
 
-import com.esotericsoftware.kryo.io.Output;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import seamer.core.Seam;
@@ -26,9 +25,7 @@ public class FileSeamPersister implements SeamPersister {
             File seamFile = FileLocation.seamFile(seamId);
             if (seamFile.exists()) return;
             LOG.info("persisting seam at {}", seamFile.getAbsolutePath());
-            Output fileOutput = serializer.serialize(seam, new FileOutputStream(seamFile));
-            fileOutput.flush();
-            fileOutput.close();
+            serializer.serialize(seam, new FileOutputStream(seamFile));
         } catch (FileNotFoundException e) {
             LOG.error("failed to persist seam", e);
         }
