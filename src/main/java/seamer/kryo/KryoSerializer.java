@@ -9,6 +9,8 @@ import seamer.file.Serializer;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 public class KryoSerializer implements Serializer {
     private final Kryo kryo;
@@ -39,5 +41,16 @@ public class KryoSerializer implements Serializer {
     public Object deserialize(InputStream inputStream) {
         Input fileInput = new Input(inputStream);
         return kryo.readClassAndObject(fileInput);
+    }
+
+    @Override
+    public List<Invocation> deserializeInvocations(InputStream inputStream) {
+        Input input = new Input(inputStream);
+        List<Invocation> invocations = new ArrayList<>();
+        while (!input.eof()) {
+            Invocation invocation = (Invocation) kryo.readClassAndObject(input);
+            invocations.add(invocation);
+        }
+        return invocations;
     }
 }

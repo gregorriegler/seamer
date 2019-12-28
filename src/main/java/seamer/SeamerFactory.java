@@ -24,7 +24,7 @@ public class SeamerFactory {
         return new Seamer<>(
             seam,
             new FileInvocationRecorder(new KryoSerializer(), seamId),
-            new FileInvocationLoader(seamId)
+            new FileInvocationLoader(new KryoSerializer(), seamId)
         );
     }
 
@@ -36,7 +36,7 @@ public class SeamerFactory {
     }
 
     public static List<Invocation> loadInvocations(final String seamId) {
-        return new FileInvocationLoader(seamId).load();
+        return new FileInvocationLoader(new KryoSerializer(), seamId).load();
     }
 
     public static void reset(String seamId) {

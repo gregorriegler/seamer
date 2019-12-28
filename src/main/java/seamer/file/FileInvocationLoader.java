@@ -1,7 +1,5 @@
 package seamer.file;
 
-import com.esotericsoftware.kryo.Kryo;
-import com.esotericsoftware.kryo.io.Input;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import seamer.core.Invocation;
@@ -9,37 +7,29 @@ import seamer.core.InvocationLoader;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class FileInvocationLoader implements InvocationLoader {
 
     private static final Logger LOG = LoggerFactory.getLogger(FileInvocationLoader.class);
 
-    private final Kryo kryo = new Kryo();
+    private final Serializer serializer;
     private String seamId;
 
-    public FileInvocationLoader(String seamId) {
+    public FileInvocationLoader(Serializer serializer, String seamId) {
+        this.serializer = serializer;
         this.seamId = seamId;
     }
 
     @Override
     public List<Invocation> load() {
-        Input input = createInput(this.seamId);
-        List<Invocation> invocations = new ArrayList<>();
-        while (!input.eof()) {
-            Invocation invocation = (Invocation) kryo.readClassAndObject(input);
-            invocations.add(invocation);
-        }
-        return invocations;
-    }
-
-    public Input createInput(String seamId) {
         try {
-            return new Input(new FileInputStream(FileLocation.invocationsFile(seamId)));
+            FileInputStream inputStream = new FileInputStream(FileLocation.invocationsFile(this.seamId));
+            return serializer.deserializeInvocations(inputStream);
         } catch (FileNotFoundException e) {
-            LOG.error("found no recorded invocations for seam '{}'", seamId, e);
-            return new Input();
+            LOG.error("found no recorded invocations for seam '{}'", this.seamId, e);
+            return Collections.emptyList();
         }
     }
 
