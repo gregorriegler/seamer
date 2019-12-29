@@ -1,6 +1,6 @@
 package seamer.test;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -15,9 +15,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public abstract class SeamTest {
 
-    private static Seamer<?> seamer;
+    protected Seamer<?> seamer;
 
-    @BeforeEach
+    @BeforeAll
     public void setup() {
         seamer = SeamerFactory.load(carrierClass(), seamId());
     }
@@ -34,7 +34,7 @@ public abstract class SeamTest {
 
     @ParameterizedTest
     @MethodSource("invocations")
-    void testAllInvocations(Object[] args, Object expected) {
+    public void testAllInvocations(Object[] args, Object expected) {
         Object actual = seamer.execute(args);
         assertEquals(expected, actual);
     }
