@@ -31,8 +31,7 @@ public class SeamInterceptor<T> implements MethodInterceptor {
                 target.getClass(),
                 seamId
             );
-            T result = seamer.execute(args);
-            return result;
+            return seamer.execute(args);
         }
 
         T result = invoke(proxy, target, args);

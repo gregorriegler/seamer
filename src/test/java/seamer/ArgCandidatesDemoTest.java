@@ -63,7 +63,7 @@ public class ArgCandidatesDemoTest {
 
         public void entrypoint(String arg1, Integer arg2, SomeObject arg3) {
             String result = SeamerFactory.intercept(
-                a -> blackbox((String) a[0], (Integer) a[1], (SomeObject) a[2]), this.getClass(), SEAM_ID
+                args -> blackbox((String) args[0], (Integer) args[1], (SomeObject) args[2]), this.getClass(), SEAM_ID
             ).invoke(arg1, arg2, arg3);
 
             LOG.info(result);

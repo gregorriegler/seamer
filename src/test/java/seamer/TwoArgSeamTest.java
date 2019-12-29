@@ -38,7 +38,7 @@ public class TwoArgSeamTest extends SeamTest {
 
         public void entryPoint(String arg1, Integer arg2) {
             String result = SeamerFactory.intercept(
-                a -> blackbox((String) a[0], (Integer) a[1]),
+                args -> blackbox((String) args[0], (Integer) args[1]),
                 this.getClass(),
                 SEAM_ID
             ).invoke(arg1, arg2);
