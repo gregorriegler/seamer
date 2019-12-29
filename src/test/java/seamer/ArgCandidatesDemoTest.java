@@ -62,9 +62,9 @@ public class ArgCandidatesDemoTest {
     public static class ArgCandidatesDemo {
 
         public void entrypoint(String arg1, Integer arg2, SomeObject arg3) {
-            String result = SeamerFactory.createAndPersist(
+            String result = SeamerFactory.intercept(
                 a -> blackbox((String) a[0], (Integer) a[1], (SomeObject) a[2]), this.getClass(), SEAM_ID
-            ).interceptInvocation(arg1, arg2, arg3);
+            ).invoke(arg1, arg2, arg3);
 
             LOG.info(result);
         }

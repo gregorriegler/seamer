@@ -27,7 +27,7 @@ public class Seamer<T> implements Serializable {
         }
     }
 
-    public T interceptInvocation(Object... args) {
+    public T invoke(Object... args) {
         T result = execute(args);
         record(args, result);
         return result;

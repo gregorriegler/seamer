@@ -37,11 +37,11 @@ public class OneArgSeamTest extends SeamTest {
     public static class OneArgDemo {
 
         public void entrypoint(Integer arg1) {
-            Integer result = SeamerFactory.createAndPersist(
+            Integer result = SeamerFactory.intercept(
                 a -> blackbox((Integer) a[0]),
                 this.getClass(),
                 SEAM_ID
-            ).interceptInvocation(arg1);
+            ).invoke(arg1);
 
             LOG.info(result + "");
         }

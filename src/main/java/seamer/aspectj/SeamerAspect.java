@@ -36,7 +36,7 @@ public class SeamerAspect {
     private void initializeSeamer(ProceedingJoinPoint pjp, Seam seam) {
         if (seamer != null) return;
 
-        seamer = SeamerFactory.createAndPersist(
+        seamer = SeamerFactory.intercept(
             ProxySeam.of(pjp.getTarget(), pjp.getSignature().getName()),
             pjp.getTarget().getClass(),
             seam.value()

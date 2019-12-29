@@ -17,7 +17,7 @@ This records all invocations and their return values of the blackbox.
 
 ```java
 public void entrypoint(String arg1, Integer arg2) {
-    String result = SeamerFactory.createAndPersist(
+    String result = SeamerFactory.intercept(
         arg -> blackbox((String) arg[0], (Integer) arg[1]), 
         this.getClass(), 
         "UserDefinedIdOfSeam"

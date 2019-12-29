@@ -26,7 +26,7 @@ public class SeamInterceptor<T> implements MethodInterceptor {
         }
 
         if (seamer == null) {
-            seamer = SeamerFactory.createAndPersist(
+            seamer = SeamerFactory.intercept(
                 ProxySeam.of(target, methodName),
                 target.getClass(),
                 seamId
