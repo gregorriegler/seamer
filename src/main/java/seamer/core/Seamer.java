@@ -27,10 +27,16 @@ public class Seamer<T> implements Serializable {
         }
     }
 
-    public T executeAndRecord(Object... args) {
+    public T interceptInvocation(Object... args) {
         T result = execute(args);
         record(args, result);
         return result;
+    }
+
+    public Seamer<T> recordInvocation(Object... args) {
+        T result = execute(args);
+        record(args, result);
+        return this;
     }
 
     public T execute(Object... args) {
@@ -58,7 +64,7 @@ public class Seamer<T> implements Serializable {
     public void shuffleArgsAndExecute() {
         List<Object[]> argCombinations = argCandidates.shuffle();
         for (Object[] args : argCombinations) {
-            executeAndRecord(args);
+            recordInvocation(args);
         }
     }
 

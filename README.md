@@ -21,7 +21,7 @@ public void entrypoint(String arg1, Integer arg2) {
         arg -> blackbox((String) arg[0], (Integer) arg[1]), 
         this.getClass(), 
         "UserDefinedIdOfSeam"
-    ).executeAndRecord(arg1, arg2);
+    ).interceptInvocation(arg1, arg2);
     // ...
 }
 

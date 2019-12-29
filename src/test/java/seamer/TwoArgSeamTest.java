@@ -41,7 +41,7 @@ public class TwoArgSeamTest extends SeamTest {
                 a -> blackbox((String) a[0], (Integer) a[1]),
                 this.getClass(),
                 SEAM_ID
-            ).executeAndRecord(arg1, arg2);
+            ).interceptInvocation(arg1, arg2);
 
             LOG.info(result);
         }
