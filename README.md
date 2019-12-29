@@ -1,8 +1,7 @@
 Seamer - fun with seams
 -----------------------
 
-A refactoring tool for Java, designed to help and get _blackboxes_ under test to enable safe refactorings.
-Works with pure functions as well as with impure ones. One seam per class is currently supported. 
+A refactoring tool for Java, designed to help and get legacy code under test.
 
 Inspired by https://github.com/testdouble/suture
 
@@ -13,7 +12,7 @@ Inspired by https://github.com/testdouble/suture
 ### Usage
 
 #### Create Seam
-This records all invocations and their return values of the blackbox.
+This records all invocations and its return values.
 
 ```java
 public void entrypoint(String arg1, Integer arg2) {
@@ -66,7 +65,7 @@ SeamerFactory.load(demo.getClass(), SEAM_ID).verify();
 ```
 
 #### Create a Seam via annotation through AspectJ
-This solution only works for pure functions though.
+This solution only works for stateless methods though.
 ```java
 public static class AspectJDemo {
 
