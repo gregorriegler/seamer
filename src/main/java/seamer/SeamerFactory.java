@@ -16,14 +16,12 @@ public class SeamerFactory {
             .orElseThrow(FailedToLoad::new);
     }
 
-    public static <T> Seamer<T> intercept(Seam<T> seam, Class<?> carrierClass, final String seamId) {
-        Seamer<T> seamer = create(seam, seamId);
-        new FileSeamRepository<T>(new KryoSerializer(carrierClass)).persist(seam, seamId);
-        return seamer;
+    public static <T> Seamer<T> persist(Seam<T> seam, Class<?> carrierClass, final String seamId) {
+        reset(seamId);
+        return intercept(seam, carrierClass, seamId);
     }
 
-    public static <T> Seamer<T> createAndPersist(Seam<T> seam, Class<?> carrierClass, final String seamId) {
-        reset(seamId);
+    public static <T> Seamer<T> intercept(Seam<T> seam, Class<?> carrierClass, final String seamId) {
         Seamer<T> seamer = create(seam, seamId);
         new FileSeamRepository<T>(new KryoSerializer(carrierClass)).persist(seam, seamId);
         return seamer;
