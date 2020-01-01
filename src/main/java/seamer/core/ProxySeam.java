@@ -8,7 +8,7 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Optional;
 
-public class ProxySeam<T> implements Seam<T> {
+public class ProxySeam<T> implements ArgsSeam<T> {
 
     private static final Logger LOG = LoggerFactory.getLogger(ProxySeam.class);
 

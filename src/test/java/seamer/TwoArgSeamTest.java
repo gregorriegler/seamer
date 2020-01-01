@@ -3,6 +3,7 @@ package seamer;
 import org.junit.jupiter.api.BeforeAll;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import seamer.core.Seam2;
 import seamer.test.SeamTest;
 
 public class TwoArgSeamTest extends SeamTest {
@@ -36,12 +37,12 @@ public class TwoArgSeamTest extends SeamTest {
 
     public static class TwoArgDemo {
 
-        public void entryPoint(String arg1, Integer arg2) {
+        public void entryPoint(String string, Integer integer) {
             String result = SeamerFactory.intercept(
-                args -> blackbox((String) args[0], (Integer) args[1]),
+                (Seam2<String, Integer, String>) (arg1, arg2) -> blackbox(arg1, arg2),
                 this.getClass(),
                 SEAM_ID
-            ).invoke(arg1, arg2);
+            ).invoke(string, integer);
 
             LOG.info(result);
         }

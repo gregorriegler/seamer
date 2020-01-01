@@ -40,7 +40,7 @@ public class Seamer<T> implements Serializable {
     }
 
     public T execute(Object... args) {
-        return seam.apply(args);
+        return seam.invoke(args);
     }
 
     public void record(Object[] args, T result) {
