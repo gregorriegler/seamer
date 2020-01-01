@@ -9,7 +9,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import seamer.core.Invocation;
-import seamer.core.Seamer;
+import seamer.core.Seam;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -26,11 +26,11 @@ public class ArgCandidatesDemoTest {
 
     @BeforeAll
     void setUp() {
-        SeamerFactory.reset(SEAM_ID);
+        Seamer.reset(SEAM_ID);
         demo = new ArgCandidatesDemo();
         demo.entrypoint(null, null, null); // persist seam
 
-        SeamerFactory.load(demo.getClass(), SEAM_ID)
+        Seamer.load(demo.getClass(), SEAM_ID)
             .addArgCandidates(0, null, "hello", "world")
             .addArgCandidates(1, null, 1, 2, 3)
             .addArgCandidates(2, new SomeObject("hello", SomeObjectState.READY), new SomeObject("world", SomeObjectState.DONE))
@@ -40,20 +40,20 @@ public class ArgCandidatesDemoTest {
     @ParameterizedTest
     @MethodSource("invocations")
     void testAllInvocations(Object[] args, Object expected) {
-        Seamer<?> seamer = SeamerFactory.load(demo.getClass(), SEAM_ID);
+        Seam<?> seam = Seamer.load(demo.getClass(), SEAM_ID);
 
-        Object actual = seamer.execute(args);
+        Object actual = seam.execute(args);
 
         assertEquals(expected, actual);
     }
 
     @Test
     void shouldVerify() {
-        SeamerFactory.load(demo.getClass(), SEAM_ID).verify();
+        Seamer.load(demo.getClass(), SEAM_ID).verify();
     }
 
     public Stream<Arguments> invocations() {
-        List<Invocation> invocations = SeamerFactory.load(demo.getClass(), SEAM_ID).getInvocations();
+        List<Invocation> invocations = Seamer.load(demo.getClass(), SEAM_ID).getInvocations();
         return invocations.stream()
             .map(c -> Arguments.of(c.getArgs(), c.getResult()));
     }
@@ -62,7 +62,7 @@ public class ArgCandidatesDemoTest {
     public static class ArgCandidatesDemo {
 
         public void entrypoint(String arg1, Integer arg2, SomeObject arg3) {
-            String result = SeamerFactory.intercept(
+            String result = Seamer.intercept(
                 args -> blackbox((String) args[0], (Integer) args[1], (SomeObject) args[2]), this.getClass(), SEAM_ID
             ).invoke(arg1, arg2, arg3);
 

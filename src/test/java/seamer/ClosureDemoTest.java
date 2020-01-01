@@ -3,9 +3,9 @@ package seamer;
 import org.junit.jupiter.api.BeforeAll;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import seamer.test.SeamTest;
+import seamer.test.SeamerTest;
 
-public class ClosureDemoTest extends SeamTest {
+public class ClosureDemoTest extends SeamerTest {
 
     private static final Logger LOG = LoggerFactory.getLogger(ClosureDemoTest.class);
     private static final String SEAM_ID = ClosureDemoTest.class.getName();
@@ -13,7 +13,7 @@ public class ClosureDemoTest extends SeamTest {
     @BeforeAll
     @Override
     public void setup() {
-        SeamerFactory.reset(seamId());
+        Seamer.reset(seamId());
 
         ClosureDemo closureDemo = new ClosureDemo();
 
@@ -37,7 +37,7 @@ public class ClosureDemoTest extends SeamTest {
     public static class ClosureDemo {
 
         public void entrypoint(String arg1, Integer arg2) {
-            String result = SeamerFactory.intercept(
+            String result = Seamer.intercept(
                 a -> blackbox((String) a[0], (Integer) a[1]),
                 this.getClass(),
                 SEAM_ID

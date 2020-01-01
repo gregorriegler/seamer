@@ -4,22 +4,21 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
-import seamer.SeamerFactory;
-import seamer.core.ProxySeam;
-import seamer.core.Seamer;
-import seamer.core.annotation.Seam;
+import seamer.Seamer;
+import seamer.core.ProxySignature;
+import seamer.core.Seam;
 
 @Aspect
 public class SeamerAspect {
 
-    private Seamer seamer;
+    private Seam seam;
 
     @Pointcut("@annotation(seam) && execution(* *(..))")
-    public void callAt(Seam seam) {
+    public void callAt(seamer.core.annotation.Seam seam) {
     }
  
     @Around("callAt(seam)")
-    public Object around(ProceedingJoinPoint pjp, Seam seam) throws Throwable {
+    public Object around(ProceedingJoinPoint pjp, seamer.core.annotation.Seam seam) throws Throwable {
         initializeSeamer(pjp, seam);
 
         Object result = pjp.proceed();
@@ -30,14 +29,14 @@ public class SeamerAspect {
 
     @SuppressWarnings("unchecked")
     private void record(ProceedingJoinPoint pjp, Object result) {
-        seamer.record(pjp.getArgs(), result);
+        seam.record(pjp.getArgs(), result);
     }
 
-    private void initializeSeamer(ProceedingJoinPoint pjp, Seam seam) {
-        if (seamer != null) return;
+    private void initializeSeamer(ProceedingJoinPoint pjp, seamer.core.annotation.Seam seam) {
+        if (this.seam != null) return;
 
-        seamer = SeamerFactory.intercept(
-            ProxySeam.of(pjp.getTarget(), pjp.getSignature().getName()),
+        this.seam = Seamer.intercept(
+            ProxySignature.of(pjp.getTarget(), pjp.getSignature().getName()),
             pjp.getTarget().getClass(),
             seam.value()
         );

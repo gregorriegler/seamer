@@ -1,14 +1,14 @@
 package seamer.file;
 
 import seamer.core.Invocation;
-import seamer.core.Seam;
+import seamer.core.Signature;
 
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
 
 public interface Serializer {
-    void serialize(Seam<?> seam, OutputStream outputStream);
+    void serialize(Signature<?> signature, OutputStream outputStream);
 
     void serialize(Invocation invocation, OutputStream outputStream);
 

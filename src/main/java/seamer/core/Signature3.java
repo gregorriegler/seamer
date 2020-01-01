@@ -1,7 +1,7 @@
 package seamer.core;
 
 @FunctionalInterface
-public interface Seam3<A1, A2, A3, R> extends Seam<R> {
+public interface Signature3<A1, A2, A3, R> extends Signature<R> {
 
     R apply(A1 a1, A2 a2, A3 a3);
 

@@ -2,9 +2,9 @@ package seamer.cglib;
 
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
-import seamer.SeamerFactory;
-import seamer.core.ProxySeam;
-import seamer.core.Seamer;
+import seamer.Seamer;
+import seamer.core.ProxySignature;
+import seamer.core.Seam;
 
 import java.lang.reflect.Method;
 
@@ -12,7 +12,7 @@ public class SeamInterceptor<T> implements MethodInterceptor {
 
     private final String methodName;
     private final String seamId;
-    private Seamer<T> seamer;
+    private Seam<T> seam;
 
     public SeamInterceptor(String methodName, String seamId) {
         this.methodName = methodName;
@@ -25,17 +25,17 @@ public class SeamInterceptor<T> implements MethodInterceptor {
             return proxy.invokeSuper(target, args);
         }
 
-        if (seamer == null) {
-            seamer = SeamerFactory.intercept(
-                ProxySeam.of(target, methodName),
+        if (seam == null) {
+            seam = Seamer.intercept(
+                ProxySignature.of(target, methodName),
                 target.getClass(),
                 seamId
             );
-            return seamer.execute(args);
+            return seam.execute(args);
         }
 
         T result = invoke(proxy, target, args);
-        seamer.record(args, result);
+        seam.record(args, result);
         return result;
     }
 

@@ -7,7 +7,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import seamer.cglib.SeamerCglibFactory;
 import seamer.core.Invocation;
-import seamer.core.Seamer;
+import seamer.core.Seam;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -18,11 +18,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class CglibProxyDemoTest {
 
     public static final String SEAM_ID = CglibProxyDemoTest.class.getName();
-    private Seamer seamer;
+    private Seam seam;
 
     @BeforeAll
     void setUp() {
-        SeamerFactory.reset(SEAM_ID);
+        Seamer.reset(SEAM_ID);
 
         ProxyDemo proxyDemo = SeamerCglibFactory.createProxySeam(ProxyDemo.class, "blackbox", SEAM_ID);
         proxyDemo.blackbox("hello", 1);
@@ -31,19 +31,19 @@ public class CglibProxyDemoTest {
         proxyDemo.blackbox("hello", 3);
         proxyDemo.blackbox("world", 4);
 
-        seamer = SeamerFactory.load(ProxyDemo.class, SEAM_ID);
+        seam = Seamer.load(ProxyDemo.class, SEAM_ID);
     }
 
     @ParameterizedTest
     @MethodSource("invocations")
     void testAllInvocations(Object[] args, Object expected) {
-        Object actual = seamer.execute(args);
+        Object actual = seam.execute(args);
 
         assertEquals(expected, actual);
     }
 
     public Stream<Arguments> invocations() {
-        List<Invocation> invocations = SeamerFactory.load(ProxyDemo.class, SEAM_ID).getInvocations();
+        List<Invocation> invocations = Seamer.load(ProxyDemo.class, SEAM_ID).getInvocations();
         return invocations.stream()
             .map(c -> Arguments.of(c.getArgs(), c.getResult()));
     }

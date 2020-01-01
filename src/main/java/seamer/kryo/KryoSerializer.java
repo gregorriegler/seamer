@@ -4,7 +4,7 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 import seamer.core.Invocation;
-import seamer.core.Seam;
+import seamer.core.Signature;
 import seamer.file.Serializer;
 
 import java.io.InputStream;
@@ -24,9 +24,9 @@ public class KryoSerializer implements Serializer {
     }
 
     @Override
-    public void serialize(Seam<?> seam, OutputStream outputStream) {
+    public void serialize(Signature<?> signature, OutputStream outputStream) {
         Output fileOutput = new Output(outputStream);
-        kryo.writeClassAndObject(fileOutput, seam);
+        kryo.writeClassAndObject(fileOutput, signature);
         fileOutput.close();
     }
 

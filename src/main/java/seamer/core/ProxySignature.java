@@ -8,20 +8,20 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Optional;
 
-public class ProxySeam<T> implements ArgsSeam<T> {
+public class ProxySignature<T> implements ArgsSignature<T> {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ProxySeam.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ProxySignature.class);
 
     private final Object target;
     private final String methodName;
 
-    private ProxySeam(Object target, String methodName) {
+    private ProxySignature(Object target, String methodName) {
         this.target = target;
         this.methodName = methodName;
     }
 
-    public static <T> ProxySeam<T> of(Object target, String methodName) {
-        return new ProxySeam<>(target, methodName);
+    public static <T> ProxySignature<T> of(Object target, String methodName) {
+        return new ProxySignature<>(target, methodName);
     }
 
     @Override

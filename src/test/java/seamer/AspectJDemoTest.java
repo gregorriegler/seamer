@@ -7,8 +7,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import seamer.core.Invocation;
-import seamer.core.Seamer;
-import seamer.core.annotation.Seam;
+import seamer.core.Seam;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -22,7 +21,7 @@ public class AspectJDemoTest {
 
     @BeforeAll
     void setUp() {
-        SeamerFactory.reset(SEAM_ID);
+        Seamer.reset(SEAM_ID);
 
         AspectJDemo aspectJDemo = new AspectJDemo();
         aspectJDemo.blackbox("hello", 1);
@@ -34,22 +33,22 @@ public class AspectJDemoTest {
 
     @Test
     void verify() {
-        SeamerFactory.load(AspectJDemo.class, SEAM_ID)
+        Seamer.load(AspectJDemo.class, SEAM_ID)
             .verify();
     }
 
     @ParameterizedTest
     @MethodSource("invocations")
     void testAllInvocations(Object[] args, Object expected) {
-        Seamer<?> seamer = SeamerFactory.load(AspectJDemo.class, SEAM_ID);
+        Seam<?> seam = Seamer.load(AspectJDemo.class, SEAM_ID);
 
-        Object actual = seamer.execute(args);
+        Object actual = seam.execute(args);
 
         assertEquals(expected, actual);
     }
 
     public Stream<Arguments> invocations() {
-        List<Invocation> invocations = SeamerFactory.load(AspectJDemo.class, SEAM_ID).getInvocations();
+        List<Invocation> invocations = Seamer.load(AspectJDemo.class, SEAM_ID).getInvocations();
         return invocations.stream()
             .map(c -> Arguments.of(c.getArgs(), c.getResult()));
     }
@@ -60,7 +59,7 @@ public class AspectJDemoTest {
             return arg1;
         }
 
-        @Seam(SEAM_ID)
+        @seamer.core.annotation.Seam(SEAM_ID)
         public String blackbox(String arg1, Integer arg2) {
             return arg1 + arg2;
         }

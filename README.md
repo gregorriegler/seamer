@@ -16,7 +16,7 @@ This records all invocations and its return values.
 
 ```java
 public void entrypoint(String arg1, Integer arg2) {
-    String result = SeamerFactory.intercept(
+    String result = Seamer.intercept(
         arg -> blackbox((String) arg[0], (Integer) arg[1]), 
         this.getClass(), 
         "UserDefinedIdOfSeam"
@@ -35,7 +35,7 @@ Seamer will then automatically invoke your blackbox with all possible combinatio
 of your provided arguments and record the results.
  
 ```java
-SeamerFactory.load("UserDefinedIdOfSeam", classCarryingTheSeam.getClass())
+Seamer.load("UserDefinedIdOfSeam", classCarryingTheSeam.getClass())
             .addArgCandidates(0, "hello", "world", null)
             .addArgCandidates(1, () -> asList(1, 2, 3))
             .addArgCandidates(2, new SomeObject("hello", SomeObjectState.READY))
@@ -47,7 +47,7 @@ These results can then get verified in a test-harness.
 #### Execute the Seam in a test-harness
 This reruns all previously recorded invocations, and verifies if the results still match.
 ```java
-public class TwoArgTest extends SeamTest {
+public class TwoArgTest extends SeamerTest {
     @Override
     public Class<?> carrierClass() {
         return YourClassCarryingTheSeam.class;
@@ -61,7 +61,7 @@ public class TwoArgTest extends SeamTest {
 ```
 or just verify all recorded invocations
 ```java
-SeamerFactory.load(demo.getClass(), SEAM_ID).verify();
+Seamer.load(demo.getClass(), SEAM_ID).verify();
 ```
 
 #### Create a Seam via annotation through AspectJ

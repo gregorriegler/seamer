@@ -3,10 +3,10 @@ package seamer;
 import org.junit.jupiter.api.BeforeAll;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import seamer.core.Seam2;
-import seamer.test.SeamTest;
+import seamer.core.Signature2;
+import seamer.test.SeamerTest;
 
-public class TwoArgSeamTest extends SeamTest {
+public class TwoArgSeamTest extends SeamerTest {
 
     private static final Logger LOG = LoggerFactory.getLogger(TwoArgSeamTest.class);
     private static final String SEAM_ID = TwoArgSeamTest.class.getName();
@@ -14,7 +14,7 @@ public class TwoArgSeamTest extends SeamTest {
     @BeforeAll
     @Override
     public void setup() {
-        SeamerFactory.reset(SEAM_ID);
+        Seamer.reset(SEAM_ID);
 
         TwoArgDemo twoArgDemo = new TwoArgDemo();
 
@@ -38,8 +38,8 @@ public class TwoArgSeamTest extends SeamTest {
     public static class TwoArgDemo {
 
         public void entryPoint(String string, Integer integer) {
-            String result = SeamerFactory.intercept(
-                (Seam2<String, Integer, String>) (arg1, arg2) -> blackbox(arg1, arg2),
+            String result = Seamer.intercept(
+                (Signature2<String, Integer, String>) (arg1, arg2) -> blackbox(arg1, arg2),
                 this.getClass(),
                 SEAM_ID
             ).invoke(string, integer);
