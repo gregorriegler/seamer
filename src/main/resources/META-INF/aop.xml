@@ -1,8 +1,8 @@
 <aspectj>
     <aspects>
-        <aspect name="seamer.aspectj.SeamerAspect"/>
+        <aspect name="com.gregorriegler.seamer.aspectj.SeamerAspect"/>
         <weaver options="-verbose -showWeaveInfo">
-            <include within="seamer..*"/>
+            <include within="com.gregorriegler.seamer..*"/>
         </weaver>
     </aspects>
 </aspectj>
