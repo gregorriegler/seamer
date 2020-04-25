@@ -3,9 +3,7 @@ package com.gregorriegler.seamer.kryo;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
-import com.esotericsoftware.kryo.serializers.ClosureSerializer;
 import com.gregorriegler.seamer.core.Invocation;
-import com.gregorriegler.seamer.core.Signature;
 import com.gregorriegler.seamer.file.Serializer;
 
 import java.io.InputStream;
@@ -28,13 +26,7 @@ public class KryoSerializer implements Serializer {
     }
 
     @Override
-    public Signature<?> deserialize(InputStream inputStream) {
-        Input input = new Input(inputStream);
-        return (Signature<?>) kryo.readObject(input, ClosureSerializer.Closure.class);
-    }
-
-    @Override
-    public <T> T deserializeObject(InputStream inputStream, Class<T> type) {
+    public <T> T deserialize(InputStream inputStream, Class<T> type) {
         return kryo.readObject(new Input(inputStream), type);
     }
 

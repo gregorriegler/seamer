@@ -9,9 +9,7 @@ import java.util.List;
 public interface Serializer {
     <T> void serialize(T object, OutputStream outputStream);
 
-    Object deserialize(InputStream inputStream);
-
-    <T> T deserializeObject(InputStream inputStream, Class<T> type);
+    <T> T deserialize(InputStream inputStream, Class<T> type);
 
     void serializeInvocation(Invocation invocation, OutputStream outputStream);
 

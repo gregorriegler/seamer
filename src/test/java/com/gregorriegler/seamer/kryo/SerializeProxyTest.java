@@ -17,7 +17,7 @@ public class SerializeProxyTest {
 
         KryoSerializer serializer = new KryoSerializer(KryoFactory.createProxyKryo(this.getClass()));
         serializer.serialize(expected, outputStream);
-        ProxySignature result = serializer.deserializeObject(from(outputStream), ProxySignature.class);
+        ProxySignature result = serializer.deserialize(from(outputStream), ProxySignature.class);
 
         assertThat(result).isEqualTo(expected);
     }
