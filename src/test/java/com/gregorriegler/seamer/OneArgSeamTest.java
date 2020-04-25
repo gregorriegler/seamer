@@ -36,8 +36,9 @@ public class OneArgSeamTest extends SeamerTest {
 
         public void entryPoint(Integer arg1) {
             Seamer.intercept(
-                "OneArgSeamTest", (Signature1<Integer, Integer>) this::blackbox,
-                this.getClass()
+                "OneArgSeamTest",
+                this.getClass(),
+                (Signature1<Integer, Integer>) this::blackbox
             ).invoke(arg1);
         }
 

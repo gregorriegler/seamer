@@ -1,3 +1,5 @@
+- can capturing class be stored as well?
+
 - location not in target but somewhere else. maybe configurable.
 - method by name does not work well Set vs Hashset arg, argsClasses unused in ProxySeam
 - cglib and aspectj proxy variant does not work with closures like lambdas do.

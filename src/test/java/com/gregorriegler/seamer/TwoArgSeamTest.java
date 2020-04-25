@@ -39,8 +39,9 @@ public class TwoArgSeamTest extends SeamerTest {
 
         public void entryPoint(String string, Integer integer) {
             String result = Seamer.intercept(
-                "TwoArgSeamTest", (Signature2<String, Integer, String>) this::blackbox,
-                this.getClass()
+                "TwoArgSeamTest",
+                this.getClass(),
+                (Signature2<String, Integer, String>) this::blackbox
             ).invoke(string, integer);
 
             LOG.info(result);

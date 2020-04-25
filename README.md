@@ -18,8 +18,8 @@ This records all invocations and its return values.
 public void entrypoint(String arg1, Integer arg2) {
     String result = Seamer.intercept(
         "UserDefinedIdOfSeam",
-        arg -> blackbox((String) arg[0], (Integer) arg[1]), 
-        this.getClass()
+        this.getClass(),
+        arg -> blackbox((String) arg[0], (Integer) arg[1]) 
     ).invoke(arg1, arg2);
     // ...
 }

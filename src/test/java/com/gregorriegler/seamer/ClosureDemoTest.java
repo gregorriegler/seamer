@@ -38,8 +38,12 @@ public class ClosureDemoTest extends SeamerTest {
 
         public void entryPoint(String arg1, Integer arg2) {
             String result = Seamer.intercept(
-                SEAM_ID, a -> blackbox((String) a[0], (Integer) a[1]),
-                this.getClass()
+                SEAM_ID,
+                this.getClass(),
+                a -> blackbox(
+                    (String) a[0],
+                    (Integer) a[1]
+                )
             ).invoke(arg1, arg2);
 
             LOG.info(result);
