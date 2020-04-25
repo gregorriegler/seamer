@@ -20,9 +20,9 @@ public class FileInvocationRepository implements InvocationRepository {
 
     private final String seamId;
 
-    public FileInvocationRepository(Serializer serializer, String seamId) {
-        this.serializer = serializer;
+    public FileInvocationRepository(String seamId, Serializer serializer) {
         this.seamId = seamId;
+        this.serializer = serializer;
         FileLocation.createSeamDir(seamId);
     }
 

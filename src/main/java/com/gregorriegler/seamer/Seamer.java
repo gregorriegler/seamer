@@ -7,15 +7,15 @@ import com.gregorriegler.seamer.file.FileResetter;
 public class Seamer {
 
     public static <T> Seam<T> intercept(final String seamId, Class<?> capturingClass, Signature<T> signature) {
-        return new Seams(capturingClass).save(seamId, signature);
+        return Seams.of(capturingClass).save(seamId, signature);
     }
 
     public static <T> Seam<T> load(final String seamId, Class<?> capturingClass) {
-        return new Seams(capturingClass).<T>byId(seamId).orElseThrow(FailedToLoad::new);
+        return Seams.of(capturingClass).<T>byId(seamId).orElseThrow(FailedToLoad::new);
     }
 
     public static <T> Seam<T> loadProxy(final String seamId, Class<?> capturingClass) {
-        return new Seams(capturingClass).<T>proxySeamById(seamId).orElseThrow(FailedToLoad::new);
+        return Seams.of(capturingClass).<T>proxySeamById(seamId).orElseThrow(FailedToLoad::new);
     }
 
     public static void reset(String seamId) {
