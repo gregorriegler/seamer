@@ -40,7 +40,7 @@ public class FileInvocationRepository implements InvocationRepository {
     public List<Invocation> getAll() {
         try {
             FileInputStream inputStream = new FileInputStream(FileLocation.invocationsFile(this.seamId));
-            return serializer.deserializeInvocations(inputStream);
+            return serializer.deserializeList(inputStream, Invocation.class);
         } catch (FileNotFoundException e) {
             LOG.error("found no recorded invocations for seam '{}'", this.seamId, e);
             return Collections.emptyList();

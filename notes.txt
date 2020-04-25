@@ -1,8 +1,7 @@
-- improve serializer api
+- KryoFactory.createProxyKryo needed ?
 - rename all tests
 - dont need interface for serializer
 - carrierClass -> capturingClass
-
 
 - method by name does not work well Set vs Hashset arg, argsClasses unused in ProxySeam
 - cglib and aspectj proxy variant does not work with closures like lambdas do.

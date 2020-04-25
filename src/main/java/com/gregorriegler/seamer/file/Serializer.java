@@ -1,7 +1,5 @@
 package com.gregorriegler.seamer.file;
 
-import com.gregorriegler.seamer.core.Invocation;
-
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
@@ -11,5 +9,5 @@ public interface Serializer {
 
     <T> T deserialize(InputStream inputStream, Class<T> type);
 
-    List<Invocation> deserializeInvocations(InputStream inputStream);
+    <T> List<T> deserializeList(InputStream inputStream, Class<T> type);
 }

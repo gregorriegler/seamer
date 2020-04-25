@@ -3,7 +3,6 @@ package com.gregorriegler.seamer.kryo;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
-import com.gregorriegler.seamer.core.Invocation;
 import com.gregorriegler.seamer.file.Serializer;
 
 import java.io.InputStream;
@@ -31,13 +30,13 @@ public class KryoSerializer implements Serializer {
     }
 
     @Override
-    public List<Invocation> deserializeInvocations(InputStream inputStream) {
+    public <T> List<T> deserializeList(InputStream inputStream, Class<T> type) {
         Input input = new Input(inputStream);
-        List<Invocation> invocations = new ArrayList<>();
+        List<T> result = new ArrayList<>();
         while (!input.end()) {
-            Invocation invocation = kryo.readObject(input, Invocation.class);
-            invocations.add(invocation);
+            T object = kryo.readObject(input, type);
+            result.add(object);
         }
-        return invocations;
+        return result;
     }
 }
