@@ -30,7 +30,7 @@ public class FileInvocationRepository implements InvocationRepository {
     public void record(Invocation invocation) {
         try {
             FileOutputStream outputStream = new FileOutputStream(FileLocation.invocationsFile(seamId), true);
-            serializer.serializeInvocation(invocation, outputStream);
+            serializer.serialize(invocation, outputStream);
         } catch (IOException e) {
             LOG.error("failed to record invocation", e);
         }

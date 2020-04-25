@@ -31,11 +31,6 @@ public class KryoSerializer implements Serializer {
     }
 
     @Override
-    public void serializeInvocation(Invocation invocation, OutputStream outputStream) {
-        serialize(invocation, outputStream);
-    }
-
-    @Override
     public List<Invocation> deserializeInvocations(InputStream inputStream) {
         Input input = new Input(inputStream);
         List<Invocation> invocations = new ArrayList<>();

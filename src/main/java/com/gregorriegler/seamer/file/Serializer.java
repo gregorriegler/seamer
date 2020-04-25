@@ -11,7 +11,5 @@ public interface Serializer {
 
     <T> T deserialize(InputStream inputStream, Class<T> type);
 
-    void serializeInvocation(Invocation invocation, OutputStream outputStream);
-
     List<Invocation> deserializeInvocations(InputStream inputStream);
 }
