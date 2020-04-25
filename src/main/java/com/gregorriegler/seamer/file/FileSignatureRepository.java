@@ -2,8 +2,8 @@ package com.gregorriegler.seamer.file;
 
 import com.esotericsoftware.kryo.serializers.ClosureSerializer;
 import com.gregorriegler.seamer.core.ProxySignature;
-import com.gregorriegler.seamer.core.SeamRepository;
 import com.gregorriegler.seamer.core.Signature;
+import com.gregorriegler.seamer.core.SignatureRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,12 +13,12 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.Optional;
 
-public class FileSeamRepository<T> implements SeamRepository<T> {
+public class FileSignatureRepository<T> implements SignatureRepository<T> {
 
-    private static final Logger LOG = LoggerFactory.getLogger(FileSeamRepository.class);
+    private static final Logger LOG = LoggerFactory.getLogger(FileSignatureRepository.class);
     private final Serializer serializer;
 
-    public FileSeamRepository(Serializer serializer) {
+    public FileSignatureRepository(Serializer serializer) {
         this.serializer = serializer;
     }
 

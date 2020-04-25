@@ -2,7 +2,7 @@ package com.gregorriegler.seamer.core;
 
 import java.util.Optional;
 
-public interface SeamRepository<T> {
+public interface SignatureRepository<T> {
 
     void persist(String seamId, Signature<T> signature);
 
