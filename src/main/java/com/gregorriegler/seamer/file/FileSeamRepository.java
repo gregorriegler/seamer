@@ -39,7 +39,10 @@ public class FileSeamRepository<T> implements SeamRepository<T> {
     @Override
     public Optional<Signature<T>> load(String seamId) {
         try {
-            Object deserialize = serializer.deserialize(new FileInputStream(FileLocation.seamFile(seamId)), ClosureSerializer.Closure.class);
+            Object deserialize = serializer.deserialize(
+                new FileInputStream(FileLocation.seamFile(seamId)),
+                ClosureSerializer.Closure.class
+            );
             return Optional.of((Signature<T>) deserialize);
         } catch (FileNotFoundException e) {
             LOG.error("failed to load seam", e);
@@ -50,7 +53,10 @@ public class FileSeamRepository<T> implements SeamRepository<T> {
     @Override
     public Optional<ProxySignature<T>> loadProxy(String seamId) {
         try {
-            ProxySignature deserialize = serializer.deserialize(new FileInputStream(FileLocation.seamFile(seamId)), ProxySignature.class);
+            ProxySignature deserialize = serializer.deserialize(
+                new FileInputStream(FileLocation.seamFile(seamId)),
+                ProxySignature.class
+            );
             return Optional.of(deserialize);
         } catch (FileNotFoundException e) {
             LOG.error("failed to load seam", e);

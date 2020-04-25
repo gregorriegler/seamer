@@ -18,7 +18,7 @@ public class Seamer {
     }
 
     public static <T> Seam<T> loadProxy(Class<?> carrierClass, final String seamId) {
-        return new FileSeamRepository<T>(new KryoSerializer(KryoFactory.createProxyKryo(carrierClass)))
+        return new FileSeamRepository<T>(new KryoSerializer(KryoFactory.createKryo(carrierClass)))
             .loadProxy(seamId)
             .map(seam -> create(seam, carrierClass, seamId))
             .orElseThrow(FailedToLoad::new);
@@ -32,7 +32,7 @@ public class Seamer {
 
     public static <T> Seam<T> interceptProxy(Signature<T> signature, Class<?> carrierClass, final String seamId) {
         Seam<T> seam = create(signature, carrierClass, seamId);
-        new FileSeamRepository<T>(new KryoSerializer(KryoFactory.createProxyKryo(carrierClass))).persist(signature, seamId);
+        new FileSeamRepository<T>(new KryoSerializer(KryoFactory.createKryo(carrierClass))).persist(signature, seamId);
         return seam;
     }
 
