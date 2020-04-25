@@ -8,5 +8,5 @@ public interface SeamRepository<T> {
 
     Optional<Signature<T>> load(String seamId);
 
-    Optional<Signature<T>> loadProxy(String seamId);
+    Optional<ProxySignature<T>> loadProxy(String seamId);
 }

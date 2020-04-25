@@ -21,7 +21,7 @@ public class ProxySignature<T> implements ArgsSignature<T> {
         this.methodName = methodName;
     }
 
-    public ProxySignature() {
+    private ProxySignature() {
     }
 
     public static <T> ProxySignature<T> of(Object target, String methodName) {
@@ -32,14 +32,11 @@ public class ProxySignature<T> implements ArgsSignature<T> {
     @SuppressWarnings("unchecked")
     public T apply(Object[] args) {
         try {
-            Class<?>[] argsClasses = Arrays.stream(args)
-                .map(arg -> arg.getClass())
-                .toArray(Class<?>[]::new);
             Method[] declaredMethods = target.getClass().getDeclaredMethods();
             Optional<Method> optionalMethod = Arrays.stream(declaredMethods)
                 .filter(m -> m.getName().equals(methodName))
                 .findFirst();
-            Method method = optionalMethod.orElseThrow(() -> new NoSuchMethodException());
+            Method method = optionalMethod.orElseThrow(NoSuchMethodException::new);
             return (T) method.invoke(target, args);
         } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             LOG.error("failed to invoke seam", e);

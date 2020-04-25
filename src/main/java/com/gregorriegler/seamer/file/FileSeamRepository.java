@@ -51,9 +51,9 @@ public class FileSeamRepository<T> implements SeamRepository<T> {
     }
 
     @Override
-    public Optional<Signature<T>> loadProxy(String seamId) {
+    public Optional<ProxySignature<T>> loadProxy(String seamId) {
         try {
-            Signature deserialize = serializer.deserialize(
+            ProxySignature deserialize = serializer.deserialize(
                 new FileInputStream(FileLocation.seamFile(seamId)),
                 ProxySignature.class
             );
