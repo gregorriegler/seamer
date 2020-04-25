@@ -37,7 +37,7 @@ public class FileSeamRepository<T> implements SeamRepository<T> {
 
     @SuppressWarnings("unchecked")
     @Override
-    public Optional<Signature<T>> load(String seamId) {
+    public Optional<Signature<T>> byId(String seamId) {
         try {
             Object deserialize = serializer.deserialize(
                 new FileInputStream(FileLocation.seamFile(seamId)),
@@ -51,7 +51,7 @@ public class FileSeamRepository<T> implements SeamRepository<T> {
     }
 
     @Override
-    public Optional<ProxySignature<T>> loadProxy(String seamId) {
+    public Optional<ProxySignature<T>> proxyById(String seamId) {
         try {
             ProxySignature deserialize = serializer.deserialize(
                 new FileInputStream(FileLocation.seamFile(seamId)),
