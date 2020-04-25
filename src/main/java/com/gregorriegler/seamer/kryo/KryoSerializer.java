@@ -8,6 +8,7 @@ import com.gregorriegler.seamer.file.Serializer;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class KryoSerializer implements Serializer {
@@ -37,6 +38,6 @@ public class KryoSerializer implements Serializer {
             T object = kryo.readObject(input, type);
             result.add(object);
         }
-        return result;
+        return Collections.unmodifiableList(result);
     }
 }
