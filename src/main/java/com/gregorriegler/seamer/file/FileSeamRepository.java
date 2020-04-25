@@ -23,7 +23,7 @@ public class FileSeamRepository<T> implements SeamRepository<T> {
     }
 
     @Override
-    public void persist(Signature<T> signature, String seamId) {
+    public void persist(String seamId, Signature<T> signature) {
         try {
             FileLocation.createSeamDir(seamId);
             File seamFile = FileLocation.seamFile(seamId);

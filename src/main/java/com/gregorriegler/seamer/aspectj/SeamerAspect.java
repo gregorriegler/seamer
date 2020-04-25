@@ -36,9 +36,8 @@ public class SeamerAspect {
         if (this.seam != null) return;
 
         this.seam = Seamer.intercept(
-            ProxySignature.of(pjp.getTarget(), pjp.getSignature().getName()),
-            pjp.getTarget().getClass(),
-            seam.value()
+            seam.value(), ProxySignature.of(pjp.getTarget(), pjp.getSignature().getName()),
+            pjp.getTarget().getClass()
         );
     }
 }

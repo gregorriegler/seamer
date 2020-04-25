@@ -4,7 +4,7 @@ import java.util.Optional;
 
 public interface SeamRepository<T> {
 
-    void persist(Signature<T> signature, String seamId);
+    void persist(String seamId, Signature<T> signature);
 
     Optional<Signature<T>> byId(String seamId);
 

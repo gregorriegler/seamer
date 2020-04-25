@@ -17,9 +17,9 @@ This records all invocations and its return values.
 ```java
 public void entrypoint(String arg1, Integer arg2) {
     String result = Seamer.intercept(
+        "UserDefinedIdOfSeam",
         arg -> blackbox((String) arg[0], (Integer) arg[1]), 
-        this.getClass(), 
-        "UserDefinedIdOfSeam"
+        this.getClass()
     ).invoke(arg1, arg2);
     // ...
 }
@@ -61,7 +61,7 @@ public class TwoArgTest extends SeamerTest {
 ```
 or just verify all recorded invocations
 ```java
-Seamer.load(demo.getClass(), SEAM_ID).verify();
+Seamer.load(SEAM_ID, demo.getClass()).verify();
 ```
 
 #### Create a Seam via annotation through AspectJ
