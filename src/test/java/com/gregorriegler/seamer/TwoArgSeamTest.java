@@ -1,6 +1,5 @@
 package com.gregorriegler.seamer;
 
-import com.esotericsoftware.minlog.Log;
 import com.gregorriegler.seamer.core.Signature2;
 import com.gregorriegler.seamer.test.SeamerTest;
 import org.junit.jupiter.api.BeforeAll;
@@ -14,13 +13,12 @@ public class TwoArgSeamTest extends SeamerTest {
     @BeforeAll
     @Override
     public void setup() {
-        Log.TRACE();
         Seamer.reset(SEAM_ID);
 
-        SomeClass twoArgDemo = new SomeClass();
+        SomeClass someClass = new SomeClass();
 
         for (int i = 0; i < 5; i++) {
-            twoArgDemo.entryPoint("hello ", i);
+            someClass.entryPoint("hello ", i);
         }
 
         seam = Seamer.load(SomeClass.class, seamId());

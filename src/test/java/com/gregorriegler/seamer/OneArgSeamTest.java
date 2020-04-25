@@ -13,10 +13,10 @@ public class OneArgSeamTest extends SeamerTest {
     public void setup() {
         Seamer.reset(SEAM_ID);
 
-        SomeClass oneArgSeam = new SomeClass();
+        SomeClass someClass = new SomeClass();
 
         for (int i = 0; i < 5; i++) {
-            oneArgSeam.entryPoint(i);
+            someClass.entryPoint(i);
         }
 
         seam = Seamer.load(SomeClass.class, SEAM_ID);
