@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ArgCandidatesTest {
 
     @Test
-    void addCandidatesAndShuffle() {
+    void should_add_candidates_and_shuffle() {
         candidates.addCandidates(0, asList("hello", "world"));
 
         List<Object[]> result = candidates.shuffle();
@@ -23,7 +23,7 @@ public class ArgCandidatesTest {
     }
 
     @Test
-    void addCandidatesThroughSupplier() {
+    void should_add_candidates_through_supplier() {
         candidates.addCandidates(0, () -> asList("hello", "world"));
 
         List<Object[]> result = candidates.shuffle();
@@ -35,7 +35,7 @@ public class ArgCandidatesTest {
     }
 
     @Test
-    void shuffleTwoArgs() {
+    void should_shuffle_two_args() {
         candidates.addCandidates(0, asList("hello", "world"));
         candidates.addCandidates(1, asList(1, 2, 3));
 
