@@ -21,19 +21,26 @@ public class KryoSerializer implements Serializer {
     }
 
     @Override
-    public void serialize(Signature<?> signature, OutputStream outputStream) {
-        serializeObject(signature, outputStream);
-    }
-
-    @Override
-    public void serializeInvocation(Invocation invocation, OutputStream outputStream) {
-        serializeObject(invocation, outputStream);
+    public <T> void serialize(T object, OutputStream outputStream) {
+        Output output = new Output(outputStream);
+        kryo.writeObject(output, object);
+        output.close();
     }
 
     @Override
     public Signature<?> deserialize(InputStream inputStream) {
         Input input = new Input(inputStream);
         return (Signature<?>) kryo.readObject(input, ClosureSerializer.Closure.class);
+    }
+
+    @Override
+    public <T> T deserializeObject(InputStream inputStream, Class<T> type) {
+        return kryo.readObject(new Input(inputStream), type);
+    }
+
+    @Override
+    public void serializeInvocation(Invocation invocation, OutputStream outputStream) {
+        serialize(invocation, outputStream);
     }
 
     @Override
@@ -45,17 +52,5 @@ public class KryoSerializer implements Serializer {
             invocations.add(invocation);
         }
         return invocations;
-    }
-
-    @Override
-    public <T> void serializeObject(T object, OutputStream outputStream) {
-        Output output = new Output(outputStream);
-        kryo.writeObject(output, object);
-        output.close();
-    }
-
-    @Override
-    public <T> T deserializeObject(InputStream inputStream, Class<T> type) {
-        return kryo.readObject(new Input(inputStream), type);
     }
 }
