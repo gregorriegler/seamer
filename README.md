@@ -49,8 +49,8 @@ This reruns all previously recorded invocations, and verifies if the results sti
 ```java
 public class TwoArgTest extends SeamerTest {
     @Override
-    public Class<?> carrierClass() {
-        return YourClassCarryingTheSeam.class;
+    public Class<?> capturingClass() {
+        return YourClassCapturingTheSeam.class;
     }
 
     @Override
