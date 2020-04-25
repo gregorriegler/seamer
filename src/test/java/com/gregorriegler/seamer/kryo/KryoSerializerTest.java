@@ -11,7 +11,7 @@ import static com.gregorriegler.seamer.kryo.KryoFactory.createKryo;
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class SerializeProxyTest {
+public class KryoSerializerTest {
 
     @Test
     void should_serialize_and_deserialize() {
