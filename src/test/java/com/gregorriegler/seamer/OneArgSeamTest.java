@@ -1,6 +1,6 @@
 package com.gregorriegler.seamer;
 
-import com.gregorriegler.seamer.core.Signature1;
+import com.gregorriegler.seamer.core.SignatureWith1Argument;
 import com.gregorriegler.seamer.test.SeamerTest;
 import org.junit.jupiter.api.BeforeAll;
 
@@ -38,7 +38,7 @@ public class OneArgSeamTest extends SeamerTest {
             Seamer.intercept(
                 "OneArgSeamTest",
                 this.getClass(),
-                (Signature1<Integer, Integer>) this::blackbox
+                (SignatureWith1Argument<Integer, Integer>) this::blackbox
             ).invoke(arg1);
         }
 

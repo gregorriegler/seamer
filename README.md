@@ -19,7 +19,7 @@ public void entrypoint(String arg1, Integer arg2) {
     String result = Seamer.intercept(
         "UserDefinedIdOfSeam",
         this.getClass(),
-        arg -> blackbox((String) arg[0], (Integer) arg[1]) 
+        (SignatureWith2Arguments<String, Integer, String>) this::blackbox
     ).invoke(arg1, arg2);
     // ...
 }

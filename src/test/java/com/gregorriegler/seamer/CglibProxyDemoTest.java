@@ -1,7 +1,6 @@
 package com.gregorriegler.seamer;
 
 import com.gregorriegler.seamer.cglib.SeamerCglibFactory;
-import com.gregorriegler.seamer.core.Invocation;
 import com.gregorriegler.seamer.core.Seam;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.TestInstance;
@@ -9,7 +8,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.List;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -43,8 +41,9 @@ public class CglibProxyDemoTest {
     }
 
     public Stream<Arguments> invocations() {
-        List<Invocation> invocations = Seamer.loadProxy(SEAM_ID, ProxyDemo.class).getInvocations();
-        return invocations.stream()
+        return Seamer.loadProxy(SEAM_ID, ProxyDemo.class)
+            .getInvocations()
+            .stream()
             .map(c -> Arguments.of(c.getArgs(), c.getResult()));
     }
 
