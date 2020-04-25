@@ -18,14 +18,14 @@ public class ClosureDemoTest extends SeamerTest {
         ClosureDemo closureDemo = new ClosureDemo();
 
         for (int i = 0; i < 5; i++) {
-            closureDemo.entrypoint("hello ", i);
+            closureDemo.entryPoint("hello ", i);
         }
 
         super.setup();
     }
 
     @Override
-    public Class<?> carrierClass() {
+    public Class<?> capturingClass() {
         return ClosureDemo.class;
     }
 
@@ -36,7 +36,7 @@ public class ClosureDemoTest extends SeamerTest {
 
     public static class ClosureDemo {
 
-        public void entrypoint(String arg1, Integer arg2) {
+        public void entryPoint(String arg1, Integer arg2) {
             String result = Seamer.intercept(
                 a -> blackbox((String) a[0], (Integer) a[1]),
                 this.getClass(),

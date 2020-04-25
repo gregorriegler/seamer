@@ -1,5 +1,6 @@
 package com.gregorriegler.seamer.file;
 
+import com.gregorriegler.seamer.core.ProxySignature;
 import com.gregorriegler.seamer.core.SeamRepository;
 import com.gregorriegler.seamer.core.Signature;
 import org.slf4j.Logger;
@@ -39,6 +40,17 @@ public class FileSeamRepository<T> implements SeamRepository<T> {
         try {
             Object deserialize = serializer.deserialize(new FileInputStream(FileLocation.seamFile(seamId)));
             return Optional.of((Signature<T>) deserialize);
+        } catch (FileNotFoundException e) {
+            LOG.error("failed to load seam", e);
+            return Optional.empty();
+        }
+    }
+
+    @Override
+    public Optional<ProxySignature<T>> loadProxy(String seamId) {
+        try {
+            ProxySignature deserialize = serializer.deserializeObject(new FileInputStream(FileLocation.seamFile(seamId)), ProxySignature.class);
+            return Optional.of(deserialize);
         } catch (FileNotFoundException e) {
             LOG.error("failed to load seam", e);
             return Optional.empty();

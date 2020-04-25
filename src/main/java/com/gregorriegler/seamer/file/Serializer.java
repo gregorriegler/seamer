@@ -10,9 +10,13 @@ import java.util.List;
 public interface Serializer {
     void serialize(Signature<?> signature, OutputStream outputStream);
 
-    void serialize(Invocation invocation, OutputStream outputStream);
+    void serializeInvocation(Invocation invocation, OutputStream outputStream);
 
     Object deserialize(InputStream inputStream);
 
     List<Invocation> deserializeInvocations(InputStream inputStream);
+
+    <T> void serializeObject(T object, OutputStream outputStream);
+
+    <T> T deserializeObject(InputStream inputStream, Class<T> type);
 }

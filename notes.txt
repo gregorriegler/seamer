@@ -1,3 +1,9 @@
+- improve serializer api
+- rename all tests
+- dont need interface for serializer
+- carrierClass -> capturingClass
+
+
 - method by name does not work well Set vs Hashset arg, argsClasses unused in ProxySeam
 - cglib and aspectj proxy variant does not work with closures like lambdas do.
 - SRP: split seamer into two parts, one of which will persist seam and record invocations, and another one that will just execute recorded invocations?

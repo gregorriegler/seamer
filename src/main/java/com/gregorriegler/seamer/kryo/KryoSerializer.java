@@ -3,6 +3,7 @@ package com.gregorriegler.seamer.kryo;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
+import com.esotericsoftware.kryo.serializers.ClosureSerializer;
 import com.gregorriegler.seamer.core.Invocation;
 import com.gregorriegler.seamer.core.Signature;
 import com.gregorriegler.seamer.file.Serializer;
@@ -15,42 +16,46 @@ import java.util.List;
 public class KryoSerializer implements Serializer {
     private final Kryo kryo;
 
-    public KryoSerializer(Class<?> carrierClass) {
-        this.kryo = KryoFactory.createKryo(carrierClass);
-    }
-
-    public KryoSerializer() {
-        this.kryo = KryoFactory.createKryo();
+    public KryoSerializer(Kryo kryo) {
+        this.kryo = kryo;
     }
 
     @Override
     public void serialize(Signature<?> signature, OutputStream outputStream) {
-        Output fileOutput = new Output(outputStream);
-        kryo.writeClassAndObject(fileOutput, signature);
-        fileOutput.close();
+        serializeObject(signature, outputStream);
     }
 
     @Override
-    public void serialize(Invocation invocation, OutputStream outputStream) {
-        Output fileOutput = new Output(outputStream);
-        kryo.writeClassAndObject(fileOutput, invocation);
-        fileOutput.close();
+    public void serializeInvocation(Invocation invocation, OutputStream outputStream) {
+        serializeObject(invocation, outputStream);
     }
 
     @Override
-    public Object deserialize(InputStream inputStream) {
-        Input fileInput = new Input(inputStream);
-        return kryo.readClassAndObject(fileInput);
+    public Signature<?> deserialize(InputStream inputStream) {
+        Input input = new Input(inputStream);
+        return (Signature<?>) kryo.readObject(input, ClosureSerializer.Closure.class);
     }
 
     @Override
     public List<Invocation> deserializeInvocations(InputStream inputStream) {
         Input input = new Input(inputStream);
         List<Invocation> invocations = new ArrayList<>();
-        while (!input.eof()) {
-            Invocation invocation = (Invocation) kryo.readClassAndObject(input);
+        while (!input.end()) {
+            Invocation invocation = kryo.readObject(input, Invocation.class);
             invocations.add(invocation);
         }
         return invocations;
+    }
+
+    @Override
+    public <T> void serializeObject(T object, OutputStream outputStream) {
+        Output output = new Output(outputStream);
+        kryo.writeObject(output, object);
+        output.close();
+    }
+
+    @Override
+    public <T> T deserializeObject(InputStream inputStream, Class<T> type) {
+        return kryo.readObject(new Input(inputStream), type);
     }
 }
