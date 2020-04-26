@@ -14,18 +14,19 @@ doSometingWith(result);
 ```
 
 You have no idea what `someReallyComplicatedLegacyMethod` is doing so you want to refactor it safely.
-This is where Seamer comes to play. 
-Seamer allows you to intercept the method, and record all invocations and results like the following.
+This is where Seamer comes in handy. 
+Seamer allows you to intercept the method, and record all invocations and results like the following:
 
 ```
 String result = Seamer.intercept(
-    "MySeam",
+    "MySeam",  // this is just an identifying name of your choice
     this.getClass(),
     (SignatureWith2Arguments<String, Integer, String>) this::someReallyComplicatedLegacyMethod
 ).invoke(param1, param2);
 
 doSometingWith(result);
 ```
+Now the code still does the same thing, plus it will record all invocations of the Seam.
 
 #### Recording some invocations
 You may now run your application. You would click around the UI and have this thing invoked a couple times with realistic arguments.
@@ -60,7 +61,7 @@ public class EverythingStillWorkingTest extends SeamerTest {
 
 And that's it. you may now refactor the code using this test as a feedback tool.
 
-Another way to verify the Seam without a JUnit TestCase is to run the following code.
+Another way to verify the Seam without a JUnit TestCase is to run the following code:
 ```java
 Seamer.load("MySeam", ClassCapturingTheSeam.class).verify();
 ```
@@ -71,7 +72,7 @@ Seamer.load("MySeam", ClassCapturingTheSeam.class).verify();
 public static class AspectJDemo {
 
     @Seam("MySeam")
-    public String blackbox(String arg1, Integer arg2) {
+    public String legacyMethod(String arg1, Integer arg2) {
         return arg1 + arg2;
     }
 }
