@@ -17,21 +17,22 @@ public class SqliteShould {
         String expectedSeam = "expected seam name";
         String actualSeam = "";
 
-        Connection connection = Sqlite.connect("jdbc:sqlite::memory:");
-
-        Sqlite.createSchema(connection);
-
-        String sql = "insert into seams values('expected seam name')";
-        Sqlite.executeUpdate(connection, sql);
-
-        actualSeam = Sqlite.getSeam(connection);
-
-        Sqlite.close(connection);
+        Sqlite sqlite = new Sqlite("jdbc:sqlite::memory:");
+        sqlite.createSchema();
+        sqlite.executeUpdate("insert into seams values('expected seam name')");
+        actualSeam = sqlite.getSeam();
+        sqlite.close();
 
         assertThat(actualSeam).isEqualTo(expectedSeam);
     }
 
     public static class Sqlite {
+
+        Connection connection;
+
+        public Sqlite(String url) {
+            this.connection = connect(url);
+        }
 
         public static Connection connect(String url) {
             Connection connection = null;
@@ -43,7 +44,7 @@ public class SqliteShould {
             return connection;
         }
 
-        public static void createSchema(Connection connection) {
+        public void createSchema() {
             try {
                 Statement statement = createStatement(connection);
                 statement.executeUpdate("drop table if exists seams");
@@ -63,28 +64,28 @@ public class SqliteShould {
             System.err.println(e.getMessage());
         }
 
-        public static void executeUpdate(Connection connection, String sql) {
+        public void executeUpdate(String sql) {
             try {
-                Statement statement = createStatement(connection);
+                Statement statement = createStatement(this.connection);
                 statement.executeUpdate(sql);
             } catch (SQLException e) {
                 handleError(e);
             }
         }
 
-        public static void close(Connection connection) {
+        public void close() {
             try {
-                if (connection != null)
-                    connection.close();
+                if (this.connection != null)
+                    this.connection.close();
             } catch (SQLException e) {
                 handleError(e);
             }
         }
 
-        public static String getSeam(Connection connection) {
+        public String getSeam() {
             String resultAsString = "";
             try{
-                Statement statement = createStatement(connection);
+                Statement statement = createStatement(this.connection);
                 ResultSet result = statement.executeQuery("select * from seams");
                 while (result.next()) {
                     resultAsString = result.getString("name");
