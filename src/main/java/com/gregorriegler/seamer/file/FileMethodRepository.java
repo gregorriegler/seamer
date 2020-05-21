@@ -38,26 +38,18 @@ public class FileMethodRepository<T> implements MethodRepository<T> {
     @SuppressWarnings("unchecked")
     @Override
     public Optional<Method<T>> byId(String seamId) {
-        try {
-            Object deserialize = serializer.deserialize(
-                new FileInputStream(FileLocation.seamFile(seamId)),
-                ClosureSerializer.Closure.class
-            );
-            return Optional.of((Method<T>) deserialize);
-        } catch (FileNotFoundException e) {
-            LOG.error("failed to load seam", e);
-            return Optional.empty();
-        }
+        return inputStream(seamId).map(stream -> (Method<T>) serializer.deserialize(stream, ClosureSerializer.Closure.class));
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public Optional<ProxyMethod<T>> proxyById(String seamId) {
+        return inputStream(seamId).map(stream -> serializer.deserialize(stream, ProxyMethod.class));
+    }
+
+    private Optional<FileInputStream> inputStream(String seamId) {
         try {
-            ProxyMethod deserialize = serializer.deserialize(
-                new FileInputStream(FileLocation.seamFile(seamId)),
-                ProxyMethod.class
-            );
-            return Optional.of(deserialize);
+            return Optional.of(new FileInputStream(FileLocation.seamFile(seamId)));
         } catch (FileNotFoundException e) {
             LOG.error("failed to load seam", e);
             return Optional.empty();
