@@ -32,13 +32,13 @@ public class AspectJDemoTest {
 
     @Test
     void verify() {
-        Seamer.verifyProxy(SEAM_ID, AspectJDemo.class);
+        Seamer.verify(SEAM_ID, AspectJDemo.class);
     }
 
     @ParameterizedTest
     @MethodSource("invocations")
     void testAllInvocations(Object[] args, Object expected) {
-        Seam<?> seam = Seamer.loadProxy(SEAM_ID, AspectJDemo.class);
+        Seam<?> seam = Seamer.load(SEAM_ID, AspectJDemo.class);
 
         Object actual = seam.execute(args);
 
@@ -46,7 +46,7 @@ public class AspectJDemoTest {
     }
 
     public Stream<Arguments> invocations() {
-        return Seamer.loadProxy(SEAM_ID, AspectJDemo.class).invocationsAsJupiterArguments();
+        return Seamer.load(SEAM_ID, AspectJDemo.class).invocationsAsJupiterArguments();
     }
 
     public static class AspectJDemo {

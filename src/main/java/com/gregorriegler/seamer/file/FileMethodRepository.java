@@ -1,6 +1,5 @@
 package com.gregorriegler.seamer.file;
 
-import com.esotericsoftware.kryo.serializers.ClosureSerializer;
 import com.gregorriegler.seamer.core.Method;
 import com.gregorriegler.seamer.core.MethodRepository;
 import com.gregorriegler.seamer.core.ProxyMethod;
@@ -38,7 +37,7 @@ public class FileMethodRepository<T> implements MethodRepository<T> {
     @SuppressWarnings("unchecked")
     @Override
     public Optional<Method<T>> byId(String seamId) {
-        return inputStream(seamId).map(stream -> (Method<T>) serializer.deserialize(stream, ClosureSerializer.Closure.class));
+        return inputStream(seamId).map(stream -> (Method<T>) serializer.deserialize(stream, Method.class));
     }
 
     @SuppressWarnings("unchecked")

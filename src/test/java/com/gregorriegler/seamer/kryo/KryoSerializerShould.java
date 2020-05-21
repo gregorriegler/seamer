@@ -15,7 +15,7 @@ public class KryoSerializerShould {
     private final KryoSerializer serializer = KryoFactory.createSerializer(this.getClass());
 
     @Test
-    void serialize_and_deserialize() {
+    void serialize_and_deserialize_ProxyMethod() {
         ProxyMethod<String> expected = ProxyMethod.of("someObject", "toString");
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 

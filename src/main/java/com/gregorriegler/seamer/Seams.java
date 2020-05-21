@@ -31,17 +31,11 @@ public class Seams {
     public <T> Optional<Seam<T>> byId(String seamId) {
         return Seams.<T>methods(serializer)
             .byId(seamId)
-            .map(signature -> createSeam(seamId, signature));
-    }
-
-    public <T> Optional<Seam<T>> proxySeamById(String seamId) {
-        return Seams.<T>methods(serializer)
-            .proxyById(seamId)
-            .map(signature -> createSeam(seamId, signature));
+            .map(method -> createSeam(seamId, method));
     }
 
     private static <T> FileMethodRepository<T> methods(KryoSerializer serializer) {
-        return new FileMethodRepository<T>(serializer);
+        return new FileMethodRepository<>(serializer);
     }
 
     public <T> Seam<T> createSeam(String seamId, Method<T> method) {

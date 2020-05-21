@@ -1,5 +1,8 @@
 package com.gregorriegler.seamer.sqlite;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -7,6 +10,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Sqlite {
+    private static final Logger LOG = LoggerFactory.getLogger(Sqlite.class);
 
     Connection connection;
 
@@ -73,6 +77,6 @@ public class Sqlite {
     }
 
     private void handleError(SQLException e) {
-        System.err.println(e.getMessage());
+        LOG.warn("an error happened interacting with sqlite", e);
     }
 }
