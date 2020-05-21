@@ -8,10 +8,17 @@ import java.util.List;
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ArgCandidatesTest {
+public class ArgCandidatesShould {
+
+    private ArgCandidates candidates;
+
+    @BeforeEach
+    void setUp() {
+        candidates = new ArgCandidates();
+    }
 
     @Test
-    void should_add_candidates_and_shuffle() {
+    void add_candidates_and_shuffle() {
         candidates.addCandidates(0, asList("hello", "world"));
 
         List<Object[]> result = candidates.shuffle();
@@ -23,7 +30,7 @@ public class ArgCandidatesTest {
     }
 
     @Test
-    void should_add_candidates_through_supplier() {
+    void add_candidates_through_supplier() {
         candidates.addCandidates(0, () -> asList("hello", "world"));
 
         List<Object[]> result = candidates.shuffle();
@@ -35,7 +42,7 @@ public class ArgCandidatesTest {
     }
 
     @Test
-    void should_shuffle_two_args() {
+    void shuffle_two_args() {
         candidates.addCandidates(0, asList("hello", "world"));
         candidates.addCandidates(1, asList(1, 2, 3));
 
@@ -49,12 +56,5 @@ public class ArgCandidatesTest {
             new Object[]{"world", 2},
             new Object[]{"world", 3}
         );
-    }
-
-    private ArgCandidates candidates;
-
-    @BeforeEach
-    void setUp() {
-        candidates = new ArgCandidates();
     }
 }

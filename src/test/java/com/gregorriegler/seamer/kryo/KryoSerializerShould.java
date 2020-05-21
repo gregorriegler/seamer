@@ -10,12 +10,12 @@ import java.util.List;
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class KryoSerializerTest {
+public class KryoSerializerShould {
 
     private final KryoSerializer serializer = KryoFactory.createSerializer(this.getClass());
 
     @Test
-    void should_serialize_and_deserialize() {
+    void serialize_and_deserialize() {
         ProxySignature<String> expected = ProxySignature.of("someObject", "toString");
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
@@ -26,7 +26,7 @@ public class KryoSerializerTest {
     }
 
     @Test
-    void should_deserialize_a_list() {
+    void deserialize_a_list() {
         List<String> expected = asList("a", "b", "c");
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
