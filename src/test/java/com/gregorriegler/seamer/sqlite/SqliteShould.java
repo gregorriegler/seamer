@@ -34,19 +34,9 @@ public class SqliteShould {
             this.connection = connect(url);
         }
 
-        public static Connection connect(String url) {
-            Connection connection = null;
-            try {
-                connection = DriverManager.getConnection(url);
-            } catch (SQLException e) {
-                handleError(e);
-            }
-            return connection;
-        }
-
         public void createSchema() {
             try {
-                Statement statement = createStatement(connection);
+                Statement statement = createStatement();
                 statement.executeUpdate("drop table if exists seams");
                 statement.executeUpdate("create table seams (name string)");
             } catch (SQLException e) {
@@ -54,23 +44,33 @@ public class SqliteShould {
             }
         }
 
-        public static Statement createStatement(Connection connection) throws SQLException {
-            Statement statement = connection.createStatement();
-            statement.setQueryTimeout(30);
-            return statement;
-        }
-
-        public static void handleError(SQLException e) {
-            System.err.println(e.getMessage());
-        }
-
         public void executeUpdate(String sql) {
             try {
-                Statement statement = createStatement(this.connection);
+                Statement statement = createStatement();
                 statement.executeUpdate(sql);
             } catch (SQLException e) {
                 handleError(e);
             }
+        }
+
+        public String getSeam() {
+            String resultAsString = "";
+            try{
+                Statement statement = createStatement();
+                ResultSet result = statement.executeQuery("select * from seams");
+                while (result.next()) {
+                    resultAsString = result.getString("name");
+                }
+            } catch (SQLException e) {
+                handleError(e);
+            }
+            return resultAsString;
+        }
+
+        public Statement createStatement() throws SQLException {
+            Statement statement = this.connection.createStatement();
+            statement.setQueryTimeout(30);
+            return statement;
         }
 
         public void close() {
@@ -82,18 +82,18 @@ public class SqliteShould {
             }
         }
 
-        public String getSeam() {
-            String resultAsString = "";
-            try{
-                Statement statement = createStatement(this.connection);
-                ResultSet result = statement.executeQuery("select * from seams");
-                while (result.next()) {
-                    resultAsString = result.getString("name");
-                }
+        private Connection connect(String url) {
+            Connection connection = null;
+            try {
+                connection = DriverManager.getConnection(url);
             } catch (SQLException e) {
                 handleError(e);
             }
-            return resultAsString;
+            return connection;
+        }
+
+        private void handleError(SQLException e) {
+            System.err.println(e.getMessage());
         }
     }
 }
