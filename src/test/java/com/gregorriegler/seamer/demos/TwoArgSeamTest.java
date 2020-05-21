@@ -1,7 +1,7 @@
 package com.gregorriegler.seamer.demos;
 
 import com.gregorriegler.seamer.Seamer;
-import com.gregorriegler.seamer.core.SignatureWith2Arguments;
+import com.gregorriegler.seamer.core.MethodWith2Arguments;
 import com.gregorriegler.seamer.test.SeamerTest;
 import org.junit.jupiter.api.BeforeAll;
 import org.slf4j.Logger;
@@ -42,8 +42,8 @@ public class TwoArgSeamTest extends SeamerTest {
             String result = Seamer.intercept(
                 "TwoArgSeamTest",
                 this.getClass(),
-                (SignatureWith2Arguments<String, Integer, String>) this::blackbox
-            ).invoke(string, integer);
+                (MethodWith2Arguments<String, Integer, String>) this::blackbox
+            ).invokeAndRecord(string, integer);
 
             LOG.info(result);
         }

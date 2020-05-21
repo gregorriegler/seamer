@@ -1,13 +1,16 @@
 package com.gregorriegler.seamer;
 
+import com.gregorriegler.seamer.core.Method;
 import com.gregorriegler.seamer.core.Seam;
-import com.gregorriegler.seamer.core.Signature;
+import com.gregorriegler.seamer.core.SeamInterceptor;
 import com.gregorriegler.seamer.file.FileResetter;
 
 public class Seamer {
 
-    public static <T> Seam<T> intercept(final String seamId, Class<?> capturingClass, Signature<T> signature) {
-        return Seams.of(capturingClass).save(seamId, signature);
+    public static <T> SeamInterceptor<T> intercept(final String seamId, Class<?> capturingClass, Method<T> method) {
+        Seams seams = Seams.of(capturingClass);
+        seams.add(seamId, method);
+        return seams.createInterceptor(seamId, method);
     }
 
     public static <T> Seam<T> load(final String seamId, Class<?> capturingClass) {

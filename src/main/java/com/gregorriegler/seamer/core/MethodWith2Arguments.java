@@ -1,7 +1,7 @@
 package com.gregorriegler.seamer.core;
 
 @FunctionalInterface
-public interface SignatureWith2Arguments<A1, A2, R> extends Signature<R> {
+public interface MethodWith2Arguments<A1, A2, R> extends Method<R> {
 
     R apply(A1 a1, A2 a2);
 

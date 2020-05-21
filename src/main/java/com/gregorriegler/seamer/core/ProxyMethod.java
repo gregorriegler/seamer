@@ -9,23 +9,23 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.Optional;
 
-public class ProxySignature<T> implements ArgsSignature<T> {
+public class ProxyMethod<T> implements ArgsMethod<T> {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ProxySignature.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ProxyMethod.class);
 
     private Object target;
     private String methodName;
 
-    private ProxySignature(Object target, String methodName) {
+    private ProxyMethod(Object target, String methodName) {
         this.target = target;
         this.methodName = methodName;
     }
 
-    private ProxySignature() {
+    private ProxyMethod() {
     }
 
-    public static <T> ProxySignature<T> of(Object target, String methodName) {
-        return new ProxySignature<>(target, methodName);
+    public static <T> ProxyMethod<T> of(Object target, String methodName) {
+        return new ProxyMethod<>(target, methodName);
     }
 
     @Override
@@ -48,7 +48,7 @@ public class ProxySignature<T> implements ArgsSignature<T> {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ProxySignature<?> that = (ProxySignature<?>) o;
+        ProxyMethod<?> that = (ProxyMethod<?>) o;
         return Objects.equals(target, that.target) &&
             Objects.equals(methodName, that.methodName);
     }

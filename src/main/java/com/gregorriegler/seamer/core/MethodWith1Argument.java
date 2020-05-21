@@ -3,7 +3,7 @@ package com.gregorriegler.seamer.core;
 import java.util.function.Function;
 
 @FunctionalInterface
-public interface SignatureWith1Argument<A1, R> extends Function<A1, R>, Signature<R> {
+public interface MethodWith1Argument<A1, R> extends Function<A1, R>, Method<R> {
 
     @Override
     @SuppressWarnings("unchecked")

@@ -1,8 +1,8 @@
 package com.gregorriegler.seamer.aspectj;
 
 import com.gregorriegler.seamer.Seamer;
-import com.gregorriegler.seamer.core.ProxySignature;
-import com.gregorriegler.seamer.core.Seam;
+import com.gregorriegler.seamer.core.ProxyMethod;
+import com.gregorriegler.seamer.core.SeamInterceptor;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -11,34 +11,30 @@ import org.aspectj.lang.annotation.Pointcut;
 @Aspect
 public class SeamerAspect {
 
-    private Seam seam;
+    private SeamInterceptor seam;
 
     @Pointcut("@annotation(seam) && execution(* *(..))")
     public void callAt(com.gregorriegler.seamer.core.annotation.Seam seam) {
     }
- 
+
+    @SuppressWarnings("unchecked")
     @Around("callAt(seam)")
     public Object around(ProceedingJoinPoint pjp, com.gregorriegler.seamer.core.annotation.Seam seam) throws Throwable {
-        initializeSeamer(pjp, seam);
+        initializeInterceptor(pjp, seam);
 
         Object result = pjp.proceed();
-        record(pjp, result);
+        this.seam.recordInvocation(pjp.getArgs(), result);
 
         return result;
     }
 
-    @SuppressWarnings("unchecked")
-    private void record(ProceedingJoinPoint pjp, Object result) {
-        seam.record(pjp.getArgs(), result);
-    }
-
-    private void initializeSeamer(ProceedingJoinPoint pjp, com.gregorriegler.seamer.core.annotation.Seam seam) {
+    private void initializeInterceptor(ProceedingJoinPoint pjp, com.gregorriegler.seamer.core.annotation.Seam seam) {
         if (this.seam != null) return;
 
         this.seam = Seamer.intercept(
             seam.value(),
             pjp.getTarget().getClass(),
-            ProxySignature.of(pjp.getTarget(), pjp.getSignature().getName())
+            ProxyMethod.of(pjp.getTarget(), pjp.getSignature().getName())
         );
     }
 }

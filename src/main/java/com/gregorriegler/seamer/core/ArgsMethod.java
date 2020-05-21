@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.function.Function;
 
 @FunctionalInterface
-public interface ArgsSignature<T> extends Function<Object[], T>, Signature<T>, Serializable {
+public interface ArgsMethod<T> extends Function<Object[], T>, Method<T>, Serializable {
 
     @Override
     default T invoke(Object... args) {

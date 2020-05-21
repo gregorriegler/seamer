@@ -2,8 +2,8 @@ package com.gregorriegler.seamer.demos;
 
 import com.gregorriegler.seamer.Seamer;
 import com.gregorriegler.seamer.core.Invocation;
+import com.gregorriegler.seamer.core.MethodWith3Arguments;
 import com.gregorriegler.seamer.core.Seam;
-import com.gregorriegler.seamer.core.SignatureWith3Arguments;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -67,8 +67,8 @@ public class ArgCandidatesDemoTest {
             String result = Seamer.intercept(
                 SEAM_ID,
                 this.getClass(),
-                (SignatureWith3Arguments<String, Integer, SomeObject, String>) this::blackbox
-            ).invoke(arg1, arg2, arg3);
+                (MethodWith3Arguments<String, Integer, SomeObject, String>) this::blackbox
+            ).invokeAndRecord(arg1, arg2, arg3);
 
             LOG.info(result);
         }

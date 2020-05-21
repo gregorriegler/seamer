@@ -45,7 +45,7 @@ public class ClosureDemoTest extends SeamerTest {
                     (String) a[0],
                     (Integer) a[1]
                 )
-            ).invoke(arg1, arg2);
+            ).invokeAndRecord(arg1, arg2);
 
             LOG.info(result);
         }

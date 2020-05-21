@@ -1,20 +1,20 @@
 package com.gregorriegler.seamer.cglib;
 
 import com.gregorriegler.seamer.Seamer;
-import com.gregorriegler.seamer.core.ProxySignature;
-import com.gregorriegler.seamer.core.Seam;
+import com.gregorriegler.seamer.core.ProxyMethod;
+import com.gregorriegler.seamer.core.SeamInterceptor;
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
 
 import java.lang.reflect.Method;
 
-public class SeamInterceptor<T> implements MethodInterceptor {
+public class SeamMethodInterceptor<T> implements MethodInterceptor {
 
     private final String methodName;
     private final String seamId;
-    private Seam<T> seam;
+    private SeamInterceptor<T> seam;
 
-    public SeamInterceptor(String methodName, String seamId) {
+    public SeamMethodInterceptor(String methodName, String seamId) {
         this.methodName = methodName;
         this.seamId = seamId;
     }
@@ -29,13 +29,13 @@ public class SeamInterceptor<T> implements MethodInterceptor {
             seam = Seamer.intercept(
                 seamId,
                 target.getClass(),
-                ProxySignature.of(target, methodName)
+                ProxyMethod.of(target, methodName)
             );
             return seam.execute(args);
         }
 
         T result = invoke(proxy, target, args);
-        seam.record(args, result);
+        seam.recordInvocation(args, result);
         return result;
     }
 

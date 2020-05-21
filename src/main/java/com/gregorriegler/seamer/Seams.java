@@ -1,9 +1,10 @@
 package com.gregorriegler.seamer;
 
+import com.gregorriegler.seamer.core.Method;
 import com.gregorriegler.seamer.core.Seam;
-import com.gregorriegler.seamer.core.Signature;
+import com.gregorriegler.seamer.core.SeamInterceptor;
 import com.gregorriegler.seamer.file.FileInvocationRepository;
-import com.gregorriegler.seamer.file.FileSignatureRepository;
+import com.gregorriegler.seamer.file.FileMethodRepository;
 import com.gregorriegler.seamer.kryo.KryoSerializer;
 
 import java.util.Optional;
@@ -22,30 +23,36 @@ public class Seams {
         serializer = createSerializer(capturingClass);
     }
 
-    public <T> Seam<T> save(String seamId, Signature<T> signature) {
-        Seams.<T>signatures(serializer).persist(seamId, signature);
-        return createSeam(seamId, signature);
+    public <T> void add(String seamId, Method<T> method) {
+        Seams.<T>methods(serializer).persist(seamId, method);
     }
 
     public <T> Optional<Seam<T>> byId(String seamId) {
-        return Seams.<T>signatures(serializer)
+        return Seams.<T>methods(serializer)
             .byId(seamId)
             .map(signature -> createSeam(seamId, signature));
     }
 
     public <T> Optional<Seam<T>> proxySeamById(String seamId) {
-        return Seams.<T>signatures(serializer)
+        return Seams.<T>methods(serializer)
             .proxyById(seamId)
             .map(signature -> createSeam(seamId, signature));
     }
 
-    private static <T> FileSignatureRepository<T> signatures(KryoSerializer serializer) {
-        return new FileSignatureRepository<T>(serializer);
+    private static <T> FileMethodRepository<T> methods(KryoSerializer serializer) {
+        return new FileMethodRepository<T>(serializer);
     }
 
-    private <T> Seam<T> createSeam(String seamId, Signature<T> signature) {
+    public <T> Seam<T> createSeam(String seamId, Method<T> method) {
         return new Seam<>(
-            signature,
+            method,
+            new FileInvocationRepository(seamId, serializer)
+        );
+    }
+
+    public <T> SeamInterceptor<T> createInterceptor(String seamId, Method<T> method) {
+        return new SeamInterceptor<>(
+            method,
             new FileInvocationRepository(seamId, serializer)
         );
     }

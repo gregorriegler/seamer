@@ -13,10 +13,10 @@ public class Seam<T> implements Serializable {
     private final InvocationRepository invocations;
     private final ArgCandidates argCandidates = new ArgCandidates();
 
-    public Signature<T> signature;
+    public Method<T> method;
 
-    public Seam(Signature<T> signature, InvocationRepository invocations) {
-        this.signature = signature;
+    public Seam(Method<T> method, InvocationRepository invocations) {
+        this.method = method;
         this.invocations = invocations;
     }
 
@@ -27,12 +27,6 @@ public class Seam<T> implements Serializable {
         }
     }
 
-    public T invoke(Object... args) {
-        T result = execute(args);
-        record(args, result);
-        return result;
-    }
-
     public Seam<T> recordInvocation(Object... args) {
         T result = execute(args);
         record(args, result);
@@ -40,7 +34,7 @@ public class Seam<T> implements Serializable {
     }
 
     public T execute(Object... args) {
-        return signature.invoke(args);
+        return method.invoke(args);
     }
 
     public void record(Object[] args, T result) {
