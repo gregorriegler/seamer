@@ -27,7 +27,7 @@ public class Seam<T> implements Serializable {
         this.verifier = new SeamVerifier<>(method, invocations);
     }
 
-    public Stream<Arguments> invocationsAsJupiterArguments() {
+    public Stream<Arguments> invocationsAsArguments() {
         return invocations.getAll()
             .stream()
             .map(c -> Arguments.of(c.getArgs(), c.getResult()));

@@ -46,7 +46,7 @@ public class AspectJDemoTest {
     }
 
     public Stream<Arguments> invocations() {
-        return Seamer.load(SEAM_ID, AspectJDemo.class).invocationsAsJupiterArguments();
+        return Seamer.invocationsAsArguments(SEAM_ID, AspectJDemo.class);
     }
 
     public static class AspectJDemo {

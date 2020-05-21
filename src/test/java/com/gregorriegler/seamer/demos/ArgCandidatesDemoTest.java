@@ -53,7 +53,7 @@ public class ArgCandidatesDemoTest {
     }
 
     public Stream<Arguments> invocations() {
-        return Seamer.load(SEAM_ID, demo.getClass()).invocationsAsJupiterArguments();
+        return Seamer.invocationsAsArguments(SEAM_ID, demo.getClass());
     }
 
 

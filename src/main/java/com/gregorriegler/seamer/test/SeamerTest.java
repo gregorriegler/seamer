@@ -27,7 +27,7 @@ public abstract class SeamerTest {
     public abstract String seamId();
 
     public Stream<Arguments> invocations() {
-        return seam.invocationsAsJupiterArguments();
+        return seam.invocationsAsArguments();
     }
 
     @ParameterizedTest
