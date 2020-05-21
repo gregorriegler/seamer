@@ -42,10 +42,7 @@ public class CglibProxyDemoTest {
     }
 
     public Stream<Arguments> invocations() {
-        return Seamer.loadProxy(SEAM_ID, ProxyDemo.class)
-            .getInvocations()
-            .stream()
-            .map(c -> Arguments.of(c.getArgs(), c.getResult()));
+        return Seamer.loadProxy(SEAM_ID, ProxyDemo.class).invocationsAsJupiterArguments();
     }
 
     public static class ProxyDemo {

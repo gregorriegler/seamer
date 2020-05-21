@@ -1,7 +1,6 @@
 package com.gregorriegler.seamer.demos;
 
 import com.gregorriegler.seamer.Seamer;
-import com.gregorriegler.seamer.core.Invocation;
 import com.gregorriegler.seamer.core.Seam;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -10,7 +9,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.List;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -34,8 +32,7 @@ public class AspectJDemoTest {
 
     @Test
     void verify() {
-        Seamer.loadProxy(SEAM_ID, AspectJDemo.class)
-            .verify();
+        Seamer.verifyProxy(SEAM_ID, AspectJDemo.class);
     }
 
     @ParameterizedTest
@@ -49,9 +46,7 @@ public class AspectJDemoTest {
     }
 
     public Stream<Arguments> invocations() {
-        List<Invocation> invocations = Seamer.loadProxy(SEAM_ID, AspectJDemo.class).getInvocations();
-        return invocations.stream()
-            .map(c -> Arguments.of(c.getArgs(), c.getResult()));
+        return Seamer.loadProxy(SEAM_ID, AspectJDemo.class).invocationsAsJupiterArguments();
     }
 
     public static class AspectJDemo {

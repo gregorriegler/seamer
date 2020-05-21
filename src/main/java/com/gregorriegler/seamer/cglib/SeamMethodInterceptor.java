@@ -2,7 +2,7 @@ package com.gregorriegler.seamer.cglib;
 
 import com.gregorriegler.seamer.Seamer;
 import com.gregorriegler.seamer.core.ProxyMethod;
-import com.gregorriegler.seamer.core.SeamInterceptor;
+import com.gregorriegler.seamer.core.SeamRecorder;
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
 
@@ -12,7 +12,7 @@ public class SeamMethodInterceptor<T> implements MethodInterceptor {
 
     private final String methodName;
     private final String seamId;
-    private SeamInterceptor<T> seam;
+    private SeamRecorder<T> seam;
 
     public SeamMethodInterceptor(String methodName, String seamId) {
         this.methodName = methodName;

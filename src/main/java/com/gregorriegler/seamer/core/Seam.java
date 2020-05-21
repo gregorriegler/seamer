@@ -1,48 +1,44 @@
 package com.gregorriegler.seamer.core;
 
+import org.junit.jupiter.params.provider.Arguments;
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 import static java.util.Arrays.asList;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
 
 public class Seam<T> implements Serializable {
 
     private final InvocationRepository invocations;
     private final ArgCandidates argCandidates = new ArgCandidates();
+    private final SeamRecorder<T> recorder;
+    private final SeamExecutor<T> executor;
+    private final SeamVerifier<T> verifier;
 
     public Method<T> method;
 
     public Seam(Method<T> method, InvocationRepository invocations) {
         this.method = method;
         this.invocations = invocations;
+        this.executor = new SeamExecutor<>(method);
+        this.recorder = new SeamRecorder<>(executor, invocations);
+        this.verifier = new SeamVerifier<>(method, invocations);
+    }
+
+    public Stream<Arguments> invocationsAsJupiterArguments() {
+        return invocations.getAll()
+            .stream()
+            .map(c -> Arguments.of(c.getArgs(), c.getResult()));
     }
 
     public void verify() {
-        for (Invocation invocation : invocations.getAll()) {
-            T actual = execute(invocation.getArgs());
-            assertThat(actual, equalTo(invocation.getResult()));
-        }
-    }
-
-    public Seam<T> recordInvocation(Object... args) {
-        T result = execute(args);
-        record(args, result);
-        return this;
+        this.verifier.verify();
     }
 
     public T execute(Object... args) {
-        return method.invoke(args);
-    }
-
-    public void record(Object[] args, T result) {
-        invocations.record(Invocation.of(args, result));
-    }
-
-    public List<Invocation> getInvocations() {
-        return invocations.getAll();
+        return executor.execute(args);
     }
 
     public Seam<T> addArgCandidates(int i, Object... candidates) {
@@ -55,10 +51,10 @@ public class Seam<T> implements Serializable {
         return this;
     }
 
-    public void shuffleArgsAndExecute() {
+    public void shuffleArgsAndRecord() {
         List<Object[]> argCombinations = argCandidates.shuffle();
         for (Object[] args : argCombinations) {
-            recordInvocation(args);
+            recorder.invokeAndRecord(args);
         }
     }
 

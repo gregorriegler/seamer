@@ -1,7 +1,6 @@
 package com.gregorriegler.seamer.demos;
 
 import com.gregorriegler.seamer.Seamer;
-import com.gregorriegler.seamer.core.Invocation;
 import com.gregorriegler.seamer.core.MethodWith3Arguments;
 import com.gregorriegler.seamer.core.Seam;
 import org.junit.jupiter.api.BeforeAll;
@@ -13,7 +12,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.List;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -36,7 +34,7 @@ public class ArgCandidatesDemoTest {
             .addArgCandidates(0, null, "hello", "world")
             .addArgCandidates(1, null, 1, 2, 3)
             .addArgCandidates(2, new SomeObject("hello", SomeObjectState.READY), new SomeObject("world", SomeObjectState.DONE))
-            .shuffleArgsAndExecute();
+            .shuffleArgsAndRecord();
     }
 
     @ParameterizedTest
@@ -51,13 +49,11 @@ public class ArgCandidatesDemoTest {
 
     @Test
     void shouldVerify() {
-        Seamer.load(SEAM_ID, demo.getClass()).verify();
+        Seamer.verify(SEAM_ID, demo.getClass());
     }
 
     public Stream<Arguments> invocations() {
-        List<Invocation> invocations = Seamer.load(SEAM_ID, demo.getClass()).getInvocations();
-        return invocations.stream()
-            .map(c -> Arguments.of(c.getArgs(), c.getResult()));
+        return Seamer.load(SEAM_ID, demo.getClass()).invocationsAsJupiterArguments();
     }
 
 

@@ -2,7 +2,8 @@ package com.gregorriegler.seamer;
 
 import com.gregorriegler.seamer.core.Method;
 import com.gregorriegler.seamer.core.Seam;
-import com.gregorriegler.seamer.core.SeamInterceptor;
+import com.gregorriegler.seamer.core.SeamExecutor;
+import com.gregorriegler.seamer.core.SeamRecorder;
 import com.gregorriegler.seamer.file.FileInvocationRepository;
 import com.gregorriegler.seamer.file.FileMethodRepository;
 import com.gregorriegler.seamer.kryo.KryoSerializer;
@@ -50,10 +51,9 @@ public class Seams {
         );
     }
 
-    public <T> SeamInterceptor<T> createInterceptor(String seamId, Method<T> method) {
-        return new SeamInterceptor<>(
-            method,
-            new FileInvocationRepository(seamId, serializer)
+    public <T> SeamRecorder<T> createInterceptor(String seamId, Method<T> method) {
+        return new SeamRecorder<>(
+            new SeamExecutor<>(method), new FileInvocationRepository(seamId, serializer)
         );
     }
 

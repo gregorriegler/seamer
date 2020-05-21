@@ -1,3 +1,5 @@
+- cglib proxy does not record first invocation?
+
 - can capturing class be stored as well?
 
 - location not in target but somewhere else. maybe configurable.

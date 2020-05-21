@@ -2,14 +2,14 @@ package com.gregorriegler.seamer.core;
 
 import java.io.Serializable;
 
-public class SeamInterceptor<T> implements Serializable {
+public class SeamRecorder<T> implements Serializable {
 
-    private final Method<T> method;
+    private final SeamExecutor<T> executor;
     private final InvocationRepository invocations;
 
-    public SeamInterceptor(Method<T> method, InvocationRepository invocations) {
-        this.method = method;
+    public SeamRecorder(SeamExecutor<T> executor, InvocationRepository invocations) {
         this.invocations = invocations;
+        this.executor = executor;
     }
 
     public T invokeAndRecord(Object... args) {
@@ -19,7 +19,7 @@ public class SeamInterceptor<T> implements Serializable {
     }
 
     public T execute(Object... args) {
-        return method.invoke(args);
+        return executor.execute(args);
     }
 
     public void recordInvocation(Object[] args, T result) {
