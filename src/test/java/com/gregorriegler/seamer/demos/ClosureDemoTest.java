@@ -1,5 +1,6 @@
-package com.gregorriegler.seamer;
+package com.gregorriegler.seamer.demos;
 
+import com.gregorriegler.seamer.Seamer;
 import com.gregorriegler.seamer.test.SeamerTest;
 import org.junit.jupiter.api.BeforeAll;
 import org.slf4j.Logger;

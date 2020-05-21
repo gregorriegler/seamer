@@ -1,5 +1,6 @@
-package com.gregorriegler.seamer;
+package com.gregorriegler.seamer.demos;
 
+import com.gregorriegler.seamer.Seamer;
 import com.gregorriegler.seamer.core.SignatureWith1Argument;
 import com.gregorriegler.seamer.test.SeamerTest;
 import org.junit.jupiter.api.BeforeAll;

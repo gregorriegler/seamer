@@ -1,5 +1,6 @@
-package com.gregorriegler.seamer;
+package com.gregorriegler.seamer.demos;
 
+import com.gregorriegler.seamer.Seamer;
 import com.gregorriegler.seamer.core.Invocation;
 import com.gregorriegler.seamer.core.Seam;
 import com.gregorriegler.seamer.core.SignatureWith3Arguments;
