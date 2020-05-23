@@ -16,7 +16,9 @@ public class Seamer {
     }
 
     public static void verify(String seamId) {
-        load(seamId).verify();
+        new Seams<>().verifierById(seamId)
+            .orElseThrow(FailedToLoad::new)
+            .verify();
     }
 
     public static void reset(String seamId) {

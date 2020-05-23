@@ -3,6 +3,7 @@ package com.gregorriegler.seamer;
 import com.gregorriegler.seamer.core.Method;
 import com.gregorriegler.seamer.core.Seam;
 import com.gregorriegler.seamer.core.SeamRecorder;
+import com.gregorriegler.seamer.core.SeamVerifier;
 import com.gregorriegler.seamer.file.FileInvocationRepository;
 import com.gregorriegler.seamer.file.FileMethodRepository;
 import com.gregorriegler.seamer.kryo.KryoSerializer;
@@ -30,4 +31,8 @@ public class Seams<T> {
             .map(method -> new Seam<>(method, new FileInvocationRepository(seamId, SERIALIZER)));
     }
 
+    public Optional<SeamVerifier<T>> verifierById(String seamId) {
+        return methods.byId(seamId)
+            .map(method -> new SeamVerifier<>(method, new FileInvocationRepository(seamId, SERIALIZER)));
+    }
 }
