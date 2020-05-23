@@ -22,12 +22,7 @@ public class TwoArgSeamTest extends SeamerTest {
             someClass.entryPoint("hello ", i);
         }
 
-        seam = Seamer.load(seamId(), SomeClass.class);
-    }
-
-    @Override
-    public Class<?> capturingClass() {
-        return SomeClass.class;
+        seam = Seamer.load(seamId());
     }
 
     @Override
@@ -41,7 +36,6 @@ public class TwoArgSeamTest extends SeamerTest {
         public void entryPoint(String string, Integer integer) {
             String result = Seamer.intercept(
                 "TwoArgSeamTest",
-                this.getClass(),
                 (MethodWith2Arguments<String, Integer, String>) this::blackbox
             ).invokeAndRecord(string, integer);
 

@@ -1,20 +1,19 @@
 package com.gregorriegler.seamer.demos;
 
 import com.gregorriegler.seamer.Seamer;
-import com.gregorriegler.seamer.test.SeamerTest;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ClosureDemoTest extends SeamerTest {
+public class ClosureDemoTest {
 
     private static final Logger LOG = LoggerFactory.getLogger(ClosureDemoTest.class);
     private static final String SEAM_ID = ClosureDemoTest.class.getName();
 
     @BeforeAll
-    @Override
-    public void setup() {
-        Seamer.reset(seamId());
+    public static void setup() {
+        Seamer.reset(SEAM_ID);
 
         ClosureDemo closureDemo = new ClosureDemo();
 
@@ -22,17 +21,15 @@ public class ClosureDemoTest extends SeamerTest {
             closureDemo.entryPoint("hello ", i);
         }
 
-        super.setup();
     }
 
-    @Override
-    public Class<?> capturingClass() {
-        return ClosureDemo.class;
-    }
-
-    @Override
     public String seamId() {
         return SEAM_ID;
+    }
+
+    @Test
+    void verify() {
+        Seamer.verify(seamId());
     }
 
     public static class ClosureDemo {
@@ -40,7 +37,6 @@ public class ClosureDemoTest extends SeamerTest {
         public void entryPoint(String arg1, Integer arg2) {
             String result = Seamer.intercept(
                 SEAM_ID,
-                this.getClass(),
                 a -> blackbox(
                     (String) a[0],
                     (Integer) a[1]

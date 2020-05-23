@@ -30,7 +30,7 @@ public class ArgCandidatesDemoTest {
         demo = new ArgCandidatesDemo();
         demo.entrypoint(null, null, null); // persist seam
 
-        Seamer.load(SEAM_ID, demo.getClass())
+        Seamer.load(SEAM_ID)
             .addArgCandidates(0, null, "hello", "world")
             .addArgCandidates(1, null, 1, 2, 3)
             .addArgCandidates(2, new SomeObject("hello", SomeObjectState.READY), new SomeObject("world", SomeObjectState.DONE))
@@ -40,7 +40,7 @@ public class ArgCandidatesDemoTest {
     @ParameterizedTest
     @MethodSource("invocations")
     void testAllInvocations(Object[] args, Object expected) {
-        Seam<?> seam = Seamer.load(SEAM_ID, demo.getClass());
+        Seam<?> seam = Seamer.load(SEAM_ID);
 
         Object actual = seam.execute(args);
 
@@ -49,11 +49,11 @@ public class ArgCandidatesDemoTest {
 
     @Test
     void shouldVerify() {
-        Seamer.verify(SEAM_ID, demo.getClass());
+        Seamer.verify(SEAM_ID);
     }
 
     public Stream<Arguments> invocations() {
-        return Seamer.invocationsAsArguments(SEAM_ID, demo.getClass());
+        return Seamer.invocationsAsArguments(SEAM_ID);
     }
 
 
@@ -62,7 +62,6 @@ public class ArgCandidatesDemoTest {
         public void entrypoint(String arg1, Integer arg2, SomeObject arg3) {
             String result = Seamer.intercept(
                 SEAM_ID,
-                this.getClass(),
                 (MethodWith3Arguments<String, Integer, SomeObject, String>) this::blackbox
             ).invokeAndRecord(arg1, arg2, arg3);
 

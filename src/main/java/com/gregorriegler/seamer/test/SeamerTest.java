@@ -19,10 +19,8 @@ public abstract class SeamerTest {
 
     @BeforeAll
     public void setup() {
-        seam = Seamer.load(seamId(), capturingClass());
+        seam = Seamer.load(seamId());
     }
-
-    public abstract Class<?> capturingClass();
 
     public abstract String seamId();
 

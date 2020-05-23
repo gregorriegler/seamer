@@ -30,7 +30,7 @@ public class CglibProxyDemoTest {
         proxyDemo.blackbox("hello", 3);
         proxyDemo.blackbox("world", 4);
 
-        seam = Seamer.load(SEAM_ID, ProxyDemo.class);
+        seam = Seamer.load(SEAM_ID);
     }
 
     @ParameterizedTest
@@ -42,7 +42,7 @@ public class CglibProxyDemoTest {
     }
 
     public Stream<Arguments> invocations() {
-        return Seamer.invocationsAsArguments(SEAM_ID, ProxyDemo.class);
+        return Seamer.invocationsAsArguments(SEAM_ID);
     }
 
     public static class ProxyDemo {

@@ -20,12 +20,7 @@ public class OneArgSeamTest extends SeamerTest {
             someClass.entryPoint(i);
         }
 
-        seam = Seamer.load(SEAM_ID, SomeClass.class);
-    }
-
-    @Override
-    public Class<?> capturingClass() {
-        return SomeClass.class;
+        seam = Seamer.load(SEAM_ID);
     }
 
     @Override
@@ -38,7 +33,6 @@ public class OneArgSeamTest extends SeamerTest {
         public void entryPoint(Integer arg1) {
             Seamer.intercept(
                 "OneArgSeamTest",
-                this.getClass(),
                 (MethodWith1Argument<Integer, Integer>) this::blackbox
             ).invokeAndRecord(arg1);
         }

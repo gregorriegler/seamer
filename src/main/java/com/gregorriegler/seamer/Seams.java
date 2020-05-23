@@ -16,12 +16,12 @@ public class Seams {
 
     private final KryoSerializer serializer;
 
-    public static Seams of(Class<?> capturingClass) {
-        return new Seams(capturingClass);
+    public static Seams of() {
+        return new Seams();
     }
 
-    private Seams(Class<?> capturingClass) {
-        serializer = createSerializer(capturingClass);
+    private Seams() {
+        serializer = createSerializer();
     }
 
     public <T> void add(String seamId, Method<T> method) {

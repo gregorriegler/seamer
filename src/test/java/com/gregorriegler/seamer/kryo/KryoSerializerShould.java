@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class KryoSerializerShould {
 
-    private final KryoSerializer serializer = KryoFactory.createSerializer(this.getClass());
+    private final KryoSerializer serializer = KryoFactory.createSerializer();
 
     @Test
     void serialize_and_deserialize_ProxyMethod() {

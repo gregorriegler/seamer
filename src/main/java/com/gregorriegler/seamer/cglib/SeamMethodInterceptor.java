@@ -32,7 +32,6 @@ public class SeamMethodInterceptor<T> implements MethodInterceptor {
         if (seam == null) {
             seam = Seamer.intercept(
                 seamId,
-                target.getClass(),
                 ProxyMethod.of(target, methodName)
             );
             return seam.execute(args);

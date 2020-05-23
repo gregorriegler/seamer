@@ -33,7 +33,6 @@ public class SeamerAspect {
 
         this.seam = Seamer.intercept(
             seam.value(),
-            pjp.getTarget().getClass(),
             ProxyMethod.of(pjp.getTarget(), pjp.getSignature().getName())
         );
     }
