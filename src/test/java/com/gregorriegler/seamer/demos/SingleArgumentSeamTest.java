@@ -22,7 +22,7 @@ public class SingleArgumentSeamTest {
     public static class SomeClass {
 
         public void entryPoint(Integer arg1) {
-            Seamer.intercept(
+            Seamer.create(
                 SEAM_ID,
                 (MethodWith1Argument<Integer, Integer>) this::blackbox
             ).invokeAndRecord(arg1);

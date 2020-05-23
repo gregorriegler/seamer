@@ -7,10 +7,10 @@ import com.gregorriegler.seamer.file.FileResetter;
 
 public class Seamer {
 
-    public static <T> SeamRecorder<T> intercept(final String seamId, Method<T> method) {
-        Seams seams = Seams.of();
+    public static <T> SeamRecorder<T> create(final String seamId, Method<T> method) {
+        Seams seams = new Seams();
         seams.add(seamId, method);
-        return seams.createInterceptor(seamId, method);
+        return seams.createRecorder(seamId, method);
     }
 
     public static void verify(String seamId) {
@@ -18,7 +18,7 @@ public class Seamer {
     }
 
     public static <T> Seam<T> load(final String seamId) {
-        return Seams.of().<T>byId(seamId).orElseThrow(FailedToLoad::new);
+        return new Seams().<T>byId(seamId).orElseThrow(FailedToLoad::new);
     }
 
     public static void reset(String seamId) {

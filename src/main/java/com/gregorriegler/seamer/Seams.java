@@ -15,11 +15,7 @@ public class Seams {
 
     private final KryoSerializer serializer;
 
-    public static Seams of() {
-        return new Seams();
-    }
-
-    private Seams() {
+    public Seams() {
         serializer = createSerializer();
     }
 
@@ -44,7 +40,7 @@ public class Seams {
         );
     }
 
-    public <T> SeamRecorder<T> createInterceptor(String seamId, Method<T> method) {
+    public <T> SeamRecorder<T> createRecorder(String seamId, Method<T> method) {
         return new SeamRecorder<>(
             method,
             new FileInvocationRepository(seamId, serializer)

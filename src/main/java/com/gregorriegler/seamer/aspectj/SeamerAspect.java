@@ -31,7 +31,7 @@ public class SeamerAspect {
     private void initializeInterceptor(ProceedingJoinPoint pjp, com.gregorriegler.seamer.core.annotation.Seam seam) {
         if (this.seam != null) return;
 
-        this.seam = Seamer.intercept(
+        this.seam = Seamer.create(
             seam.value(),
             ProxyMethod.of(pjp.getTarget(), pjp.getSignature().getName())
         );

@@ -27,7 +27,7 @@ public class ClosureSeamTest {
     public static class ClosureDemo {
 
         public void entryPoint(String arg1, Integer arg2) {
-            String result = Seamer.intercept(
+            String result = Seamer.create(
                 SEAM_ID,
                 a -> blackbox(
                     (String) a[0],

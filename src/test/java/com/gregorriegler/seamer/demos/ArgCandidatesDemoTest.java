@@ -35,7 +35,7 @@ public class ArgCandidatesDemoTest {
     public static class ArgCandidatesDemo {
 
         public void entrypoint(String arg1, Integer arg2, SomeObject arg3) {
-            String result = Seamer.intercept(
+            String result = Seamer.create(
                 SEAM_ID,
                 (MethodWith3Arguments<String, Integer, SomeObject, String>) this::blackbox
             ).invokeAndRecord(arg1, arg2, arg3);

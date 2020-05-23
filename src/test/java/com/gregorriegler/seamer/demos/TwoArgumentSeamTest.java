@@ -27,7 +27,7 @@ public class TwoArgumentSeamTest {
         private static final Logger LOG = LoggerFactory.getLogger(SomeClass.class);
 
         public void entryPoint(String string, Integer integer) {
-            String result = Seamer.intercept(
+            String result = Seamer.create(
                 "TwoArgSeamTest",
                 (MethodWith2Arguments<String, Integer, String>) this::blackbox
             ).invokeAndRecord(string, integer);
