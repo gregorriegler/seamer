@@ -1,14 +1,14 @@
 package com.gregorriegler.seamer.core;
 
-public class SeamExecutor<T> {
+public class SeamInvoker<T> {
 
     private final Method<T> method;
 
-    public SeamExecutor(Method<T> method) {
+    public SeamInvoker(Method<T> method) {
         this.method = method;
     }
 
-    public T execute(Object... args) {
+    public T invoke(Object... args) {
         return method.invoke(args);
     }
 }

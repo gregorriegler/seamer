@@ -10,14 +10,14 @@ public class Seam<T> implements Serializable {
 
     private final ArgCandidates argCandidates = new ArgCandidates();
     private final SeamRecorder<T> recorder;
-    private final SeamExecutor<T> executor;
+    private final SeamInvoker<T> executor;
     private final SeamVerifier<T> verifier;
 
     public Method<T> method;
 
     public Seam(Method<T> method, InvocationRepository invocations) {
         this.method = method;
-        this.executor = new SeamExecutor<>(method);
+        this.executor = new SeamInvoker<>(method);
         this.recorder = new SeamRecorder<>(executor, invocations);
         this.verifier = new SeamVerifier<>(method, invocations);
     }

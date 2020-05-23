@@ -2,7 +2,7 @@ package com.gregorriegler.seamer;
 
 import com.gregorriegler.seamer.core.Method;
 import com.gregorriegler.seamer.core.Seam;
-import com.gregorriegler.seamer.core.SeamExecutor;
+import com.gregorriegler.seamer.core.SeamInvoker;
 import com.gregorriegler.seamer.core.SeamRecorder;
 import com.gregorriegler.seamer.file.FileInvocationRepository;
 import com.gregorriegler.seamer.file.FileMethodRepository;
@@ -47,7 +47,8 @@ public class Seams {
 
     public <T> SeamRecorder<T> createInterceptor(String seamId, Method<T> method) {
         return new SeamRecorder<>(
-            new SeamExecutor<>(method), new FileInvocationRepository(seamId, serializer)
+            new SeamInvoker<>(method),
+            new FileInvocationRepository(seamId, serializer)
         );
     }
 

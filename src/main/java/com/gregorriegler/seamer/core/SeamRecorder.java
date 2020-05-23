@@ -4,25 +4,25 @@ import java.io.Serializable;
 
 public class SeamRecorder<T> implements Serializable {
 
-    private final SeamExecutor<T> executor;
+    private final SeamInvoker<T> invoker;
     private final InvocationRepository invocations;
 
-    public SeamRecorder(SeamExecutor<T> executor, InvocationRepository invocations) {
+    public SeamRecorder(SeamInvoker<T> invoker, InvocationRepository invocations) {
         this.invocations = invocations;
-        this.executor = executor;
+        this.invoker = invoker;
     }
 
     public T invokeAndRecord(Object... args) {
-        T result = execute(args);
-        recordInvocation(args, result);
+        T result = invoke(args);
+        record(args, result);
         return result;
     }
 
-    public T execute(Object... args) {
-        return executor.execute(args);
+    public T invoke(Object... args) {
+        return invoker.invoke(args);
     }
 
-    public void recordInvocation(Object[] args, T result) {
+    public void record(Object[] args, T result) {
         invocations.record(Invocation.of(args, result));
     }
 }

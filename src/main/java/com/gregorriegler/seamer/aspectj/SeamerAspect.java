@@ -23,7 +23,7 @@ public class SeamerAspect {
         initializeInterceptor(pjp, seam);
 
         Object result = pjp.proceed();
-        this.seam.recordInvocation(pjp.getArgs(), result);
+        this.seam.record(pjp.getArgs(), result);
 
         return result;
     }

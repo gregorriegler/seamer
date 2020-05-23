@@ -34,11 +34,11 @@ public class SeamMethodInterceptor<T> implements MethodInterceptor {
                 seamId,
                 ProxyMethod.of(target, methodName)
             );
-            return seam.execute(args);
+            return seam.invoke(args);
         }
 
         T result = invoke(proxy, target, args);
-        seam.recordInvocation(args, result);
+        seam.record(args, result);
         return result;
     }
 
