@@ -8,17 +8,15 @@ import com.gregorriegler.seamer.file.FileResetter;
 public class Seamer {
 
     public static <T> SeamRecorder<T> create(final String seamId, Method<T> method) {
-        Seams seams = new Seams();
-        seams.add(seamId, method);
-        return seams.createRecorder(seamId, method);
+        return new Seams<T>().addToRecord(seamId, method);
+    }
+
+    public static <T> Seam<T> load(final String seamId) {
+        return new Seams<T>().byId(seamId).orElseThrow(FailedToLoad::new);
     }
 
     public static void verify(String seamId) {
         load(seamId).verify();
-    }
-
-    public static <T> Seam<T> load(final String seamId) {
-        return new Seams().<T>byId(seamId).orElseThrow(FailedToLoad::new);
     }
 
     public static void reset(String seamId) {

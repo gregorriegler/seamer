@@ -11,39 +11,23 @@ import java.util.Optional;
 
 import static com.gregorriegler.seamer.kryo.KryoFactory.createSerializer;
 
-public class Seams {
+public class Seams<T> {
 
-    private final KryoSerializer serializer;
+    public static final KryoSerializer SERIALIZER = createSerializer();
+    private final FileMethodRepository<T> methods;
 
     public Seams() {
-        serializer = createSerializer();
+        methods = new FileMethodRepository<>(SERIALIZER);
     }
 
-    public <T> void add(String seamId, Method<T> method) {
-        Seams.<T>methods(serializer).persist(seamId, method);
+    public SeamRecorder<T> addToRecord(String seamId, Method<T> method) {
+        methods.persist(seamId, method);
+        return new SeamRecorder<>(method, new FileInvocationRepository(seamId, SERIALIZER));
     }
 
-    public <T> Optional<Seam<T>> byId(String seamId) {
-        return Seams.<T>methods(serializer)
-            .byId(seamId)
-            .map(method -> createSeam(seamId, method));
+    public Optional<Seam<T>> byId(String seamId) {
+        return methods.byId(seamId)
+            .map(method -> new Seam<>(method, new FileInvocationRepository(seamId, SERIALIZER)));
     }
 
-    private static <T> FileMethodRepository<T> methods(KryoSerializer serializer) {
-        return new FileMethodRepository<>(serializer);
-    }
-
-    public <T> Seam<T> createSeam(String seamId, Method<T> method) {
-        return new Seam<>(
-            method,
-            new FileInvocationRepository(seamId, serializer)
-        );
-    }
-
-    public <T> SeamRecorder<T> createRecorder(String seamId, Method<T> method) {
-        return new SeamRecorder<>(
-            method,
-            new FileInvocationRepository(seamId, serializer)
-        );
-    }
 }
