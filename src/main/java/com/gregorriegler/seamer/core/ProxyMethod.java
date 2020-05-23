@@ -21,6 +21,7 @@ public class ProxyMethod<T> implements ArgsMethod<T> {
         this.methodName = methodName;
     }
 
+    // for deserialization
     private ProxyMethod() {
     }
 
