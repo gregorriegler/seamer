@@ -1,8 +1,8 @@
 package com.gregorriegler.seamer;
 
 import com.gregorriegler.seamer.core.Method;
-import com.gregorriegler.seamer.core.Seam;
 import com.gregorriegler.seamer.core.SeamRecorder;
+import com.gregorriegler.seamer.core.SeamRecordingsBuilder;
 import com.gregorriegler.seamer.core.SeamVerifier;
 import com.gregorriegler.seamer.file.FileInvocationRepository;
 import com.gregorriegler.seamer.file.FileMethodRepository;
@@ -21,14 +21,14 @@ public class Seams<T> {
         methods = new FileMethodRepository<>(SERIALIZER);
     }
 
-    public SeamRecorder<T> addToRecord(String seamId, Method<T> method) {
+    public SeamRecorder<T> create(String seamId, Method<T> method) {
         methods.persist(seamId, method);
         return new SeamRecorder<>(method, new FileInvocationRepository(seamId, SERIALIZER));
     }
 
-    public Optional<Seam<T>> byId(String seamId) {
+    public Optional<SeamRecordingsBuilder<T>> recordingsBuilderById(String seamId) {
         return methods.byId(seamId)
-            .map(method -> new Seam<>(method, new FileInvocationRepository(seamId, SERIALIZER)));
+            .map(method -> new SeamRecordingsBuilder<>(method, new FileInvocationRepository(seamId, SERIALIZER)));
     }
 
     public Optional<SeamVerifier<T>> verifierById(String seamId) {

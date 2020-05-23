@@ -24,7 +24,7 @@ public class ArgCandidatesDemoTest {
         demo = new ArgCandidatesDemo();
         demo.entrypoint(null, null, null); // persist seam
 
-        Seamer.load(SEAM_ID)
+        Seamer.customRecordings(SEAM_ID)
             .addArgCandidates(0, null, "hello", "world")
             .addArgCandidates(1, null, 1, 2, 3)
             .addArgCandidates(2, new SomeObject("hello", SomeObjectState.READY), new SomeObject("world", SomeObjectState.DONE))
