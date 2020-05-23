@@ -10,9 +10,13 @@ import java.lang.reflect.Method;
 
 public class SeamMethodInterceptor<T> implements MethodInterceptor {
 
-    private final String methodName;
-    private final String seamId;
+    private String methodName;
+    private String seamId;
     private SeamRecorder<T> seam;
+
+    // for deserialization
+    public SeamMethodInterceptor() {
+    }
 
     public SeamMethodInterceptor(String methodName, String seamId) {
         this.methodName = methodName;
