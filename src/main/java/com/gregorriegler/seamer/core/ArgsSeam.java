@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.function.Function;
 
 @FunctionalInterface
-public interface ArgsMethod<T> extends Function<Object[], T>, Method<T>, Serializable {
+public interface ArgsSeam<T> extends Function<Object[], T>, Seam<T>, Serializable {
 
     @Override
     default T invoke(Object... args) {

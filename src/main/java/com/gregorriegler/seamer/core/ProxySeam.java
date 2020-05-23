@@ -9,24 +9,24 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.Optional;
 
-public class ProxyMethod<T> implements ArgsMethod<T> {
+public class ProxySeam<T> implements ArgsSeam<T> {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ProxyMethod.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ProxySeam.class);
 
     private Object target;
     private String methodName;
 
-    private ProxyMethod(Object target, String methodName) {
+    private ProxySeam(Object target, String methodName) {
         this.target = target;
         this.methodName = methodName;
     }
 
     // for deserialization
-    private ProxyMethod() {
+    private ProxySeam() {
     }
 
-    public static <T> ProxyMethod<T> of(Object target, String methodName) {
-        return new ProxyMethod<>(target, methodName);
+    public static <T> ProxySeam<T> of(Object target, String methodName) {
+        return new ProxySeam<>(target, methodName);
     }
 
     @Override
@@ -49,7 +49,7 @@ public class ProxyMethod<T> implements ArgsMethod<T> {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ProxyMethod<?> that = (ProxyMethod<?>) o;
+        ProxySeam<?> that = (ProxySeam<?>) o;
         return Objects.equals(target, that.target) &&
             Objects.equals(methodName, that.methodName);
     }

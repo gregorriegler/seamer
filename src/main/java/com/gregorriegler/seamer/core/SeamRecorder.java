@@ -4,11 +4,11 @@ import java.io.Serializable;
 
 public class SeamRecorder<T> implements Serializable {
 
-    private final Method<T> method;
+    private final Seam<T> seam;
     private final InvocationRepository invocations;
 
-    public SeamRecorder(Method<T> method, InvocationRepository invocations) {
-        this.method = method;
+    public SeamRecorder(Seam<T> seam, InvocationRepository invocations) {
+        this.seam = seam;
         this.invocations = invocations;
     }
 
@@ -19,7 +19,7 @@ public class SeamRecorder<T> implements Serializable {
     }
 
     public T invoke(Object... args) {
-        return method.invoke(args);
+        return seam.invoke(args);
     }
 
     public void record(Object[] args, T result) {

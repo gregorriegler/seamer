@@ -1,12 +1,12 @@
 package com.gregorriegler.seamer;
 
-import com.gregorriegler.seamer.core.Method;
+import com.gregorriegler.seamer.core.Seam;
 import com.gregorriegler.seamer.core.SeamRecorder;
 import com.gregorriegler.seamer.core.SeamRecordingsBuilder;
 import com.gregorriegler.seamer.core.SeamVerifier;
 import com.gregorriegler.seamer.file.FileInvocationRepository;
-import com.gregorriegler.seamer.file.FileMethodRepository;
 import com.gregorriegler.seamer.file.FileResetter;
+import com.gregorriegler.seamer.file.FileSeamRepository;
 import com.gregorriegler.seamer.kryo.KryoSerializer;
 
 import static com.gregorriegler.seamer.kryo.KryoFactory.createSerializer;
@@ -15,14 +15,14 @@ public class Seamer<T> {
 
     public static final KryoSerializer SERIALIZER = createSerializer();
 
-    private final FileMethodRepository<T> methods;
+    private final FileSeamRepository<T> seams;
 
     public Seamer() {
-        this.methods = new FileMethodRepository<>(SERIALIZER);
+        this.seams = new FileSeamRepository<>(SERIALIZER);
     }
 
-    public static <T> SeamRecorder<T> create(final String seamId, Method<T> method) {
-        return new Seamer<T>().createSeam(seamId, method);
+    public static <T> SeamRecorder<T> create(final String seamId, Seam<T> seam) {
+        return new Seamer<T>().createSeam(seamId, seam);
     }
 
     public static <T> SeamRecordingsBuilder<T> customRecordings(String seamId) {
@@ -37,20 +37,20 @@ public class Seamer<T> {
         new FileResetter().reset(seamId);
     }
 
-    private SeamRecorder<T> createSeam(final String seamId, Method<T> method) {
-        methods.persist(seamId, method);
-        return new SeamRecorder<>(method, invocations(seamId));
+    private SeamRecorder<T> createSeam(final String seamId, Seam<T> seam) {
+        seams.persist(seamId, seam);
+        return new SeamRecorder<>(seam, invocations(seamId));
     }
 
     private SeamRecordingsBuilder<T> createCustomRecordings(String seamId) {
-        return methods.byId(seamId)
-            .map(method -> new SeamRecordingsBuilder<>(method, invocations(seamId)))
+        return seams.byId(seamId)
+            .map(seam -> new SeamRecordingsBuilder<>(seam, invocations(seamId)))
             .orElseThrow(FailedToLoad::new);
     }
 
     private void verifySeam(String seamId) {
-        methods.byId(seamId)
-            .map(method -> new SeamVerifier<>(method, invocations(seamId)))
+        seams.byId(seamId)
+            .map(seam -> new SeamVerifier<>(seam, invocations(seamId)))
             .orElseThrow(FailedToLoad::new)
             .verify();
     }

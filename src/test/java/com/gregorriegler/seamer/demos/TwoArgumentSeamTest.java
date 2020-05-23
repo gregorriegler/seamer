@@ -1,7 +1,7 @@
 package com.gregorriegler.seamer.demos;
 
 import com.gregorriegler.seamer.Seamer;
-import com.gregorriegler.seamer.core.MethodWith2Arguments;
+import com.gregorriegler.seamer.core.SeamWith2Arguments;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -29,7 +29,7 @@ public class TwoArgumentSeamTest {
         public void entryPoint(String string, Integer integer) {
             String result = Seamer.create(
                 "TwoArgSeamTest",
-                (MethodWith2Arguments<String, Integer, String>) this::blackbox
+                (SeamWith2Arguments<String, Integer, String>) this::blackbox
             ).invokeAndRecord(string, integer);
 
             LOG.info(result);

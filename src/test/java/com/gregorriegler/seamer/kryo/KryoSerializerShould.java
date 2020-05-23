@@ -1,6 +1,6 @@
 package com.gregorriegler.seamer.kryo;
 
-import com.gregorriegler.seamer.core.ProxyMethod;
+import com.gregorriegler.seamer.core.ProxySeam;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
@@ -16,11 +16,11 @@ public class KryoSerializerShould {
 
     @Test
     void serialize_and_deserialize_ProxyMethod() {
-        ProxyMethod<String> expected = ProxyMethod.of("someObject", "toString");
+        ProxySeam<String> expected = ProxySeam.of("someObject", "toString");
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
         serializer.serialize(expected, outputStream);
-        ProxyMethod<?> result = serializer.deserialize(from(outputStream), ProxyMethod.class);
+        ProxySeam<?> result = serializer.deserialize(from(outputStream), ProxySeam.class);
 
         assertThat(result).isEqualTo(expected);
     }

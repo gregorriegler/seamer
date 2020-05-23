@@ -1,7 +1,7 @@
 package com.gregorriegler.seamer.core;
 
 @FunctionalInterface
-public interface MethodWith3Arguments<A1, A2, A3, R> extends Method<R> {
+public interface SeamWith3Arguments<A1, A2, A3, R> extends Seam<R> {
 
     R apply(A1 a1, A2 a2, A3 a3);
 

@@ -6,16 +6,16 @@ import static org.hamcrest.Matchers.equalTo;
 public class SeamVerifier<T> {
     private final InvocationRepository invocations;
 
-    public Method<T> method;
+    public Seam<T> seam;
 
-    public SeamVerifier(Method<T> method, InvocationRepository invocations) {
-        this.method = method;
+    public SeamVerifier(Seam<T> seam, InvocationRepository invocations) {
+        this.seam = seam;
         this.invocations = invocations;
     }
 
     public void verify() {
         for (Invocation invocation : invocations.getAll()) {
-            T actual = method.invoke(invocation.getArgs());
+            T actual = seam.invoke(invocation.getArgs());
             assertThat(actual, equalTo(invocation.getResult()));
         }
     }

@@ -1,7 +1,7 @@
 package com.gregorriegler.seamer.demos;
 
 import com.gregorriegler.seamer.Seamer;
-import com.gregorriegler.seamer.core.MethodWith3Arguments;
+import com.gregorriegler.seamer.core.SeamWith3Arguments;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -37,7 +37,7 @@ public class ArgCandidatesDemoTest {
         public void entrypoint(String arg1, Integer arg2, SomeObject arg3) {
             String result = Seamer.create(
                 SEAM_ID,
-                (MethodWith3Arguments<String, Integer, SomeObject, String>) this::blackbox
+                (SeamWith3Arguments<String, Integer, SomeObject, String>) this::blackbox
             ).invokeAndRecord(arg1, arg2, arg3);
 
             LOG.info(result);
