@@ -2,18 +2,17 @@ package com.gregorriegler.seamer.demos;
 
 import com.gregorriegler.seamer.Seamer;
 import com.gregorriegler.seamer.core.MethodWith2Arguments;
-import com.gregorriegler.seamer.test.SeamerTest;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TwoArgSeamTest extends SeamerTest {
+public class TwoArgumentSeamTest {
 
     private static final String SEAM_ID = "TwoArgSeamTest";
 
     @BeforeAll
-    @Override
-    public void setup() {
+    public void recordInvocations() {
         Seamer.reset(SEAM_ID);
 
         SomeClass someClass = new SomeClass();
@@ -21,14 +20,8 @@ public class TwoArgSeamTest extends SeamerTest {
         for (int i = 0; i < 5; i++) {
             someClass.entryPoint("hello ", i);
         }
-
-        seam = Seamer.load(seamId());
     }
 
-    @Override
-    public String seamId() {
-        return SEAM_ID;
-    }
 
     public static class SomeClass {
         private static final Logger LOG = LoggerFactory.getLogger(SomeClass.class);
@@ -45,6 +38,10 @@ public class TwoArgSeamTest extends SeamerTest {
         public String blackbox(String arg1, Integer arg2) {
             return arg1 + arg2;
         }
+    }
 
+    @Test
+    void verify() {
+        Seamer.verify(SEAM_ID);
     }
 }

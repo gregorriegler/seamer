@@ -6,30 +6,22 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ClosureDemoTest {
+/**
+ * seam interacts with and changes state in the capturing class
+ */
+public class ClosureSeamTest {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ClosureDemoTest.class);
-    private static final String SEAM_ID = ClosureDemoTest.class.getName();
+    private static final Logger LOG = LoggerFactory.getLogger(ClosureSeamTest.class);
+    private static final String SEAM_ID = ClosureSeamTest.class.getName();
 
     @BeforeAll
-    public static void setup() {
+    public static void recordInvocations() {
         Seamer.reset(SEAM_ID);
 
         ClosureDemo closureDemo = new ClosureDemo();
-
         for (int i = 0; i < 5; i++) {
             closureDemo.entryPoint("hello ", i);
         }
-
-    }
-
-    public String seamId() {
-        return SEAM_ID;
-    }
-
-    @Test
-    void verify() {
-        Seamer.verify(seamId());
     }
 
     public static class ClosureDemo {
@@ -52,5 +44,10 @@ public class ClosureDemoTest {
             state += arg2;
             return arg1 + state;
         }
+    }
+
+    @Test
+    void verify() {
+        Seamer.verify(SEAM_ID);
     }
 }

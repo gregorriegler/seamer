@@ -2,19 +2,13 @@ package com.gregorriegler.seamer.demos;
 
 import com.gregorriegler.seamer.Seamer;
 import com.gregorriegler.seamer.core.MethodWith3Arguments;
-import com.gregorriegler.seamer.core.Seam;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.stream.Stream;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static java.util.Arrays.asList;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ArgCandidatesDemoTest {
@@ -34,28 +28,9 @@ public class ArgCandidatesDemoTest {
             .addArgCandidates(0, null, "hello", "world")
             .addArgCandidates(1, null, 1, 2, 3)
             .addArgCandidates(2, new SomeObject("hello", SomeObjectState.READY), new SomeObject("world", SomeObjectState.DONE))
+            .addArgCandidates(2, () -> asList(new SomeObject("foo", SomeObjectState.READY), new SomeObject("bar", SomeObjectState.DONE)))
             .shuffleArgsAndRecord();
     }
-
-    @ParameterizedTest
-    @MethodSource("invocations")
-    void testAllInvocations(Object[] args, Object expected) {
-        Seam<?> seam = Seamer.load(SEAM_ID);
-
-        Object actual = seam.execute(args);
-
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    void shouldVerify() {
-        Seamer.verify(SEAM_ID);
-    }
-
-    public Stream<Arguments> invocations() {
-        return Seamer.invocationsAsArguments(SEAM_ID);
-    }
-
 
     public static class ArgCandidatesDemo {
 
@@ -103,4 +78,10 @@ public class ArgCandidatesDemoTest {
     public enum SomeObjectState {
         READY, DONE
     }
+
+    @Test
+    void verify() {
+        Seamer.verify(SEAM_ID);
+    }
+
 }

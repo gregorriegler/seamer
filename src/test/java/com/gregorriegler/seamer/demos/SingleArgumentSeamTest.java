@@ -2,37 +2,28 @@ package com.gregorriegler.seamer.demos;
 
 import com.gregorriegler.seamer.Seamer;
 import com.gregorriegler.seamer.core.MethodWith1Argument;
-import com.gregorriegler.seamer.test.SeamerTest;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
-public class OneArgSeamTest extends SeamerTest {
+public class SingleArgumentSeamTest {
 
-    private static final String SEAM_ID = "OneArgSeamTest";
+    private static final String SEAM_ID = "SingleArgumentSeam";
 
     @BeforeAll
-    @Override
-    public void setup() {
+    public void recordInvocations() {
         Seamer.reset(SEAM_ID);
 
         SomeClass someClass = new SomeClass();
-
         for (int i = 0; i < 5; i++) {
             someClass.entryPoint(i);
         }
-
-        seam = Seamer.load(SEAM_ID);
-    }
-
-    @Override
-    public String seamId() {
-        return SEAM_ID;
     }
 
     public static class SomeClass {
 
         public void entryPoint(Integer arg1) {
             Seamer.intercept(
-                "OneArgSeamTest",
+                SEAM_ID,
                 (MethodWith1Argument<Integer, Integer>) this::blackbox
             ).invokeAndRecord(arg1);
         }
@@ -40,6 +31,10 @@ public class OneArgSeamTest extends SeamerTest {
         public Integer blackbox(Integer i) {
             return i * 2;
         }
+    }
 
+    @Test
+    void verify() {
+        Seamer.verify(SEAM_ID);
     }
 }
