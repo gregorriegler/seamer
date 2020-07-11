@@ -36,12 +36,7 @@ public class Sqlite {
             PreparedStatement preparedStatement = connection.prepareStatement(command);
             int i = 1;
             for (Object param : params) {
-                if (param instanceof String) {
-                    preparedStatement.setString(i, ((String) param));
-                } else if (param instanceof byte[]) {
-                    preparedStatement.setBytes(i, (byte[]) param);
-                }
-
+                preparedStatement.setObject(i, param);
                 i++;
             }
 
