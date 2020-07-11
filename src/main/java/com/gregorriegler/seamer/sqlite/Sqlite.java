@@ -5,9 +5,11 @@ import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Optional;
 
 public class Sqlite {
     private static final Logger LOG = LoggerFactory.getLogger(Sqlite.class);
@@ -16,17 +18,6 @@ public class Sqlite {
 
     public Sqlite(String url) {
         this.connection = connect(url);
-    }
-
-    public void createSchema() {
-        command(
-            "drop table if exists seams",
-            "create table seams (name string)"
-        );
-    }
-
-    public String getSeam() {
-        return queryOne("select * from seams", "name");
     }
 
     public void command(String... commands) {
@@ -40,24 +31,45 @@ public class Sqlite {
         }
     }
 
-    private String queryOne(String query, String column) {
-        String resultAsString = "";
-        try{
-            Statement statement = createStatement();
-            ResultSet result = statement.executeQuery(query);
-            if (result.next()) {
-                resultAsString = result.getString(column);
+    public void parameterizedCommand(String command, Object... params) {
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(command);
+            int i = 1;
+            for (Object param : params) {
+                if (param instanceof String) {
+                    preparedStatement.setString(i, ((String) param));
+                } else if (param instanceof byte[]) {
+                    preparedStatement.setBytes(i, (byte[]) param);
+                }
+
+                i++;
             }
+
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             handleError(e);
         }
-        return resultAsString;
     }
 
-    public Statement createStatement() throws SQLException {
-        Statement statement = this.connection.createStatement();
-        statement.setQueryTimeout(30);
-        return statement;
+    public Optional<byte[]> queryBytes(String query, String param) {
+        return queryOne(query, param, byte[].class);
+    }
+
+    public <T> Optional<T> queryOne(String query, String param, Class<T> clazz) {
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, param);
+            ResultSet resultSet = statement.executeQuery();
+            if(resultSet.next()) {
+                byte[] bytes = resultSet.getBytes(1);
+                return Optional.of((T) bytes);
+            } else {
+                return Optional.empty();
+            }
+        } catch (SQLException e) {
+            handleError(e);
+            return Optional.empty();
+        }
     }
 
     public void close() {
@@ -67,6 +79,12 @@ public class Sqlite {
         } catch (SQLException e) {
             handleError(e);
         }
+    }
+
+    private Statement createStatement() throws SQLException {
+        Statement statement = this.connection.createStatement();
+        statement.setQueryTimeout(30);
+        return statement;
     }
 
     private Connection connect(String url) {
