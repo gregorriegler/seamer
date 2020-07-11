@@ -7,13 +7,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class SqliteShould {
 
     @Test
-    void create_a_sqlite_db() {
+    void create_a_db() {
         String expectedSeam = "expected seam name";
         String actualSeam = "";
 
         Sqlite sqlite = new Sqlite("jdbc:sqlite::memory:");
         sqlite.createSchema();
-        sqlite.executeUpdate("insert into seams values('expected seam name')");
+        sqlite.command("insert into seams values('expected seam name')");
         actualSeam = sqlite.getSeam();
         sqlite.close();
 

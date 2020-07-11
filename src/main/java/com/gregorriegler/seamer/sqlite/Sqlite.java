@@ -12,26 +12,25 @@ import java.sql.Statement;
 public class Sqlite {
     private static final Logger LOG = LoggerFactory.getLogger(Sqlite.class);
 
-    Connection connection;
+    private final Connection connection;
 
     public Sqlite(String url) {
         this.connection = connect(url);
     }
 
     public void createSchema() {
-        try {
-            Statement statement = createStatement();
-            statement.executeUpdate("drop table if exists seams");
-            statement.executeUpdate("create table seams (name string)");
-        } catch (SQLException e) {
-            handleError(e);
-        }
+        command(
+            "drop table if exists seams",
+            "create table seams (name string)"
+        );
     }
 
-    public void executeUpdate(String sql) {
+    public void command(String... commands) {
         try {
             Statement statement = createStatement();
-            statement.executeUpdate(sql);
+            for (String sql : commands) {
+                statement.executeUpdate(sql);
+            }
         } catch (SQLException e) {
             handleError(e);
         }
@@ -42,7 +41,7 @@ public class Sqlite {
         try{
             Statement statement = createStatement();
             ResultSet result = statement.executeQuery("select * from seams");
-            while (result.next()) {
+            if (result.next()) {
                 resultAsString = result.getString("name");
             }
         } catch (SQLException e) {
