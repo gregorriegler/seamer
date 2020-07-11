@@ -25,6 +25,10 @@ public class Sqlite {
         );
     }
 
+    public String getSeam() {
+        return queryOne("select * from seams", "name");
+    }
+
     public void command(String... commands) {
         try {
             Statement statement = createStatement();
@@ -36,13 +40,13 @@ public class Sqlite {
         }
     }
 
-    public String getSeam() {
+    private String queryOne(String query, String column) {
         String resultAsString = "";
         try{
             Statement statement = createStatement();
-            ResultSet result = statement.executeQuery("select * from seams");
+            ResultSet result = statement.executeQuery(query);
             if (result.next()) {
-                resultAsString = result.getString("name");
+                resultAsString = result.getString(column);
             }
         } catch (SQLException e) {
             handleError(e);
