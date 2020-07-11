@@ -22,7 +22,7 @@ class SeamShould {
         assertThatThrownBy(() -> new SeamWithId<>("id", null)).isInstanceOf(IllegalArgumentException.class);
     }
 
-    private ProxySeam<Object> seamStub() {
-        return ProxySeam.of(this, "test");
+    private ProxySuture<Object> seamStub() {
+        return ProxySuture.of(this, "test");
     }
 }

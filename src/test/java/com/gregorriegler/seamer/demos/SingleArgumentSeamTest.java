@@ -1,7 +1,7 @@
 package com.gregorriegler.seamer.demos;
 
 import com.gregorriegler.seamer.Seamer;
-import com.gregorriegler.seamer.core.SeamWith1Argument;
+import com.gregorriegler.seamer.core.SutureWith1Argument;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -29,7 +29,7 @@ public class SingleArgumentSeamTest {
         public void entryPoint(Integer arg1) {
             Seamer.create(
                 SEAM_ID,
-                (SeamWith1Argument<Integer, Integer>) this::blackbox
+                (SutureWith1Argument<Integer, Integer>) this::blackbox
             ).invokeAndRecord(arg1);
         }
 

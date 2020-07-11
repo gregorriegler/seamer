@@ -9,24 +9,24 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.Optional;
 
-public class ProxySeam<T> implements ArgsSeam<T> {
+public class ProxySuture<T> implements ArgsSuture<T> {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ProxySeam.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ProxySuture.class);
 
     private Object target;
     private String methodName;
 
-    private ProxySeam(Object target, String methodName) {
+    private ProxySuture(Object target, String methodName) {
         this.target = target;
         this.methodName = methodName;
     }
 
     // for deserialization
-    private ProxySeam() {
+    private ProxySuture() {
     }
 
-    public static <T> ProxySeam<T> of(Object target, String methodName) {
-        return new ProxySeam<>(target, methodName);
+    public static <T> ProxySuture<T> of(Object target, String methodName) {
+        return new ProxySuture<>(target, methodName);
     }
 
     @Override
@@ -49,7 +49,7 @@ public class ProxySeam<T> implements ArgsSeam<T> {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ProxySeam<?> that = (ProxySeam<?>) o;
+        ProxySuture<?> that = (ProxySuture<?>) o;
         return Objects.equals(target, that.target) &&
             Objects.equals(methodName, that.methodName);
     }

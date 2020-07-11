@@ -3,20 +3,20 @@ package com.gregorriegler.seamer.core;
 public class SeamWithId<T> {
 
     private final String id;
-    private final Seam<T> seam;
+    private final Suture<T> suture;
 
-    public SeamWithId(String id, Seam<T> seam) {
+    public SeamWithId(String id, Suture<T> suture) {
         if(id == null) throw new IllegalArgumentException("id is mandatory");
-        if(seam == null) throw new IllegalArgumentException("seam is mandatory");
+        if(suture == null) throw new IllegalArgumentException("seam is mandatory");
         this.id = id;
-        this.seam = seam;
+        this.suture = suture;
     }
 
     public String id() {
         return id;
     }
 
-    public Seam<T> seam() {
-        return seam;
+    public Suture<T> seam() {
+        return suture;
     }
 }

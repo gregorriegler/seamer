@@ -1,7 +1,7 @@
 package com.gregorriegler.seamer.core;
 
 @FunctionalInterface
-public interface SeamWith2Arguments<A1, A2, R> extends Seam<R> {
+public interface SutureWith2Arguments<A1, A2, R> extends Suture<R> {
 
     R apply(A1 a1, A2 a2);
 

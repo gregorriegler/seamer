@@ -3,7 +3,7 @@ package com.gregorriegler.seamer.core;
 import java.util.function.Function;
 
 @FunctionalInterface
-public interface SeamWith1Argument<A1, R> extends Function<A1, R>, Seam<R> {
+public interface SutureWith1Argument<A1, R> extends Function<A1, R>, Suture<R> {
 
     @Override
     @SuppressWarnings("unchecked")

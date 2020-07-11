@@ -1,7 +1,7 @@
 package com.gregorriegler.seamer.aspectj;
 
 import com.gregorriegler.seamer.Seamer;
-import com.gregorriegler.seamer.core.ProxySeam;
+import com.gregorriegler.seamer.core.ProxySuture;
 import com.gregorriegler.seamer.core.SeamRecorder;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -33,7 +33,7 @@ public class SeamerAspect {
 
         this.seam = Seamer.create(
             seam.value(),
-            ProxySeam.of(pjp.getTarget(), pjp.getSignature().getName())
+            ProxySuture.of(pjp.getTarget(), pjp.getSignature().getName())
         );
     }
 }
