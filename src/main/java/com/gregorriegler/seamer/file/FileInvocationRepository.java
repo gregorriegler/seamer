@@ -18,7 +18,7 @@ public class FileInvocationRepository implements InvocationRepository {
 
     private final Serializer serializer;
 
-    private final String seamId;
+    public final String seamId;
 
     public FileInvocationRepository(String seamId, Serializer serializer) {
         this.seamId = seamId;
@@ -27,7 +27,7 @@ public class FileInvocationRepository implements InvocationRepository {
     }
 
     @Override
-    public void record(Invocation invocation) {
+    public void record(String seamId, Invocation invocation) {
         try {
             FileOutputStream outputStream = new FileOutputStream(FileLocation.invocationsFile(seamId), true);
             serializer.serialize(invocation, outputStream);
@@ -37,9 +37,9 @@ public class FileInvocationRepository implements InvocationRepository {
     }
 
     @Override
-    public List<Invocation> getAll() {
+    public List<Invocation> getAll(String seamId) {
         try {
-            FileInputStream inputStream = new FileInputStream(FileLocation.invocationsFile(this.seamId));
+            FileInputStream inputStream = new FileInputStream(FileLocation.invocationsFile(seamId));
             return serializer.deserializeList(inputStream, Invocation.class);
         } catch (FileNotFoundException e) {
             LOG.error("found no recorded invocations for seam '{}'", this.seamId, e);

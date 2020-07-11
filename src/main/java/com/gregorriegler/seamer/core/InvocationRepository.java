@@ -3,7 +3,7 @@ package com.gregorriegler.seamer.core;
 import java.util.List;
 
 public interface InvocationRepository {
-    void record(Invocation invocation);
+    void record(String seamId, Invocation invocation);
 
-    List<Invocation> getAll();
+    List<Invocation> getAll(String seamId);
 }

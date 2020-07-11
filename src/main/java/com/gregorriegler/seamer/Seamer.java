@@ -39,18 +39,18 @@ public class Seamer<T> {
 
     private SeamRecorder<T> createSeam(final String seamId, Seam<T> seam) {
         seams.persist(seamId, seam);
-        return new SeamRecorder<>(seam, invocations(seamId));
+        return new SeamRecorder<>(seamId, seam, invocations(seamId));
     }
 
     private SeamRecordingsBuilder<T> createCustomRecordings(String seamId) {
         return seams.byId(seamId)
-            .map(seam -> new SeamRecordingsBuilder<>(seam, invocations(seamId)))
+            .map(seam -> new SeamRecordingsBuilder<>(seamId, seam, invocations(seamId)))
             .orElseThrow(FailedToLoad::new);
     }
 
     private void verifySeam(String seamId) {
         seams.byId(seamId)
-            .map(seam -> new SeamVerifier<>(seam, invocations(seamId)))
+            .map(seam -> new SeamVerifier<>(seamId, seam, invocations(seamId)))
             .orElseThrow(FailedToLoad::new)
             .verify();
     }
