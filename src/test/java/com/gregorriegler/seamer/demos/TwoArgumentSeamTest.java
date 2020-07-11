@@ -2,7 +2,7 @@ package com.gregorriegler.seamer.demos;
 
 import com.gregorriegler.seamer.Seamer;
 import com.gregorriegler.seamer.core.SeamWith2Arguments;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +11,7 @@ public class TwoArgumentSeamTest {
 
     private static final String SEAM_ID = "TwoArgSeamTest";
 
-    @BeforeAll
+    @BeforeEach
     public void recordInvocations() {
         Seamer.reset(SEAM_ID);
 

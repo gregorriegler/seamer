@@ -2,14 +2,14 @@ package com.gregorriegler.seamer.demos;
 
 import com.gregorriegler.seamer.Seamer;
 import com.gregorriegler.seamer.core.SeamWith1Argument;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class SingleArgumentSeamTest {
 
     private static final String SEAM_ID = "SingleArgumentSeam";
 
-    @BeforeAll
+    @BeforeEach
     public void recordInvocations() {
         Seamer.reset(SEAM_ID);
 

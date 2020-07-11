@@ -2,14 +2,14 @@ package com.gregorriegler.seamer.demos;
 
 import com.gregorriegler.seamer.Seamer;
 import com.gregorriegler.seamer.cglib.SeamerCglibFactory;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class CglibProxySeamTest {
 
     public static final String SEAM_ID = CglibProxySeamTest.class.getName();
 
-    @BeforeAll
+    @BeforeEach
     void recordInvocations() {
         Seamer.reset(SEAM_ID);
 
