@@ -18,10 +18,9 @@ This is where Seamer comes in handy.
 Seamer allows you to intercept the method, and record all invocations and results like the following:
 
 ```
-String result = Seamer.intercept(
-    "MySeam",  // this is just an identifying name of your choice
-    this.getClass(),
-    (SignatureWith2Arguments<String, Integer, String>) this::someReallyComplicatedLegacyMethod
+String result = Seamer.create(
+    "MySeam",  // this is just an id of your choice
+    (InvokableWith2Arguments<String, Integer, String>) this::someReallyComplicatedLegacyMethod
 ).invoke(param1, param2);
 
 doSometingWith(result);
@@ -34,37 +33,23 @@ Or, you would record some invocations using the following code.
 
 ```java
 // shuffles given argument candidates, records all possible scenarios and its results.
-Seamer.load("MySeam", ClassCapturingTheSeam.class)
-            .addArgCandidates(0, "hello", "world", null)
-            .addArgCandidates(1, () -> asList(1, 2, 3))
-            .shuffleArgsAndExecute();
+Seamer.customRecordings("MySeam")
+    .addArgCandidates(0, "hello", "world", null)
+    .addArgCandidates(1, () -> asList(1, 2, 3))
+    .shuffleArgsAndExecute();
 ```
-
-These results can then get verified in a test-harness.
 
 #### Verifying the Seam in a test-harness
 You may now setup a test that replays all recorded invocations and verifies if the code is still doing what it is supposed to do.
-It's really easy.
-```java
-public class EverythingStillWorkingTest extends SeamerTest {
-    @Override
-    public Class<?> capturingClass() {
-        return ClassCapturingTheSeam.class;
-    }
 
-    @Override
-    public String seamId() {
-        return "MySeam";
-    }
+```java
+@Test
+void verify_everything_still_works() {
+    Seamer.verify("MySeam");
 }
 ```
 
 And that's it. you may now refactor the code using this test as a feedback tool.
-
-Another way to verify the Seam without a JUnit TestCase is to run the following code:
-```java
-Seamer.load("MySeam", ClassCapturingTheSeam.class).verify();
-```
 
 #### Create a seam via Proxy
 ##### Spring+AspectJ
@@ -93,8 +78,6 @@ class SeamerConfig {
 ```java
 SeamerCglibFactory.createProxySeam(ClassCaputringTheSeam.class, "legacyMethod", "MySeam")
 ```
-
-
 
 
 #### Suture
