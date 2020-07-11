@@ -4,6 +4,7 @@ import com.gregorriegler.seamer.core.Seam;
 import com.gregorriegler.seamer.core.SeamRecorder;
 import com.gregorriegler.seamer.core.SeamRecordingsBuilder;
 import com.gregorriegler.seamer.core.SeamVerifier;
+import com.gregorriegler.seamer.core.SeamWithId;
 import com.gregorriegler.seamer.file.FileInvocationRepository;
 import com.gregorriegler.seamer.file.FileResetter;
 import com.gregorriegler.seamer.file.FileSeamRepository;
@@ -22,7 +23,8 @@ public class Seamer<T> {
     }
 
     public static <T> SeamRecorder<T> create(final String seamId, Seam<T> seam) {
-        return new Seamer<T>().createSeam(seamId, seam);
+        SeamWithId<T> seamWithId = new SeamWithId<>(seamId, seam);
+        return new Seamer<T>().startRecording(seamWithId);
     }
 
     public static <T> SeamRecordingsBuilder<T> customRecordings(String seamId) {
@@ -37,20 +39,20 @@ public class Seamer<T> {
         new FileResetter().reset(seamId);
     }
 
-    private SeamRecorder<T> createSeam(final String seamId, Seam<T> seam) {
-        seams.persist(seamId, seam);
-        return new SeamRecorder<>(seamId, seam, invocations());
+    private SeamRecorder<T> startRecording(SeamWithId<T> seamWithId) {
+        seams.persist(seamWithId);
+        return new SeamRecorder<>(seamWithId, invocations());
     }
 
     private SeamRecordingsBuilder<T> createCustomRecordings(String seamId) {
         return seams.byId(seamId)
-            .map(seam -> new SeamRecordingsBuilder<>(seamId, seam, invocations()))
+            .map(seamWithId -> new SeamRecordingsBuilder<>(seamWithId, invocations()))
             .orElseThrow(FailedToLoad::new);
     }
 
     private void verifySeam(String seamId) {
         seams.byId(seamId)
-            .map(seam -> new SeamVerifier<>(seamId, seam, invocations()))
+            .map(seamWithId -> new SeamVerifier<T>(seamWithId, invocations()))
             .orElseThrow(FailedToLoad::new)
             .verify();
     }

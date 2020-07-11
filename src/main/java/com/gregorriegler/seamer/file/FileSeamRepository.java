@@ -3,6 +3,7 @@ package com.gregorriegler.seamer.file;
 import com.gregorriegler.seamer.core.ProxySeam;
 import com.gregorriegler.seamer.core.Seam;
 import com.gregorriegler.seamer.core.SeamRepository;
+import com.gregorriegler.seamer.core.SeamWithId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,13 +23,13 @@ public class FileSeamRepository<T> implements SeamRepository<T> {
     }
 
     @Override
-    public void persist(String seamId, Seam<T> seam) {
+    public void persist(SeamWithId seamWithId) {
         try {
-            FileLocation.createSeamDir(seamId);
-            File seamFile = FileLocation.seamFile(seamId);
+            FileLocation.createSeamDir(seamWithId.id());
+            File seamFile = FileLocation.seamFile(seamWithId.id());
             if (seamFile.exists()) return;
             LOG.info("persisting seam at {}", seamFile.getAbsolutePath());
-            serializer.serialize(seam, new FileOutputStream(seamFile));
+            serializer.serialize(seamWithId.seam(), new FileOutputStream(seamFile));
         } catch (FileNotFoundException e) {
             LOG.error("failed to persist seam", e);
         }
@@ -36,8 +37,8 @@ public class FileSeamRepository<T> implements SeamRepository<T> {
 
     @SuppressWarnings("unchecked")
     @Override
-    public Optional<Seam<T>> byId(String seamId) {
-        return inputStream(seamId).map(stream -> (Seam<T>) serializer.deserialize(stream, Seam.class));
+    public Optional<SeamWithId<T>> byId(String seamId) {
+        return inputStream(seamId).map(stream -> (Seam<T>) serializer.deserialize(stream, Seam.class)).map(seam -> new SeamWithId<>(seamId, seam));
     }
 
     @SuppressWarnings("unchecked")
