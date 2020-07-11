@@ -19,4 +19,8 @@ public class Seam<T> {
     public Invokable<T> seam() {
         return invokable;
     }
+
+    public void verify(Invocations invocations) {
+        new SeamVerifier<T>(this, invocations).verify();
+    }
 }

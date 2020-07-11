@@ -4,7 +4,6 @@ import com.gregorriegler.seamer.core.Invokable;
 import com.gregorriegler.seamer.core.Seam;
 import com.gregorriegler.seamer.core.SeamRecorder;
 import com.gregorriegler.seamer.core.SeamRecordingsBuilder;
-import com.gregorriegler.seamer.core.SeamVerifier;
 import com.gregorriegler.seamer.file.FileInvocations;
 import com.gregorriegler.seamer.file.FileResetter;
 import com.gregorriegler.seamer.file.FileSeamRepository;
@@ -52,9 +51,8 @@ public class Seamer<T> {
 
     private void verifySeam(String seamId) {
         seams.byId(seamId)
-            .map(seam -> new SeamVerifier<>(seam, invocations()))
             .orElseThrow(FailedToLoad::new)
-            .verify();
+            .verify(invocations());
     }
 
     private static FileInvocations invocations() {
