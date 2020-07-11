@@ -1,29 +1,33 @@
 package com.gregorriegler.seamer.core;
 
-import java.io.Serializable;
+import java.util.List;
+import java.util.function.Supplier;
 
-public class SeamRecorder<T> implements Serializable {
+import static java.util.Arrays.asList;
 
-    private Seam<T> seam;
-    private final Invocations invocations;
+public class SeamRecorder<T> {
 
-    public SeamRecorder(Seam<T> seam, Invocations invocations) {
+    private final ArgCandidates argCandidates = new ArgCandidates();
+    private final Seam<T> seam;
+
+    public SeamRecorder(Seam<T> seam) {
         this.seam = seam;
-        this.invocations = invocations;
     }
 
-    public T invokeAndRecord(Object... args) {
-        T result = invoke(args);
-        record(args, result);
-        return result;
+    public SeamRecorder<T> addArgCandidates(int i, Object... candidates) {
+        argCandidates.addCandidates(i, asList(candidates));
+        return this;
     }
 
-    // todo encapsulation
-    public T invoke(Object... args) {
-        return seam.seam().invoke(args);
+    public SeamRecorder<T> addArgCandidates(int i, Supplier<List<Object>> supplier) {
+        argCandidates.addCandidates(i, supplier);
+        return this;
     }
 
-    public void record(Object[] args, T result) {
-        invocations.record(seam.id(), Invocation.of(args, result));
+    public void shuffleArgsAndRecord() {
+        List<Object[]> argCombinations = argCandidates.shuffle();
+        for (Object[] args : argCombinations) {
+            seam.invokeAndRecord(args);
+        }
     }
 }

@@ -2,7 +2,7 @@ package com.gregorriegler.seamer.aspectj;
 
 import com.gregorriegler.seamer.Seamer;
 import com.gregorriegler.seamer.core.ProxyInvokable;
-import com.gregorriegler.seamer.core.SeamRecorder;
+import com.gregorriegler.seamer.core.Seam;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -11,7 +11,7 @@ import org.aspectj.lang.annotation.Pointcut;
 @Aspect
 public class SeamerAspect {
 
-    private SeamRecorder seam;
+    private Seam seam;
 
     @Pointcut("@annotation(seam) && execution(* *(..))")
     public void callAt(com.gregorriegler.seamer.core.annotation.Seam seam) {

@@ -1,7 +1,7 @@
 package com.gregorriegler.seamer.file;
 
+import com.gregorriegler.seamer.core.Invocations;
 import com.gregorriegler.seamer.core.Invokable;
-import com.gregorriegler.seamer.core.ProxyInvokable;
 import com.gregorriegler.seamer.core.Seam;
 import com.gregorriegler.seamer.core.SeamRepository;
 import org.slf4j.Logger;
@@ -37,14 +37,10 @@ public class FileSeamRepository<T> implements SeamRepository<T> {
 
     @SuppressWarnings("unchecked")
     @Override
-    public Optional<Seam<T>> byId(String seamId) {
-        return inputStream(seamId).map(stream -> (Invokable<T>) serializer.deserialize(stream, Invokable.class)).map(seam -> new Seam<>(seamId, seam));
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public Optional<ProxyInvokable<T>> proxyById(String seamId) {
-        return inputStream(seamId).map(stream -> serializer.deserialize(stream, ProxyInvokable.class));
+    public Optional<Seam<T>> byId(String seamId, Invocations invocations) {
+        return inputStream(seamId)
+            .map(stream -> (Invokable<T>) serializer.deserialize(stream, Invokable.class))
+            .map(seam -> new Seam<>(seamId, seam, invocations));
     }
 
     private Optional<FileInputStream> inputStream(String seamId) {

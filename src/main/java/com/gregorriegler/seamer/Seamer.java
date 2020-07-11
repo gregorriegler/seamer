@@ -1,62 +1,58 @@
 package com.gregorriegler.seamer;
 
+import com.gregorriegler.seamer.core.Invocations;
 import com.gregorriegler.seamer.core.Invokable;
 import com.gregorriegler.seamer.core.Seam;
 import com.gregorriegler.seamer.core.SeamRecorder;
-import com.gregorriegler.seamer.core.SeamRecordingsBuilder;
+import com.gregorriegler.seamer.core.SeamRepository;
 import com.gregorriegler.seamer.file.FileInvocations;
 import com.gregorriegler.seamer.file.FileResetter;
 import com.gregorriegler.seamer.file.FileSeamRepository;
-import com.gregorriegler.seamer.kryo.KryoSerializer;
 
 import static com.gregorriegler.seamer.kryo.KryoFactory.createSerializer;
 
 public class Seamer<T> {
 
-    public static final KryoSerializer SERIALIZER = createSerializer();
-
-    private final FileSeamRepository<T> seams;
+    private final SeamRepository<T> seams;
+    private final Invocations invocations;
 
     public Seamer() {
-        this.seams = new FileSeamRepository<>(SERIALIZER);
+        this.seams = new FileSeamRepository<>(createSerializer());
+        this.invocations = new FileInvocations(createSerializer());
     }
 
-    public static <T> SeamRecorder<T> create(final String seamId, Invokable<T> invokable) {
-        Seam<T> seam = new Seam<>(seamId, invokable);
-        return new Seamer<T>().startRecording(seam);
+    public static <T> Seam<T> create(String seamId, Invokable<T> invokable) {
+        return new Seamer<T>().persist(seamId, invokable);
     }
 
-    public static <T> SeamRecordingsBuilder<T> customRecordings(String seamId) {
+    private Seam<T> persist(String seamId, Invokable<T> invokable) {
+        Seam<T> seam = new Seam<>(seamId, invokable, invocations);
+        seams.persist(seam);
+        return seam;
+    }
+
+    public static <T> SeamRecorder<T> customRecordings(String seamId) {
         return new Seamer<T>().createCustomRecordings(seamId);
+    }
+
+    private SeamRecorder<T> createCustomRecordings(String seamId) {
+        return seams.byId(seamId, invocations)
+            .map(SeamRecorder::new)
+            .orElseThrow(FailedToLoad::new);
     }
 
     public static <T> void verify(String seamId) {
         new Seamer<T>().verifySeam(seamId);
     }
 
+    private void verifySeam(String seamId) {
+        seams.byId(seamId, invocations)
+            .orElseThrow(FailedToLoad::new)
+            .verify();
+    }
+
     public static void reset(String seamId) {
         new FileResetter().reset(seamId);
-    }
-
-    private SeamRecorder<T> startRecording(Seam<T> seam) {
-        seams.persist(seam);
-        return new SeamRecorder<>(seam, invocations());
-    }
-
-    private SeamRecordingsBuilder<T> createCustomRecordings(String seamId) {
-        return seams.byId(seamId)
-            .map(seam -> new SeamRecordingsBuilder<>(seam, invocations()))
-            .orElseThrow(FailedToLoad::new);
-    }
-
-    private void verifySeam(String seamId) {
-        seams.byId(seamId)
-            .orElseThrow(FailedToLoad::new)
-            .verify(invocations());
-    }
-
-    private static FileInvocations invocations() {
-        return new FileInvocations(SERIALIZER);
     }
 
     public static class FailedToLoad extends RuntimeException {
