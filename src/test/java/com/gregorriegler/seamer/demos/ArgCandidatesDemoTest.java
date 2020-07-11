@@ -32,6 +32,11 @@ public class ArgCandidatesDemoTest {
             .shuffleArgsAndRecord();
     }
 
+    @Test
+    void verify() {
+        Seamer.verify(SEAM_ID);
+    }
+
     public static class ArgCandidatesDemo {
 
         public void entrypoint(String arg1, Integer arg2, SomeObject arg3) {
@@ -53,6 +58,7 @@ public class ArgCandidatesDemoTest {
     }
 
     private static class SomeObject {
+
         private final String title;
         private final SomeObjectState state;
 
@@ -77,11 +83,7 @@ public class ArgCandidatesDemoTest {
 
     public enum SomeObjectState {
         READY, DONE
-    }
 
-    @Test
-    void verify() {
-        Seamer.verify(SEAM_ID);
     }
 
 }

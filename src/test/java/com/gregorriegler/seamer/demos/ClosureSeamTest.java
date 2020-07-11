@@ -24,6 +24,11 @@ public class ClosureSeamTest {
         }
     }
 
+    @Test
+    void verify() {
+        Seamer.verify(SEAM_ID);
+    }
+
     public static class ClosureDemo {
 
         public void entryPoint(String arg1, Integer arg2) {
@@ -44,10 +49,5 @@ public class ClosureSeamTest {
             state += arg2;
             return arg1 + state;
         }
-    }
-
-    @Test
-    void verify() {
-        Seamer.verify(SEAM_ID);
     }
 }

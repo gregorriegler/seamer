@@ -19,6 +19,11 @@ public class SingleArgumentSeamTest {
         }
     }
 
+    @Test
+    void verify() {
+        Seamer.verify(SEAM_ID);
+    }
+
     public static class SomeClass {
 
         public void entryPoint(Integer arg1) {
@@ -31,10 +36,6 @@ public class SingleArgumentSeamTest {
         public Integer blackbox(Integer i) {
             return i * 2;
         }
-    }
 
-    @Test
-    void verify() {
-        Seamer.verify(SEAM_ID);
     }
 }

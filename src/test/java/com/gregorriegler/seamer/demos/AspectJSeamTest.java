@@ -1,6 +1,7 @@
 package com.gregorriegler.seamer.demos;
 
 import com.gregorriegler.seamer.Seamer;
+import com.gregorriegler.seamer.core.annotation.Seam;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -20,20 +21,21 @@ public class AspectJSeamTest {
         aspectJDemo.blackbox("world", 4);
     }
 
+    @Test
+    void verify() {
+        Seamer.verify(SEAM_ID);
+    }
+
     public static class AspectJDemo {
 
         public String doNotProxyThis(String arg1) {
             return arg1;
         }
 
-        @com.gregorriegler.seamer.core.annotation.Seam(SEAM_ID)
+        @Seam(SEAM_ID)
         public String blackbox(String arg1, Integer arg2) {
             return arg1 + arg2;
         }
-    }
 
-    @Test
-    void verify() {
-        Seamer.verify(SEAM_ID);
     }
 }

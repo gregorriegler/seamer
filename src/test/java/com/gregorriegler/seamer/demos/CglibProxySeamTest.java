@@ -21,6 +21,11 @@ public class CglibProxySeamTest {
         proxyDemo.blackbox("world", 4);
     }
 
+    @Test
+    void verify() {
+        Seamer.verify(SEAM_ID);
+    }
+
     public static class ProxyDemo {
 
         public String doNotProxyThis(String arg1) {
@@ -31,10 +36,6 @@ public class CglibProxySeamTest {
             String result = arg1 + arg2;
             return result;
         }
-    }
 
-    @Test
-    void verify() {
-        Seamer.verify(SEAM_ID);
     }
 }

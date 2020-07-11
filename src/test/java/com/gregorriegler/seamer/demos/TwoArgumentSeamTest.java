@@ -22,8 +22,13 @@ public class TwoArgumentSeamTest {
         }
     }
 
+    @Test
+    void verify() {
+        Seamer.verify(SEAM_ID);
+    }
 
     public static class SomeClass {
+
         private static final Logger LOG = LoggerFactory.getLogger(SomeClass.class);
 
         public void entryPoint(String string, Integer integer) {
@@ -38,10 +43,6 @@ public class TwoArgumentSeamTest {
         public String blackbox(String arg1, Integer arg2) {
             return arg1 + arg2;
         }
-    }
 
-    @Test
-    void verify() {
-        Seamer.verify(SEAM_ID);
     }
 }
