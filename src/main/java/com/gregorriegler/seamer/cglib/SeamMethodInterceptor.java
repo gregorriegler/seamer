@@ -1,7 +1,7 @@
 package com.gregorriegler.seamer.cglib;
 
 import com.gregorriegler.seamer.Seamer;
-import com.gregorriegler.seamer.core.ProxySuture;
+import com.gregorriegler.seamer.core.ProxyInvokable;
 import com.gregorriegler.seamer.core.SeamRecorder;
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
@@ -32,7 +32,7 @@ public class SeamMethodInterceptor<T> implements MethodInterceptor {
         if (seam == null) {
             seam = Seamer.create(
                 seamId,
-                ProxySuture.of(target, methodName)
+                ProxyInvokable.of(target, methodName)
             );
             return seam.invoke(args);
         }

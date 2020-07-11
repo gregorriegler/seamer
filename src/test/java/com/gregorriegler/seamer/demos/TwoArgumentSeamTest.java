@@ -1,7 +1,7 @@
 package com.gregorriegler.seamer.demos;
 
 import com.gregorriegler.seamer.Seamer;
-import com.gregorriegler.seamer.core.SutureWith2Arguments;
+import com.gregorriegler.seamer.core.InvokableWith2Arguments;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -34,7 +34,7 @@ public class TwoArgumentSeamTest {
         public void entryPoint(String string, Integer integer) {
             String result = Seamer.create(
                 "TwoArgSeamTest",
-                (SutureWith2Arguments<String, Integer, String>) this::blackbox
+                (InvokableWith2Arguments<String, Integer, String>) this::blackbox
             ).invokeAndRecord(string, integer);
 
             LOG.info(result);

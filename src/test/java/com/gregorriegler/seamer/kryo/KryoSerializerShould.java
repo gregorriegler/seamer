@@ -1,6 +1,6 @@
 package com.gregorriegler.seamer.kryo;
 
-import com.gregorriegler.seamer.core.ProxySuture;
+import com.gregorriegler.seamer.core.ProxyInvokable;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
@@ -16,11 +16,11 @@ public class KryoSerializerShould {
 
     @Test
     void serialize_and_deserialize_ProxyMethod() {
-        ProxySuture<String> expected = ProxySuture.of("someObject", "toString");
+        ProxyInvokable<String> expected = ProxyInvokable.of("someObject", "toString");
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
         serializer.serialize(expected, outputStream);
-        ProxySuture<?> result = serializer.deserialize(from(outputStream), ProxySuture.class);
+        ProxyInvokable<?> result = serializer.deserialize(from(outputStream), ProxyInvokable.class);
 
         assertThat(result).isEqualTo(expected);
     }

@@ -8,5 +8,5 @@ public interface SeamRepository<T> {
 
     Optional<Seam<T>> byId(String seamId);
 
-    Optional<ProxySuture<T>> proxyById(String seamId);
+    Optional<ProxyInvokable<T>> proxyById(String seamId);
 }

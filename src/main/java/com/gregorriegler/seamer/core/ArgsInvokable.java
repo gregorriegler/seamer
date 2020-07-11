@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.function.Function;
 
 @FunctionalInterface
-public interface ArgsSuture<T> extends Function<Object[], T>, Suture<T>, Serializable {
+public interface ArgsInvokable<T> extends Function<Object[], T>, Invokable<T>, Serializable {
 
     @Override
     default T invoke(Object... args) {

@@ -1,10 +1,10 @@
 package com.gregorriegler.seamer;
 
+import com.gregorriegler.seamer.core.Invokable;
 import com.gregorriegler.seamer.core.Seam;
 import com.gregorriegler.seamer.core.SeamRecorder;
 import com.gregorriegler.seamer.core.SeamRecordingsBuilder;
 import com.gregorriegler.seamer.core.SeamVerifier;
-import com.gregorriegler.seamer.core.Suture;
 import com.gregorriegler.seamer.file.FileInvocationRepository;
 import com.gregorriegler.seamer.file.FileResetter;
 import com.gregorriegler.seamer.file.FileSeamRepository;
@@ -22,8 +22,8 @@ public class Seamer<T> {
         this.seams = new FileSeamRepository<>(SERIALIZER);
     }
 
-    public static <T> SeamRecorder<T> create(final String seamId, Suture<T> suture) {
-        Seam<T> seam = new Seam<>(seamId, suture);
+    public static <T> SeamRecorder<T> create(final String seamId, Invokable<T> invokable) {
+        Seam<T> seam = new Seam<>(seamId, invokable);
         return new Seamer<T>().startRecording(seam);
     }
 

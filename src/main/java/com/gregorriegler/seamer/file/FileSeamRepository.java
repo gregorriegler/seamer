@@ -1,9 +1,9 @@
 package com.gregorriegler.seamer.file;
 
-import com.gregorriegler.seamer.core.ProxySuture;
+import com.gregorriegler.seamer.core.Invokable;
+import com.gregorriegler.seamer.core.ProxyInvokable;
 import com.gregorriegler.seamer.core.Seam;
 import com.gregorriegler.seamer.core.SeamRepository;
-import com.gregorriegler.seamer.core.Suture;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,13 +38,13 @@ public class FileSeamRepository<T> implements SeamRepository<T> {
     @SuppressWarnings("unchecked")
     @Override
     public Optional<Seam<T>> byId(String seamId) {
-        return inputStream(seamId).map(stream -> (Suture<T>) serializer.deserialize(stream, Suture.class)).map(seam -> new Seam<>(seamId, seam));
+        return inputStream(seamId).map(stream -> (Invokable<T>) serializer.deserialize(stream, Invokable.class)).map(seam -> new Seam<>(seamId, seam));
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public Optional<ProxySuture<T>> proxyById(String seamId) {
-        return inputStream(seamId).map(stream -> serializer.deserialize(stream, ProxySuture.class));
+    public Optional<ProxyInvokable<T>> proxyById(String seamId) {
+        return inputStream(seamId).map(stream -> serializer.deserialize(stream, ProxyInvokable.class));
     }
 
     private Optional<FileInputStream> inputStream(String seamId) {

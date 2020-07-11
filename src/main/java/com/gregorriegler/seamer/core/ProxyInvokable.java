@@ -9,24 +9,24 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.Optional;
 
-public class ProxySuture<T> implements ArgsSuture<T> {
+public class ProxyInvokable<T> implements ArgsInvokable<T> {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ProxySuture.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ProxyInvokable.class);
 
     private Object target;
     private String methodName;
 
-    private ProxySuture(Object target, String methodName) {
+    private ProxyInvokable(Object target, String methodName) {
         this.target = target;
         this.methodName = methodName;
     }
 
     // for deserialization
-    private ProxySuture() {
+    private ProxyInvokable() {
     }
 
-    public static <T> ProxySuture<T> of(Object target, String methodName) {
-        return new ProxySuture<>(target, methodName);
+    public static <T> ProxyInvokable<T> of(Object target, String methodName) {
+        return new ProxyInvokable<>(target, methodName);
     }
 
     @Override
@@ -49,7 +49,7 @@ public class ProxySuture<T> implements ArgsSuture<T> {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ProxySuture<?> that = (ProxySuture<?>) o;
+        ProxyInvokable<?> that = (ProxyInvokable<?>) o;
         return Objects.equals(target, that.target) &&
             Objects.equals(methodName, that.methodName);
     }
