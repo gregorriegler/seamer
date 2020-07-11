@@ -4,11 +4,11 @@ import java.io.Serializable;
 
 public class SeamRecorder<T> implements Serializable {
 
-    private SeamWithId<T> seamWithId;
+    private Seam<T> seam;
     private final InvocationRepository invocations;
 
-    public SeamRecorder(SeamWithId<T> seamWithId, InvocationRepository invocations) {
-        this.seamWithId = seamWithId;
+    public SeamRecorder(Seam<T> seam, InvocationRepository invocations) {
+        this.seam = seam;
         this.invocations = invocations;
     }
 
@@ -20,10 +20,10 @@ public class SeamRecorder<T> implements Serializable {
 
     // todo encapsulation
     public T invoke(Object... args) {
-        return seamWithId.seam().invoke(args);
+        return seam.seam().invoke(args);
     }
 
     public void record(Object[] args, T result) {
-        invocations.record(seamWithId.id(), Invocation.of(args, result));
+        invocations.record(seam.id(), Invocation.of(args, result));
     }
 }

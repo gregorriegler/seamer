@@ -4,17 +4,17 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
 public class SeamVerifier<T> {
-    private final SeamWithId<T> seamWithId;
+    private final Seam<T> seam;
     private final InvocationRepository invocations;
 
-    public SeamVerifier(SeamWithId<T> seamWithId, InvocationRepository invocations) {
-        this.seamWithId = seamWithId;
+    public SeamVerifier(Seam<T> seam, InvocationRepository invocations) {
+        this.seam = seam;
         this.invocations = invocations;
     }
 
     public void verify() {
-        for (Invocation invocation : invocations.getAll(seamWithId.id())) {
-            T actual = seamWithId.seam().invoke(invocation.getArgs());
+        for (Invocation invocation : invocations.getAll(seam.id())) {
+            T actual = seam.seam().invoke(invocation.getArgs());
             assertThat(actual, equalTo(invocation.getResult()));
         }
     }

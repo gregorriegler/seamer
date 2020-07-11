@@ -1,9 +1,9 @@
 package com.gregorriegler.seamer;
 
+import com.gregorriegler.seamer.core.Seam;
 import com.gregorriegler.seamer.core.SeamRecorder;
 import com.gregorriegler.seamer.core.SeamRecordingsBuilder;
 import com.gregorriegler.seamer.core.SeamVerifier;
-import com.gregorriegler.seamer.core.SeamWithId;
 import com.gregorriegler.seamer.core.Suture;
 import com.gregorriegler.seamer.file.FileInvocationRepository;
 import com.gregorriegler.seamer.file.FileResetter;
@@ -23,8 +23,8 @@ public class Seamer<T> {
     }
 
     public static <T> SeamRecorder<T> create(final String seamId, Suture<T> suture) {
-        SeamWithId<T> seamWithId = new SeamWithId<>(seamId, suture);
-        return new Seamer<T>().startRecording(seamWithId);
+        Seam<T> seam = new Seam<>(seamId, suture);
+        return new Seamer<T>().startRecording(seam);
     }
 
     public static <T> SeamRecordingsBuilder<T> customRecordings(String seamId) {
@@ -39,9 +39,9 @@ public class Seamer<T> {
         new FileResetter().reset(seamId);
     }
 
-    private SeamRecorder<T> startRecording(SeamWithId<T> seamWithId) {
-        seams.persist(seamWithId);
-        return new SeamRecorder<>(seamWithId, invocations());
+    private SeamRecorder<T> startRecording(Seam<T> seam) {
+        seams.persist(seam);
+        return new SeamRecorder<>(seam, invocations());
     }
 
     private SeamRecordingsBuilder<T> createCustomRecordings(String seamId) {

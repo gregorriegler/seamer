@@ -1,8 +1,8 @@
 package com.gregorriegler.seamer.file;
 
 import com.gregorriegler.seamer.core.ProxySuture;
+import com.gregorriegler.seamer.core.Seam;
 import com.gregorriegler.seamer.core.SeamRepository;
-import com.gregorriegler.seamer.core.SeamWithId;
 import com.gregorriegler.seamer.core.Suture;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,13 +23,13 @@ public class FileSeamRepository<T> implements SeamRepository<T> {
     }
 
     @Override
-    public void persist(SeamWithId seamWithId) {
+    public void persist(Seam seam) {
         try {
-            FileLocation.createSeamDir(seamWithId.id());
-            File seamFile = FileLocation.seamFile(seamWithId.id());
+            FileLocation.createSeamDir(seam.id());
+            File seamFile = FileLocation.seamFile(seam.id());
             if (seamFile.exists()) return;
             LOG.info("persisting seam at {}", seamFile.getAbsolutePath());
-            serializer.serialize(seamWithId.seam(), new FileOutputStream(seamFile));
+            serializer.serialize(seam.seam(), new FileOutputStream(seamFile));
         } catch (FileNotFoundException e) {
             LOG.error("failed to persist seam", e);
         }
@@ -37,8 +37,8 @@ public class FileSeamRepository<T> implements SeamRepository<T> {
 
     @SuppressWarnings("unchecked")
     @Override
-    public Optional<SeamWithId<T>> byId(String seamId) {
-        return inputStream(seamId).map(stream -> (Suture<T>) serializer.deserialize(stream, Suture.class)).map(seam -> new SeamWithId<>(seamId, seam));
+    public Optional<Seam<T>> byId(String seamId) {
+        return inputStream(seamId).map(stream -> (Suture<T>) serializer.deserialize(stream, Suture.class)).map(seam -> new Seam<>(seamId, seam));
     }
 
     @SuppressWarnings("unchecked")

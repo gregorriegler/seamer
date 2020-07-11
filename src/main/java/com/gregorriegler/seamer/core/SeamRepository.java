@@ -4,9 +4,9 @@ import java.util.Optional;
 
 public interface SeamRepository<T> {
 
-    void persist(SeamWithId seamWithId);
+    void persist(Seam seam);
 
-    Optional<SeamWithId<T>> byId(String seamId);
+    Optional<Seam<T>> byId(String seamId);
 
     Optional<ProxySuture<T>> proxyById(String seamId);
 }
