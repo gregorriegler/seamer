@@ -5,7 +5,7 @@ import com.gregorriegler.seamer.core.Seam;
 import com.gregorriegler.seamer.core.SeamRecorder;
 import com.gregorriegler.seamer.core.SeamRecordingsBuilder;
 import com.gregorriegler.seamer.core.SeamVerifier;
-import com.gregorriegler.seamer.file.FileInvocationRepository;
+import com.gregorriegler.seamer.file.FileInvocations;
 import com.gregorriegler.seamer.file.FileResetter;
 import com.gregorriegler.seamer.file.FileSeamRepository;
 import com.gregorriegler.seamer.kryo.KryoSerializer;
@@ -46,19 +46,19 @@ public class Seamer<T> {
 
     private SeamRecordingsBuilder<T> createCustomRecordings(String seamId) {
         return seams.byId(seamId)
-            .map(seamWithId -> new SeamRecordingsBuilder<>(seamWithId, invocations()))
+            .map(seam -> new SeamRecordingsBuilder<>(seam, invocations()))
             .orElseThrow(FailedToLoad::new);
     }
 
     private void verifySeam(String seamId) {
         seams.byId(seamId)
-            .map(seamWithId -> new SeamVerifier<T>(seamWithId, invocations()))
+            .map(seam -> new SeamVerifier<>(seam, invocations()))
             .orElseThrow(FailedToLoad::new)
             .verify();
     }
 
-    private static FileInvocationRepository invocations() {
-        return new FileInvocationRepository(SERIALIZER);
+    private static FileInvocations invocations() {
+        return new FileInvocations(SERIALIZER);
     }
 
     public static class FailedToLoad extends RuntimeException {

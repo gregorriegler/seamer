@@ -5,9 +5,9 @@ import java.io.Serializable;
 public class SeamRecorder<T> implements Serializable {
 
     private Seam<T> seam;
-    private final InvocationRepository invocations;
+    private final Invocations invocations;
 
-    public SeamRecorder(Seam<T> seam, InvocationRepository invocations) {
+    public SeamRecorder(Seam<T> seam, Invocations invocations) {
         this.seam = seam;
         this.invocations = invocations;
     }

@@ -1,7 +1,7 @@
 package com.gregorriegler.seamer.file;
 
 import com.gregorriegler.seamer.core.Invocation;
-import com.gregorriegler.seamer.core.InvocationRepository;
+import com.gregorriegler.seamer.core.Invocations;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,13 +12,13 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
-public class FileInvocationRepository implements InvocationRepository {
+public class FileInvocations implements Invocations {
 
-    private static final Logger LOG = LoggerFactory.getLogger(FileInvocationRepository.class);
+    private static final Logger LOG = LoggerFactory.getLogger(FileInvocations.class);
 
     private final Serializer serializer;
 
-    public FileInvocationRepository(Serializer serializer) {
+    public FileInvocations(Serializer serializer) {
         this.serializer = serializer;
     }
 

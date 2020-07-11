@@ -10,7 +10,7 @@ public class SeamRecordingsBuilder<T> {
     private final ArgCandidates argCandidates = new ArgCandidates();
     private final SeamRecorder<T> recorder;
 
-    public SeamRecordingsBuilder(Seam<T> seam, InvocationRepository invocations) {
+    public SeamRecordingsBuilder(Seam<T> seam, Invocations invocations) {
         this.recorder = new SeamRecorder<T>(seam, invocations);
     }
 

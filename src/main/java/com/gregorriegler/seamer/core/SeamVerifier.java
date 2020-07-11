@@ -5,9 +5,9 @@ import static org.hamcrest.Matchers.equalTo;
 
 public class SeamVerifier<T> {
     private final Seam<T> seam;
-    private final InvocationRepository invocations;
+    private final Invocations invocations;
 
-    public SeamVerifier(Seam<T> seam, InvocationRepository invocations) {
+    public SeamVerifier(Seam<T> seam, Invocations invocations) {
         this.seam = seam;
         this.invocations = invocations;
     }
