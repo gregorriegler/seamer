@@ -39,24 +39,24 @@ public class Seamer<T> {
 
     private SeamRecorder<T> createSeam(final String seamId, Seam<T> seam) {
         seams.persist(seamId, seam);
-        return new SeamRecorder<>(seamId, seam, invocations(seamId));
+        return new SeamRecorder<>(seamId, seam, invocations());
     }
 
     private SeamRecordingsBuilder<T> createCustomRecordings(String seamId) {
         return seams.byId(seamId)
-            .map(seam -> new SeamRecordingsBuilder<>(seamId, seam, invocations(seamId)))
+            .map(seam -> new SeamRecordingsBuilder<>(seamId, seam, invocations()))
             .orElseThrow(FailedToLoad::new);
     }
 
     private void verifySeam(String seamId) {
         seams.byId(seamId)
-            .map(seam -> new SeamVerifier<>(seamId, seam, invocations(seamId)))
+            .map(seam -> new SeamVerifier<>(seamId, seam, invocations()))
             .orElseThrow(FailedToLoad::new)
             .verify();
     }
 
-    private static FileInvocationRepository invocations(String seamId) {
-        return new FileInvocationRepository(seamId, SERIALIZER);
+    private static FileInvocationRepository invocations() {
+        return new FileInvocationRepository(SERIALIZER);
     }
 
     public static class FailedToLoad extends RuntimeException {
