@@ -8,12 +8,12 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class SeamShould {
 
-    private final ProxyInvokable<Object> invokableStub = Stubs.invokable();
+    private final Invokable<String> invokableStub = Stubs.invokable();
     private final Invocations invocationsStub = Stubs.invocations();
 
     @Test
     void be_constructed() {
-        Seam<Object> seam = new Seam<>("id", invokableStub, invocationsStub);
+        Seam<String> seam = new Seam<>("id", invokableStub, invocationsStub);
         assertThat(seam).isNotNull();
     }
 

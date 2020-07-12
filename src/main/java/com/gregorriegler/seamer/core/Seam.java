@@ -22,8 +22,12 @@ public class Seam<T> {
         return id;
     }
 
-    public Invokable<T> seam() {
+    public Invokable<T> invokable() {
         return invokable;
+    }
+
+    public Invocations invocations() {
+        return invocations;
     }
 
     public T invokeAndRecord(Object... args) {

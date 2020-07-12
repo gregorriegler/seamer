@@ -29,7 +29,7 @@ public class FileSeamRepository<T> implements SeamRepository<T> {
             File seamFile = FileLocation.seamFile(seam.id());
             if (seamFile.exists()) return;
             LOG.info("persisting seam at {}", seamFile.getAbsolutePath());
-            serializer.serialize(seam.seam(), new FileOutputStream(seamFile));
+            serializer.serialize(seam.invokable(), new FileOutputStream(seamFile));
         } catch (FileNotFoundException e) {
             LOG.error("failed to persist seam", e);
         }

@@ -29,14 +29,14 @@ public class SqliteShould {
     void persist_and_retrieve_data() {
         sqlite.parameterizedCommand("insert into seams values(?, ?)", seamName, seam);
 
-        byte[] result = sqlite.queryBytes("select object from seams where name = ?", seamName).get();
+        byte[] result = sqlite.queryBytes("select invokable from seams where id = ?", seamName).get();
 
         assertThat(result).isEqualTo(seam);
     }
 
     @Test
     void not_find_non_existent_data() {
-        Optional<byte[]> result = sqlite.queryBytes("select object from seams where name = ?", seamName);
+        Optional<byte[]> result = sqlite.queryBytes("select invokable from seams where id = ?", seamName);
 
         assertThat(result).isEmpty();
     }
@@ -44,7 +44,7 @@ public class SqliteShould {
     private void createSchema() {
         sqlite.command(
             "drop table if exists seams",
-            "create table seams (name string, object blob)"
+            "create table seams (id string, invokable blob)"
         );
     }
 
