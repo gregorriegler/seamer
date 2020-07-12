@@ -2,6 +2,7 @@ package com.gregorriegler.seamer.core;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Objects;
 
 public class Invocation implements Serializable {
 
@@ -31,5 +32,21 @@ public class Invocation implements Serializable {
     @Override
     public String toString() {
         return Arrays.toString(args) + " => " + result;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Invocation that = (Invocation) o;
+        return Arrays.equals(args, that.args) &&
+            Objects.equals(result, that.result);
+    }
+
+    @Override
+    public int hashCode() {
+        int result1 = Objects.hash(result);
+        result1 = 31 * result1 + Arrays.hashCode(args);
+        return result1;
     }
 }
