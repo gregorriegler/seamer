@@ -17,12 +17,15 @@ public class SqliteSeamRepository<T> implements SeamRepository<T> {
     private final Serializer serializer;
 
     public SqliteSeamRepository() {
-        serializer = KryoFactory.createSerializer();
-        sqlite = new Sqlite("jdbc:sqlite::memory:");
+        this("jdbc:sqlite::memory:");
+    }
+
+    public SqliteSeamRepository(String url) {
+        sqlite = new Sqlite(url);
         sqlite.command(
-            "drop table if exists seams",
-            "create table seams (id string, invokable blob)"
+            "create table if not exists seams (id string, invokable blob)"
         );
+        serializer = KryoFactory.createSerializer();
     }
 
     @Override
@@ -39,6 +42,7 @@ public class SqliteSeamRepository<T> implements SeamRepository<T> {
             .map(b -> new Seam<T>(seamId, invokableFrom(b), invocations));
     }
 
+    @SuppressWarnings("unchecked")
     private Invokable<T> invokableFrom(byte[] bytes) {
         return (Invokable<T>) serializer.deserialize(new ByteArrayInputStream(bytes), Invokable.class);
     }

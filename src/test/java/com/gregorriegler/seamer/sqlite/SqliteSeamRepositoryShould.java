@@ -13,6 +13,7 @@ public class SqliteSeamRepositoryShould {
 
     private final SqliteSeamRepository<String> repository = new SqliteSeamRepository<>();
     private final Invocations invocationsStub = Stubs.invocations();
+    private final Seam<String> expectedSeam = new Seam<>("seamId", Stubs.invokable(), invocationsStub);
 
     @Test
     void start_empty() {
@@ -23,11 +24,24 @@ public class SqliteSeamRepositoryShould {
 
     @Test
     void persist_and_retrieve_a_seam() {
-        Seam<String> expectedSeam = new Seam<>("seamId", Stubs.invokable(), invocationsStub);
-
         repository.persist(expectedSeam);
         Seam<String> seam = repository.byId("seamId", invocationsStub).get();
 
+        assertIsExpected(seam);
+    }
+
+    @Test
+    void write_to_a_file() {
+        SqliteSeamRepository<String> writingRepository = new SqliteSeamRepository<>("jdbc:sqlite:/tmp/seamertest");
+        writingRepository.persist(expectedSeam);
+
+        SqliteSeamRepository<String> readingRepository = new SqliteSeamRepository<>("jdbc:sqlite:/tmp/seamertest");
+        Seam<String> seam = readingRepository.byId("seamId", invocationsStub).get();
+
+        assertIsExpected(seam);
+    }
+
+    private void assertIsExpected(Seam<String> seam) {
         assertThat(seam.id()).isEqualTo(expectedSeam.id());
         assertThat(seam.invocations()).isEqualTo(expectedSeam.invocations());
         assertThat(seam.invokable().invoke()).isEqualTo(expectedSeam.invokable().invoke());
