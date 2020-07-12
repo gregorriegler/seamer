@@ -9,6 +9,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 public class Sqlite {
@@ -47,23 +50,36 @@ public class Sqlite {
     }
 
     public Optional<byte[]> queryBytes(String query, String param) {
-        return queryOne(query, param, byte[].class);
+        return queryOne(query, param);
     }
 
-    public <T> Optional<T> queryOne(String query, String param, Class<T> clazz) {
+    public List<byte[]> queryListOfBytes(String query, String param) {
+        return queryList(query, param);
+    }
+
+    private <T> Optional<T> queryOne(String query, String param) {
+        List<T> result = queryList(query, param);
+        if (result.isEmpty()) {
+            return Optional.empty();
+        } else {
+            return Optional.ofNullable(result.get(0));
+        }
+    }
+
+    private <T> List<T> queryList(String query, String param) {
         try {
+            List<T> result = new ArrayList<>();
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, param);
             ResultSet resultSet = statement.executeQuery();
-            if(resultSet.next()) {
-                byte[] bytes = resultSet.getBytes(1);
-                return Optional.of((T) bytes);
-            } else {
-                return Optional.empty();
+            while (resultSet.next()) {
+                T object = (T) resultSet.getObject(1);
+                result.add(object);
             }
+            return result;
         } catch (SQLException e) {
             handleError(e);
-            return Optional.empty();
+            return Collections.emptyList();
         }
     }
 
