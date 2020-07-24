@@ -1,9 +1,7 @@
-package com.gregorriegler.seamer.sqlite;
+package com.gregorriegler.seamer.core;
 
 import com.gregorriegler.seamer.Stubs;
-import com.gregorriegler.seamer.core.Invocations;
-import com.gregorriegler.seamer.core.Seam;
-import com.gregorriegler.seamer.core.SeamRepository;
+import com.gregorriegler.seamer.kryo.KryoFactory;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
@@ -13,11 +11,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public abstract class SeamRepositoryShould {
     public static final String SEAM_ID = "seamId";
-    private final SeamRepository repository = createRepository();
+    private final SeamRepository repository = createRepository(KryoFactory.createSerializer());
     private final Invocations invocationsStub = Stubs.invocations();
     private final Seam<String> expectedSeam = new Seam<>(SEAM_ID, Stubs.invokable(), invocationsStub);
 
-    protected abstract SeamRepository createRepository();
+    protected abstract SeamRepository createRepository(Serializer serializer);
 
     @AfterEach
     void tearDown() {
@@ -35,7 +33,7 @@ public abstract class SeamRepositoryShould {
     void persist_and_retrieve_a_seam() {
         repository.persist(expectedSeam);
 
-        Seam<String> seam = createRepository().<String>byId(SEAM_ID, invocationsStub).get();
+        Seam<String> seam = createRepository(KryoFactory.createSerializer()).<String>byId(SEAM_ID, invocationsStub).get();
 
         assertThat(seam.id()).isEqualTo(expectedSeam.id());
         assertThat(seam.invocations()).isEqualTo(expectedSeam.invocations());

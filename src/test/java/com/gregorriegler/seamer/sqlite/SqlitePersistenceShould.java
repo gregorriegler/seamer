@@ -2,6 +2,7 @@ package com.gregorriegler.seamer.sqlite;
 
 import com.gregorriegler.seamer.core.Invocations;
 import com.gregorriegler.seamer.core.SeamRepository;
+import com.gregorriegler.seamer.kryo.KryoFactory;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -12,14 +13,14 @@ class SqlitePersistenceShould {
 
     @Test
     void create_SqliteSeamRepository() {
-        SeamRepository seams = persistence.createSeams();
+        SeamRepository seams = persistence.createSeams(KryoFactory.createSerializer());
 
         assertThat(seams).isInstanceOf(SqliteSeamRepository.class);
     }
 
     @Test
     void create_SqliteInvocations() {
-        Invocations invocations = persistence.createInvocations();
+        Invocations invocations = persistence.createInvocations(KryoFactory.createSerializer());
 
         assertThat(invocations).isInstanceOf(SqliteInvocations.class);
     }

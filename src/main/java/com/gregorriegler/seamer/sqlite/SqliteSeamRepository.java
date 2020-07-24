@@ -5,7 +5,6 @@ import com.gregorriegler.seamer.core.Invokable;
 import com.gregorriegler.seamer.core.Seam;
 import com.gregorriegler.seamer.core.SeamRepository;
 import com.gregorriegler.seamer.core.Serializer;
-import com.gregorriegler.seamer.kryo.KryoFactory;
 
 import java.util.Optional;
 
@@ -14,16 +13,16 @@ public class SqliteSeamRepository implements SeamRepository {
     private final Sqlite sqlite;
     private final Serializer serializer;
 
-    public SqliteSeamRepository() {
-        this("jdbc:sqlite::memory:");
+    public SqliteSeamRepository(Serializer serializer) {
+        this("jdbc:sqlite::memory:", serializer);
     }
 
-    public SqliteSeamRepository(String url) {
+    public SqliteSeamRepository(String url, Serializer serializer) {
         sqlite = new Sqlite(url);
         sqlite.command(
             "create table if not exists seams (id string not null primary key, invokable blob)"
         );
-        serializer = KryoFactory.createSerializer();
+        this.serializer = serializer;
     }
 
     @Override

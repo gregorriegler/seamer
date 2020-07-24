@@ -6,6 +6,8 @@ import com.gregorriegler.seamer.core.Seam;
 import com.gregorriegler.seamer.core.SeamRecorder;
 import com.gregorriegler.seamer.core.SeamRepository;
 import com.gregorriegler.seamer.file.FileBasedPersistence;
+import com.gregorriegler.seamer.kryo.KryoFactory;
+import com.gregorriegler.seamer.kryo.KryoSerializer;
 
 public class Seamer {
 
@@ -30,8 +32,9 @@ public class Seamer {
     }
 
     public static Seamer create(Persistence persistence) {
-        SeamRepository seams = persistence.createSeams();
-        Invocations invocations = persistence.createInvocations();
+        KryoSerializer serializer = KryoFactory.createSerializer();
+        SeamRepository seams = persistence.createSeams(serializer);
+        Invocations invocations = persistence.createInvocations(serializer);
         return new Seamer(seams, invocations);
     }
 

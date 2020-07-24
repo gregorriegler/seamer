@@ -2,16 +2,10 @@ package com.gregorriegler.seamer;
 
 import com.gregorriegler.seamer.core.Invocations;
 import com.gregorriegler.seamer.core.SeamRepository;
-import com.gregorriegler.seamer.kryo.KryoFactory;
-import com.gregorriegler.seamer.kryo.KryoSerializer;
+import com.gregorriegler.seamer.core.Serializer;
 
 public interface Persistence {
+    SeamRepository createSeams(Serializer serializer);
 
-    SeamRepository createSeams();
-
-    Invocations createInvocations();
-
-    default KryoSerializer serializer() {
-        return KryoFactory.createSerializer();
-    }
+    Invocations createInvocations(Serializer serializer);
 }

@@ -3,7 +3,6 @@ package com.gregorriegler.seamer.sqlite;
 import com.gregorriegler.seamer.core.Invocation;
 import com.gregorriegler.seamer.core.Invocations;
 import com.gregorriegler.seamer.core.Serializer;
-import com.gregorriegler.seamer.kryo.KryoFactory;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,10 +12,10 @@ public class SqliteInvocations implements Invocations {
     private final Sqlite sqlite;
     private final Serializer serializer;
 
-    SqliteInvocations() {
+    SqliteInvocations(Serializer serializer) {
         sqlite = new Sqlite("jdbc:sqlite::memory:");
         sqlite.command("create table if not exists invocations (seam_id string not null, invocation blob)");
-        serializer = KryoFactory.createSerializer();
+        this.serializer = serializer;
     }
 
     @Override
