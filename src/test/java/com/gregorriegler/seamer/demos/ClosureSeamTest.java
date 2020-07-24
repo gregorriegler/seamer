@@ -32,7 +32,7 @@ public class ClosureSeamTest {
     public static class ClosureDemo {
 
         public void entryPoint(String arg1, Integer arg2) {
-            String result = Seamer.create(
+            String result = Seamer.createSeam(
                 SEAM_ID,
                 a -> blackbox(
                     (String) a[0],

@@ -30,7 +30,7 @@ public class SeamMethodInterceptor<T> implements MethodInterceptor {
         }
 
         if (seam == null) {
-            seam = Seamer.create(
+            seam = Seamer.createSeam(
                 seamId,
                 ProxyInvokable.of(target, methodName)
             );

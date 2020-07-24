@@ -5,6 +5,7 @@ import com.gregorriegler.seamer.core.Invokable;
 import com.gregorriegler.seamer.core.Seam;
 import com.gregorriegler.seamer.core.SeamRecorder;
 import com.gregorriegler.seamer.core.SeamRepository;
+import com.gregorriegler.seamer.file.FileBasedPersistence;
 import com.gregorriegler.seamer.file.FileResetter;
 
 public class Seamer<T> {
@@ -12,13 +13,24 @@ public class Seamer<T> {
     private final SeamRepository<T> seams;
     private final Invocations invocations;
 
-    public Seamer(SeamRepository<T> seams, Invocations invocations) {
+    private Seamer(SeamRepository<T> seams, Invocations invocations) {
         this.seams = seams;
         this.invocations = invocations;
     }
 
-    public static <T> Seam<T> create(String seamId, Invokable<T> invokable) {
-        return Seamer.<T>defaultFactory().createSeamer().persist(seamId, invokable);
+    public static <T> Seam<T> createSeam(String seamId, Invokable<T> invokable) {
+        Seamer<T> seamer = create(defaultPersistence());
+        return seamer.persist(seamId, invokable);
+    }
+
+    public static <T> Seamer<T> create() {
+        return create(defaultPersistence());
+    }
+
+    public static <T> Seamer<T> create(Persistence<T> persistence) {
+        SeamRepository<T> seams = persistence.createSeams();
+        Invocations invocations = persistence.createInvocations();
+        return new Seamer<>(seams, invocations);
     }
 
 
@@ -29,7 +41,7 @@ public class Seamer<T> {
     }
 
     public static <T> SeamRecorder<T> customRecordings(String seamId) {
-        return Seamer.<T>defaultFactory().createSeamer().createCustomRecordings(seamId);
+        return Seamer.<T>create(defaultPersistence()).createCustomRecordings(seamId);
     }
 
     private SeamRecorder<T> createCustomRecordings(String seamId) {
@@ -39,7 +51,7 @@ public class Seamer<T> {
     }
 
     public static <T> void verify(String seamId) {
-        defaultFactory().createSeamer().verifySeam(seamId);
+        Seamer.<T>create(defaultPersistence()).verifySeam(seamId);
     }
 
     private void verifySeam(String seamId) {
@@ -48,8 +60,8 @@ public class Seamer<T> {
             .verify();
     }
 
-    private static <T> FileSeamerFactory<T> defaultFactory() {
-        return new FileSeamerFactory<>();
+    private static <T> FileBasedPersistence<T> defaultPersistence() {
+        return new FileBasedPersistence<>();
     }
 
     public static void reset(String seamId) {

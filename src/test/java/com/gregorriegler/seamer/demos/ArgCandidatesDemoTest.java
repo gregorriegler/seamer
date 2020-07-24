@@ -40,7 +40,7 @@ public class ArgCandidatesDemoTest {
     public static class ArgCandidatesDemo {
 
         public void entrypoint(String arg1, Integer arg2, SomeObject arg3) {
-            String result = Seamer.create(
+            String result = Seamer.createSeam(
                 SEAM_ID,
                 (InvokableWith3Arguments<String, Integer, SomeObject, String>) this::blackbox
             ).invokeAndRecord(arg1, arg2, arg3);

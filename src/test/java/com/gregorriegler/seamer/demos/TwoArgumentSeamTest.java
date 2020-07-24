@@ -32,7 +32,7 @@ public class TwoArgumentSeamTest {
         private static final Logger LOG = LoggerFactory.getLogger(SomeClass.class);
 
         public void entryPoint(String string, Integer integer) {
-            String result = Seamer.create(
+            String result = Seamer.createSeam(
                 "TwoArgSeamTest",
                 (InvokableWith2Arguments<String, Integer, String>) this::blackbox
             ).invokeAndRecord(string, integer);
