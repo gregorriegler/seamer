@@ -2,6 +2,7 @@ package com.gregorriegler.seamer;
 
 import com.gregorriegler.seamer.core.Invocations;
 import com.gregorriegler.seamer.core.Invokable;
+import com.gregorriegler.seamer.core.Persistence;
 import com.gregorriegler.seamer.core.Seam;
 import com.gregorriegler.seamer.core.SeamRecorder;
 import com.gregorriegler.seamer.core.SeamRepository;

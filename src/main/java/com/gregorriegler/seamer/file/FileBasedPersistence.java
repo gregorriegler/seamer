@@ -1,7 +1,7 @@
 package com.gregorriegler.seamer.file;
 
-import com.gregorriegler.seamer.Persistence;
 import com.gregorriegler.seamer.core.Invocations;
+import com.gregorriegler.seamer.core.Persistence;
 import com.gregorriegler.seamer.core.SeamRepository;
 import com.gregorriegler.seamer.core.Serializer;
 
