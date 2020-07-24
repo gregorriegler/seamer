@@ -31,4 +31,9 @@ public class SqliteInvocations implements Invocations {
             .collect(Collectors.toList());
         return result;
     }
+
+    @Override
+    public void remove(String seamId) {
+        sqlite.parameterizedCommand("delete from invocations where seam_id = ?", seamId);
+    }
 }

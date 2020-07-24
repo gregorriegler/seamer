@@ -45,4 +45,9 @@ public class FileInvocations implements Invocations {
         }
     }
 
+    @Override
+    public void remove(String seamId) {
+        FileLocation.invocationsFile(seamId).delete();
+    }
+
 }

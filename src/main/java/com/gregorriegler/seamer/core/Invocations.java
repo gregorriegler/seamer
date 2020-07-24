@@ -6,4 +6,6 @@ public interface Invocations {
     void record(String seamId, Invocation invocation);
 
     List<Invocation> getAll(String seamId);
+
+    void remove(String seamId);
 }

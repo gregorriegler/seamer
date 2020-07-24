@@ -1,7 +1,7 @@
 package com.gregorriegler.seamer.core;
 
 import com.gregorriegler.seamer.kryo.KryoFactory;
-import com.gregorriegler.seamer.sqlite.SqlitePersistence;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -13,6 +13,11 @@ public abstract class InvocationsShould {
     private final Invocation expectedInvocation = Invocation.of(new Object[]{"1", "2"}, "hello world!");
     private final Invocation anotherInvocation = Invocation.of(new Object[]{"1", "2", "3"}, "another world!");
     private final String seamId = "seamId";
+
+    @AfterEach
+    void tearDown() {
+        invocations.remove(seamId);
+    }
 
     @Test
     void start_empty() {
@@ -40,9 +45,18 @@ public abstract class InvocationsShould {
         assertThat(result).containsExactly(expectedInvocation, anotherInvocation);
     }
 
+    @Test
+    void remove_invocations() {
+        invocations.record(seamId, expectedInvocation);
+
+        invocations.remove(seamId);
+
+        assertThat(invocations.getAll(seamId)).isEmpty();
+    }
+
     private Invocations createInvocations() {
         return createPersistence().createInvocations(KryoFactory.createSerializer());
     }
 
-    protected abstract SqlitePersistence createPersistence();
+    protected abstract Persistence createPersistence();
 }

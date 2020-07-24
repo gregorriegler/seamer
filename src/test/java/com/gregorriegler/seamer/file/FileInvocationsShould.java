@@ -1,13 +1,13 @@
-package com.gregorriegler.seamer.sqlite;
+package com.gregorriegler.seamer.file;
 
 import com.gregorriegler.seamer.core.InvocationsShould;
 import com.gregorriegler.seamer.core.Persistence;
 
-public class SqliteInvocationsShould extends InvocationsShould {
+public class FileInvocationsShould extends InvocationsShould {
 
     @Override
     protected Persistence createPersistence() {
-        return new SqlitePersistence();
+        return new FileBasedPersistence();
     }
 
 }

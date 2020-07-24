@@ -31,12 +31,15 @@ public class Stubs {
 
         @Override
         public void record(String seamId, Invocation invocation) {
-
         }
 
         @Override
         public List<Invocation> getAll(String seamId) {
             return Collections.emptyList();
+        }
+
+        @Override
+        public void remove(String seamId) {
         }
 
         @Override
