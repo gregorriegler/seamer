@@ -1,6 +1,7 @@
 package com.gregorriegler.seamer.sqlite;
 
 import com.gregorriegler.seamer.core.Invocation;
+import com.gregorriegler.seamer.core.Invocations;
 import com.gregorriegler.seamer.kryo.KryoFactory;
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +11,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class SqliteInvocationsShould {
 
-    private final SqliteInvocations invocations = new SqliteInvocations("jdbc:sqlite::memory:", KryoFactory.createSerializer());
+    private final Invocations invocations = createInvocations();
+
+    protected Invocations createInvocations() {
+        return createPersistence().createInvocations(KryoFactory.createSerializer());
+    }
+
+    protected SqlitePersistence createPersistence() {
+        return new SqlitePersistence();
+    }
+
     private final Invocation expectedInvocation = Invocation.of(new Object[]{"1", "2"}, "hello world!");
     private final Invocation anotherInvocation = Invocation.of(new Object[]{"1", "2", "3"}, "another world!");
     private final String seamId = "seamId";
