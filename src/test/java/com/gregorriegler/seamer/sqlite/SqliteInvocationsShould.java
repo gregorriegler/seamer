@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class SqliteInvocationsShould {
 
-    private final SqliteInvocations invocations = new SqliteInvocations(KryoFactory.createSerializer());
+    private final SqliteInvocations invocations = new SqliteInvocations("jdbc:sqlite::memory:", KryoFactory.createSerializer());
     private final Invocation expectedInvocation = Invocation.of(new Object[]{"1", "2"}, "hello world!");
     private final Invocation anotherInvocation = Invocation.of(new Object[]{"1", "2", "3"}, "another world!");
     private final String seamId = "seamId";

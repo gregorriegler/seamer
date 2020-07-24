@@ -10,21 +10,20 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public abstract class SeamRepositoryShould {
-    public static final String SEAM_ID = "seamId";
     private final SeamRepository repository = createRepository(KryoFactory.createSerializer());
     private final Invocations invocationsStub = Stubs.invocations();
-    private final Seam<String> expectedSeam = new Seam<>(SEAM_ID, Stubs.invokable(), invocationsStub);
+    private final Seam<String> expectedSeam = Stubs.seam(invocationsStub);
 
     protected abstract SeamRepository createRepository(Serializer serializer);
 
     @AfterEach
     void tearDown() {
-        repository.remove(SEAM_ID);
+        repository.remove(Stubs.SEAM_ID);
     }
 
     @Test
     void start_empty() {
-        Optional<Seam<String>> seam = repository.byId(SEAM_ID, invocationsStub);
+        Optional<Seam<String>> seam = repository.byId(Stubs.SEAM_ID, invocationsStub);
 
         assertThat(seam).isEmpty();
     }
@@ -33,7 +32,7 @@ public abstract class SeamRepositoryShould {
     void persist_and_retrieve_a_seam() {
         repository.persist(expectedSeam);
 
-        Seam<String> seam = createRepository(KryoFactory.createSerializer()).<String>byId(SEAM_ID, invocationsStub).get();
+        Seam<String> seam = createRepository(KryoFactory.createSerializer()).<String>byId(Stubs.SEAM_ID, invocationsStub).get();
 
         assertThat(seam.id()).isEqualTo(expectedSeam.id());
         assertThat(seam.invocations()).isEqualTo(expectedSeam.invocations());
@@ -44,8 +43,8 @@ public abstract class SeamRepositoryShould {
     void delete_a_seam() {
         repository.persist(expectedSeam);
 
-        repository.remove(SEAM_ID);
+        repository.remove(Stubs.SEAM_ID);
 
-        assertThat(repository.byId(SEAM_ID, invocationsStub)).isEmpty();
+        assertThat(repository.byId(Stubs.SEAM_ID, invocationsStub)).isEmpty();
     }
 }

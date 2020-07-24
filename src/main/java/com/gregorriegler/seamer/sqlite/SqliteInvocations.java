@@ -12,8 +12,8 @@ public class SqliteInvocations implements Invocations {
     private final Sqlite sqlite;
     private final Serializer serializer;
 
-    SqliteInvocations(Serializer serializer) {
-        sqlite = new Sqlite("jdbc:sqlite::memory:");
+    public SqliteInvocations(String uri, Serializer serializer) {
+        sqlite = new Sqlite(uri);
         sqlite.command("create table if not exists invocations (seam_id string not null, invocation blob)");
         this.serializer = serializer;
     }

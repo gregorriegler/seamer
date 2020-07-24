@@ -13,12 +13,8 @@ public class SqliteSeamRepository implements SeamRepository {
     private final Sqlite sqlite;
     private final Serializer serializer;
 
-    public SqliteSeamRepository(Serializer serializer) {
-        this("jdbc:sqlite::memory:", serializer);
-    }
-
-    public SqliteSeamRepository(String url, Serializer serializer) {
-        sqlite = new Sqlite(url);
+    public SqliteSeamRepository(String uri, Serializer serializer) {
+        sqlite = new Sqlite(uri);
         sqlite.command(
             "create table if not exists seams (id string not null primary key, invokable blob)"
         );

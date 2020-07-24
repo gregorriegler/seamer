@@ -1,5 +1,7 @@
 package com.gregorriegler.seamer.core;
 
+import java.util.Objects;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
@@ -53,6 +55,19 @@ public class Seam<T> {
 
     private void assertNotNull(Object var, String message) {
         if(var == null) throw new IllegalArgumentException(message);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Seam<?> seam = (Seam<?>) o;
+        return Objects.equals(id, seam.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 
     @Override

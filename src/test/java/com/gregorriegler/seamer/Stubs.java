@@ -3,17 +3,28 @@ package com.gregorriegler.seamer;
 import com.gregorriegler.seamer.core.Invocation;
 import com.gregorriegler.seamer.core.Invocations;
 import com.gregorriegler.seamer.core.Invokable;
+import com.gregorriegler.seamer.core.Seam;
 
 import java.util.Collections;
 import java.util.List;
 
 public class Stubs {
+    public static final String SEAM_ID = "seamId";
+
     public static Invocations invocations() {
         return new InvocationsStub();
     }
 
     public static Invokable<String> invokable() {
         return (Invokable<String>) args -> "hello world!";
+    }
+
+    public static Seam<String> seam() {
+        return new Seam<>(SEAM_ID, invokable(), invocations());
+    }
+
+    public static Seam<String> seam(Invocations invocationsStub) {
+        return new Seam<>(SEAM_ID, invokable(), invocationsStub);
     }
 
     public static class InvocationsStub implements Invocations {
