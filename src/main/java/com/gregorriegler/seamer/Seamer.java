@@ -20,7 +20,7 @@ public class Seamer {
 
     public static <T> Seam<T> createSeam(String seamId, Invokable<T> invokable) {
         Seamer seamer = create(defaultPersistence());
-        return seamer.<T>persist(seamId, invokable);
+        return seamer.persist(seamId, invokable);
     }
 
     public static Seamer create() {
@@ -51,7 +51,7 @@ public class Seamer {
             .orElseThrow(FailedToLoad::new);
     }
 
-    public static <T> void verify(String seamId) {
+    public static void verify(String seamId) {
         Seamer.create(defaultPersistence()).verifySeam(seamId);
     }
 

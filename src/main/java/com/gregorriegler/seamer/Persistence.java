@@ -5,7 +5,7 @@ import com.gregorriegler.seamer.core.SeamRepository;
 import com.gregorriegler.seamer.kryo.KryoFactory;
 import com.gregorriegler.seamer.kryo.KryoSerializer;
 
-public interface Persistence<T> {
+public interface Persistence {
 
     SeamRepository createSeams();
 
