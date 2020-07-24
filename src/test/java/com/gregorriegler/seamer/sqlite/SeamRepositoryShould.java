@@ -21,7 +21,7 @@ public abstract class SeamRepositoryShould {
 
     @AfterEach
     void tearDown() {
-        repository.clear();
+        repository.remove(SEAM_ID);
     }
 
     @Test
@@ -43,10 +43,10 @@ public abstract class SeamRepositoryShould {
     }
 
     @Test
-    void clear_the_repository() {
+    void delete_a_seam() {
         repository.persist(expectedSeam);
 
-        repository.clear();
+        repository.remove(SEAM_ID);
 
         assertThat(repository.byId(SEAM_ID, invocationsStub)).isEmpty();
     }

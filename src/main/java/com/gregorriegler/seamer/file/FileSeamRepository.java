@@ -44,8 +44,11 @@ public class FileSeamRepository implements SeamRepository {
     }
 
     @Override
-    public void clear() {
-
+    public void remove(String seamId) {
+        FileLocation.invocationsFile(seamId).delete();
+        FileLocation.seamFile(seamId).delete();
+        FileLocation.seamDirAsFile(seamId).delete();
+        LOG.info("removed seam of id: {}", seamId);
     }
 
     private Optional<FileInputStream> inputStream(String seamId) {

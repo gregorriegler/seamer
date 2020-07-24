@@ -6,7 +6,6 @@ import com.gregorriegler.seamer.core.Seam;
 import com.gregorriegler.seamer.core.SeamRecorder;
 import com.gregorriegler.seamer.core.SeamRepository;
 import com.gregorriegler.seamer.file.FileBasedPersistence;
-import com.gregorriegler.seamer.file.FileResetter;
 
 public class Seamer {
 
@@ -22,6 +21,10 @@ public class Seamer {
         return create().createCustomRecordings(seamId);
     }
 
+    public static void reset(String seamId) {
+        create().seams.remove(seamId);
+    }
+
     public static Seamer create() {
         return create(defaultPersistence());
     }
@@ -34,10 +37,6 @@ public class Seamer {
 
     private static FileBasedPersistence defaultPersistence() {
         return new FileBasedPersistence();
-    }
-
-    public static void reset(String seamId) {
-        new FileResetter().reset(seamId);
     }
 
     private final SeamRepository seams;

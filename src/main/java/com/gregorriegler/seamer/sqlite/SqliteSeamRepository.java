@@ -42,8 +42,8 @@ public class SqliteSeamRepository implements SeamRepository {
     }
 
     @Override
-    public void clear() {
-        sqlite.command("delete from seams");
+    public void remove(String seamId) {
+        sqlite.parameterizedCommand("delete from seams where id = ?", seamId);
     }
 
     @SuppressWarnings("unchecked")
