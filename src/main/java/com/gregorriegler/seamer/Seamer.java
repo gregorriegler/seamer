@@ -10,17 +10,16 @@ import com.gregorriegler.seamer.file.FileResetter;
 
 public class Seamer {
 
-    private final SeamRepository seams;
-    private final Invocations invocations;
-
-    private Seamer(SeamRepository seams, Invocations invocations) {
-        this.seams = seams;
-        this.invocations = invocations;
+    public static <T> Seam<T> createSeam(String seamId, Invokable<T> invokable) {
+        return create().persist(seamId, invokable);
     }
 
-    public static <T> Seam<T> createSeam(String seamId, Invokable<T> invokable) {
-        Seamer seamer = create(defaultPersistence());
-        return seamer.persist(seamId, invokable);
+    public static void verify(String seamId) {
+        create().verifySeam(seamId);
+    }
+
+    public static <T> SeamRecorder<T> customRecordings(String seamId) {
+        return create().createCustomRecordings(seamId);
     }
 
     public static Seamer create() {
@@ -33,16 +32,27 @@ public class Seamer {
         return new Seamer(seams, invocations);
     }
 
+    private static FileBasedPersistence defaultPersistence() {
+        return new FileBasedPersistence();
+    }
+
+    public static void reset(String seamId) {
+        new FileResetter().reset(seamId);
+    }
+
+    private final SeamRepository seams;
+
+    private final Invocations invocations;
+
+    private Seamer(SeamRepository seams, Invocations invocations) {
+        this.seams = seams;
+        this.invocations = invocations;
+    }
 
     private <T> Seam<T> persist(String seamId, Invokable<T> invokable) {
         Seam<T> seam = new Seam<>(seamId, invokable, invocations);
         seams.persist(seam);
         return seam;
-    }
-
-    public static <T> SeamRecorder<T> customRecordings(String seamId) {
-        Seamer seamer = Seamer.create(defaultPersistence());
-        return seamer.createCustomRecordings(seamId);
     }
 
     private <T> SeamRecorder<T> createCustomRecordings(String seamId) {
@@ -51,22 +61,10 @@ public class Seamer {
             .orElseThrow(FailedToLoad::new);
     }
 
-    public static void verify(String seamId) {
-        Seamer.create(defaultPersistence()).verifySeam(seamId);
-    }
-
     private void verifySeam(String seamId) {
         seams.byId(seamId, invocations)
             .orElseThrow(FailedToLoad::new)
             .verify();
-    }
-
-    private static FileBasedPersistence defaultPersistence() {
-        return new FileBasedPersistence();
-    }
-
-    public static void reset(String seamId) {
-        new FileResetter().reset(seamId);
     }
 
     public static class FailedToLoad extends RuntimeException {
