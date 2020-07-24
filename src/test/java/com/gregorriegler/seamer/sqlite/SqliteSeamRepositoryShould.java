@@ -1,7 +1,7 @@
 package com.gregorriegler.seamer.sqlite;
 
-import com.gregorriegler.seamer.core.Persistence;
 import com.gregorriegler.seamer.core.SeamRepositoryShould;
+import com.gregorriegler.seamer.core.Serializer;
 import org.junit.jupiter.api.io.TempDir;
 
 import java.io.File;
@@ -12,12 +12,8 @@ public class SqliteSeamRepositoryShould extends SeamRepositoryShould {
     static File tempDir;
 
     @Override
-    protected Persistence createPersistence() {
-        return new SqlitePersistence(jdbcUri());
-    }
-
-    private String jdbcUri() {
-        return "jdbc:sqlite:"+ tempDir.getAbsolutePath() + "/seams";
+    protected SqliteSeamRepository createRepository(Serializer serializer) {
+        return new SqliteSeamRepository("jdbc:sqlite:"+ tempDir.getAbsolutePath() + "/seams", serializer);
     }
 
 }
