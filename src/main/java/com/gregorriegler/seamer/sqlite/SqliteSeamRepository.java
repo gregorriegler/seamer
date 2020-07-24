@@ -4,7 +4,7 @@ import com.gregorriegler.seamer.core.Invocations;
 import com.gregorriegler.seamer.core.Invokable;
 import com.gregorriegler.seamer.core.Seam;
 import com.gregorriegler.seamer.core.SeamRepository;
-import com.gregorriegler.seamer.file.Serializer;
+import com.gregorriegler.seamer.core.Serializer;
 import com.gregorriegler.seamer.kryo.KryoFactory;
 
 import java.util.Optional;

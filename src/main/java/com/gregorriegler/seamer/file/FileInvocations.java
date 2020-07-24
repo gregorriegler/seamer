@@ -2,6 +2,7 @@ package com.gregorriegler.seamer.file;
 
 import com.gregorriegler.seamer.core.Invocation;
 import com.gregorriegler.seamer.core.Invocations;
+import com.gregorriegler.seamer.core.Serializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

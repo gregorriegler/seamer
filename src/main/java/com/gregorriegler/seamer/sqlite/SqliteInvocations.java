@@ -2,7 +2,7 @@ package com.gregorriegler.seamer.sqlite;
 
 import com.gregorriegler.seamer.core.Invocation;
 import com.gregorriegler.seamer.core.Invocations;
-import com.gregorriegler.seamer.file.Serializer;
+import com.gregorriegler.seamer.core.Serializer;
 import com.gregorriegler.seamer.kryo.KryoFactory;
 
 import java.util.List;

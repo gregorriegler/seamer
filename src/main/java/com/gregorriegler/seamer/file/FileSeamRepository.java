@@ -4,6 +4,7 @@ import com.gregorriegler.seamer.core.Invocations;
 import com.gregorriegler.seamer.core.Invokable;
 import com.gregorriegler.seamer.core.Seam;
 import com.gregorriegler.seamer.core.SeamRepository;
+import com.gregorriegler.seamer.core.Serializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

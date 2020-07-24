@@ -3,7 +3,7 @@ package com.gregorriegler.seamer.kryo;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
-import com.gregorriegler.seamer.file.Serializer;
+import com.gregorriegler.seamer.core.Serializer;
 
 import java.io.InputStream;
 import java.io.OutputStream;

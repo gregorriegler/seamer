@@ -1,4 +1,4 @@
-package com.gregorriegler.seamer.file;
+package com.gregorriegler.seamer.core;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
