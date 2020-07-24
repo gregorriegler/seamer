@@ -10,11 +10,11 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public abstract class SeamRepositoryShould {
-    private final SeamRepository repository = createRepository(KryoFactory.createSerializer());
+    private final SeamRepository repository = createSeams();
     private final Invocations invocationsStub = Stubs.invocations();
     private final Seam<String> expectedSeam = Stubs.seam(invocationsStub);
 
-    protected abstract SeamRepository createRepository(Serializer serializer);
+    protected abstract Persistence createPersistence();
 
     @AfterEach
     void tearDown() {
@@ -32,7 +32,7 @@ public abstract class SeamRepositoryShould {
     void persist_and_retrieve_a_seam() {
         repository.persist(expectedSeam);
 
-        Seam<String> seam = createRepository(KryoFactory.createSerializer()).<String>byId(Stubs.SEAM_ID, invocationsStub).get();
+        Seam<String> seam = createSeams().<String>byId(Stubs.SEAM_ID, invocationsStub).get();
 
         assertThat(seam.id()).isEqualTo(expectedSeam.id());
         assertThat(seam.invocations()).isEqualTo(expectedSeam.invocations());
@@ -46,5 +46,9 @@ public abstract class SeamRepositoryShould {
         repository.remove(Stubs.SEAM_ID);
 
         assertThat(repository.byId(Stubs.SEAM_ID, invocationsStub)).isEmpty();
+    }
+
+    private SeamRepository createSeams() {
+        return createPersistence().createSeams(KryoFactory.createSerializer());
     }
 }
