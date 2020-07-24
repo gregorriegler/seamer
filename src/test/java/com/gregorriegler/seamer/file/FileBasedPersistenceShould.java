@@ -8,11 +8,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class FileBasedPersistenceShould {
 
-    private FileBasedPersistence<String> persistence = new FileBasedPersistence<>();
+    private FileBasedPersistence persistence = new FileBasedPersistence();
 
     @Test
     void create_FileSeamRepository() {
-        SeamRepository<String> seams = persistence.createSeams();
+        SeamRepository seams = persistence.createSeams();
 
         assertThat(seams).isInstanceOf(FileSeamRepository.class);
     }

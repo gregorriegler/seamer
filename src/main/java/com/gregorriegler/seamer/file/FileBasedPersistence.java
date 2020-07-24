@@ -4,13 +4,13 @@ import com.gregorriegler.seamer.Persistence;
 import com.gregorriegler.seamer.core.Invocations;
 import com.gregorriegler.seamer.core.SeamRepository;
 
-public class FileBasedPersistence<T> implements Persistence<T> {
+public class FileBasedPersistence implements Persistence {
     public FileBasedPersistence() {
     }
 
     @Override
-    public SeamRepository<T> createSeams() {
-        return new FileSeamRepository<>(serializer());
+    public SeamRepository createSeams() {
+        return new FileSeamRepository(serializer());
     }
 
     @Override

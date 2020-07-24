@@ -13,7 +13,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.Optional;
 
-public class FileSeamRepository<T> implements SeamRepository<T> {
+public class FileSeamRepository implements SeamRepository {
 
     private static final Logger LOG = LoggerFactory.getLogger(FileSeamRepository.class);
     private final Serializer serializer;
@@ -23,7 +23,7 @@ public class FileSeamRepository<T> implements SeamRepository<T> {
     }
 
     @Override
-    public void persist(Seam seam) {
+    public <T> void persist(Seam<T> seam) {
         try {
             FileLocation.createSeamDir(seam.id());
             File seamFile = FileLocation.seamFile(seam.id());
@@ -37,7 +37,7 @@ public class FileSeamRepository<T> implements SeamRepository<T> {
 
     @SuppressWarnings("unchecked")
     @Override
-    public Optional<Seam<T>> byId(String seamId, Invocations invocations) {
+    public <T> Optional<Seam<T>> byId(String seamId, Invocations invocations) {
         return inputStream(seamId)
             .map(stream -> (Invokable<T>) serializer.deserialize(stream, Invokable.class))
             .map(seam -> new Seam<>(seamId, seam, invocations));

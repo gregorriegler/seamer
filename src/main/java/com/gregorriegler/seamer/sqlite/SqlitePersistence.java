@@ -4,10 +4,10 @@ import com.gregorriegler.seamer.Persistence;
 import com.gregorriegler.seamer.core.Invocations;
 import com.gregorriegler.seamer.core.SeamRepository;
 
-public class SqlitePersistence<T> implements Persistence<T> {
+public class SqlitePersistence implements Persistence {
     @Override
-    public SeamRepository<T> createSeams() {
-        return new SqliteSeamRepository<>();
+    public SeamRepository createSeams() {
+        return new SqliteSeamRepository();
     }
 
     @Override

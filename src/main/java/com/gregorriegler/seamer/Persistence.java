@@ -7,7 +7,7 @@ import com.gregorriegler.seamer.kryo.KryoSerializer;
 
 public interface Persistence<T> {
 
-    SeamRepository<T> createSeams();
+    SeamRepository createSeams();
 
     Invocations createInvocations();
 

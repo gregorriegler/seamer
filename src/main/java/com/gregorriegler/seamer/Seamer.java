@@ -8,50 +8,51 @@ import com.gregorriegler.seamer.core.SeamRepository;
 import com.gregorriegler.seamer.file.FileBasedPersistence;
 import com.gregorriegler.seamer.file.FileResetter;
 
-public class Seamer<T> {
+public class Seamer {
 
-    private final SeamRepository<T> seams;
+    private final SeamRepository seams;
     private final Invocations invocations;
 
-    private Seamer(SeamRepository<T> seams, Invocations invocations) {
+    private Seamer(SeamRepository seams, Invocations invocations) {
         this.seams = seams;
         this.invocations = invocations;
     }
 
     public static <T> Seam<T> createSeam(String seamId, Invokable<T> invokable) {
-        Seamer<T> seamer = create(defaultPersistence());
-        return seamer.persist(seamId, invokable);
+        Seamer seamer = create(defaultPersistence());
+        return seamer.<T>persist(seamId, invokable);
     }
 
-    public static <T> Seamer<T> create() {
+    public static Seamer create() {
         return create(defaultPersistence());
     }
 
-    public static <T> Seamer<T> create(Persistence<T> persistence) {
-        SeamRepository<T> seams = persistence.createSeams();
+    public static Seamer create(Persistence persistence) {
+        SeamRepository seams = persistence.createSeams();
         Invocations invocations = persistence.createInvocations();
-        return new Seamer<>(seams, invocations);
+        return new Seamer(seams, invocations);
     }
 
 
-    private Seam<T> persist(String seamId, Invokable<T> invokable) {
+    private <T> Seam<T> persist(String seamId, Invokable<T> invokable) {
         Seam<T> seam = new Seam<>(seamId, invokable, invocations);
         seams.persist(seam);
         return seam;
     }
 
     public static <T> SeamRecorder<T> customRecordings(String seamId) {
-        return Seamer.<T>create(defaultPersistence()).createCustomRecordings(seamId);
+        Seamer seamer = Seamer.create(defaultPersistence());
+        return seamer.createCustomRecordings(seamId);
     }
 
-    private SeamRecorder<T> createCustomRecordings(String seamId) {
-        return seams.byId(seamId, invocations)
+    private <T> SeamRecorder<T> createCustomRecordings(String seamId) {
+        return seams.<T>byId(seamId, invocations)
             .map(SeamRecorder::new)
             .orElseThrow(FailedToLoad::new);
     }
 
     public static <T> void verify(String seamId) {
-        Seamer.<T>create(defaultPersistence()).verifySeam(seamId);
+        Seamer.create(defaultPersistence()).verifySeam(seamId);
     }
 
     private void verifySeam(String seamId) {
@@ -60,8 +61,8 @@ public class Seamer<T> {
             .verify();
     }
 
-    private static <T> FileBasedPersistence<T> defaultPersistence() {
-        return new FileBasedPersistence<>();
+    private static FileBasedPersistence defaultPersistence() {
+        return new FileBasedPersistence();
     }
 
     public static void reset(String seamId) {

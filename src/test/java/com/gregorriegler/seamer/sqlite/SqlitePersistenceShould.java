@@ -8,11 +8,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class SqlitePersistenceShould {
 
-    private SqlitePersistence<String> persistence = new SqlitePersistence<>();
+    private SqlitePersistence persistence = new SqlitePersistence();
 
     @Test
     void create_SqliteSeamRepository() {
-        SeamRepository<String> seams = persistence.createSeams();
+        SeamRepository seams = persistence.createSeams();
 
         assertThat(seams).isInstanceOf(SqliteSeamRepository.class);
     }

@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class SqliteSeamRepositoryShould {
 
-    private final SqliteSeamRepository<String> repository = new SqliteSeamRepository<>();
+    private final SqliteSeamRepository repository = new SqliteSeamRepository();
     private final Invocations invocationsStub = Stubs.invocations();
     private final Seam<String> expectedSeam = new Seam<>("seamId", Stubs.invokable(), invocationsStub);
 
@@ -25,18 +25,18 @@ public class SqliteSeamRepositoryShould {
     @Test
     void persist_and_retrieve_a_seam() {
         repository.persist(expectedSeam);
-        Seam<String> seam = repository.byId("seamId", invocationsStub).get();
+        Seam<String> seam = repository.<String>byId("seamId", invocationsStub).get();
 
         assertIsExpected(seam);
     }
 
     @Test
     void write_to_a_file() {
-        SqliteSeamRepository<String> writingRepository = new SqliteSeamRepository<>("jdbc:sqlite:/tmp/seamertest");
+        SqliteSeamRepository writingRepository = new SqliteSeamRepository("jdbc:sqlite:/tmp/seamertest");
         writingRepository.persist(expectedSeam);
 
-        SqliteSeamRepository<String> readingRepository = new SqliteSeamRepository<>("jdbc:sqlite:/tmp/seamertest");
-        Seam<String> seam = readingRepository.byId("seamId", invocationsStub).get();
+        SqliteSeamRepository readingRepository = new SqliteSeamRepository("jdbc:sqlite:/tmp/seamertest");
+        Seam<String> seam = readingRepository.<String> byId("seamId", invocationsStub).get();
 
         assertIsExpected(seam);
     }

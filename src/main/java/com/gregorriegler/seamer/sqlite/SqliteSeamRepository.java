@@ -9,7 +9,7 @@ import com.gregorriegler.seamer.kryo.KryoFactory;
 
 import java.util.Optional;
 
-public class SqliteSeamRepository<T> implements SeamRepository<T> {
+public class SqliteSeamRepository implements SeamRepository {
 
     private final Sqlite sqlite;
     private final Serializer serializer;
@@ -27,7 +27,7 @@ public class SqliteSeamRepository<T> implements SeamRepository<T> {
     }
 
     @Override
-    public void persist(Seam<T> seam) {
+    public <T> void persist(Seam<T> seam) {
         sqlite.parameterizedCommand(
             "insert into seams (id, invokable) values (?, ?)",
             seam.id(),
@@ -36,13 +36,13 @@ public class SqliteSeamRepository<T> implements SeamRepository<T> {
     }
 
     @Override
-    public Optional<Seam<T>> byId(String seamId, Invocations invocations) {
+    public <T> Optional<Seam<T>> byId(String seamId, Invocations invocations) {
         return sqlite.queryBytes("select invokable from seams where id = ?", seamId)
-            .map(bytes -> new Seam<>(seamId, invokableFrom(bytes), invocations));
+            .map(bytes -> new Seam<T>(seamId, invokableFrom(bytes), invocations));
     }
 
     @SuppressWarnings("unchecked")
-    private Invokable<T> invokableFrom(byte[] bytes) {
+    private <T> Invokable<T> invokableFrom(byte[] bytes) {
         return serializer.fromBytesArray(bytes, Invokable.class);
     }
 

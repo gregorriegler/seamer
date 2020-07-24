@@ -2,10 +2,10 @@ package com.gregorriegler.seamer.core;
 
 import java.util.Optional;
 
-public interface SeamRepository<T> {
+public interface SeamRepository {
 
-    void persist(Seam<T> seam);
+    <T> void persist(Seam<T> seam);
 
-    Optional<Seam<T>> byId(String seamId, Invocations invocations);
+    <T> Optional<Seam<T>> byId(String seamId, Invocations invocations);
 
 }
