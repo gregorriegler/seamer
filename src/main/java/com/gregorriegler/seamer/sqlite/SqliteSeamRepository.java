@@ -41,6 +41,11 @@ public class SqliteSeamRepository implements SeamRepository {
             .map(bytes -> new Seam<T>(seamId, invokableFrom(bytes), invocations));
     }
 
+    @Override
+    public void clear() {
+        sqlite.command("delete from seams");
+    }
+
     @SuppressWarnings("unchecked")
     private <T> Invokable<T> invokableFrom(byte[] bytes) {
         return serializer.fromBytesArray(bytes, Invokable.class);

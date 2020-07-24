@@ -43,6 +43,11 @@ public class FileSeamRepository implements SeamRepository {
             .map(seam -> new Seam<>(seamId, seam, invocations));
     }
 
+    @Override
+    public void clear() {
+
+    }
+
     private Optional<FileInputStream> inputStream(String seamId) {
         try {
             return Optional.of(new FileInputStream(FileLocation.seamFile(seamId)));

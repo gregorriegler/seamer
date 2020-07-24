@@ -54,4 +54,9 @@ public class Seam<T> {
     private void assertNotNull(Object var, String message) {
         if(var == null) throw new IllegalArgumentException(message);
     }
+
+    @Override
+    public String toString() {
+        return "Seam{" + id + '}';
+    }
 }

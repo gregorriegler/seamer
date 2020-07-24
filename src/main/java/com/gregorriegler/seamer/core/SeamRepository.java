@@ -8,4 +8,5 @@ public interface SeamRepository {
 
     <T> Optional<Seam<T>> byId(String seamId, Invocations invocations);
 
+    void clear();
 }
