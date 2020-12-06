@@ -7,7 +7,7 @@ Seamer is a tool that aims at making it easy to create characterization tests.
 
 Suppose you have a code like the following.
 
-```
+```java
 String result = someReallyComplicatedLegacyMethod(String param1, Integer param2);
 
 doSometingWith(result);
@@ -15,9 +15,9 @@ doSometingWith(result);
 
 You have no idea what `someReallyComplicatedLegacyMethod` is doing so you want to refactor it safely.
 This is where Seamer comes in handy. 
-Seamer allows you to intercept the method, and record all invocations and results like the following:
+Seamer allows you to intercept the method and record all invocations and results like the following:
 
-```
+```java
 String result = Seamer.create(
     "MySeam",  // this is just an id of your choice
     (InvokableWith2Arguments<String, Integer, String>) this::someReallyComplicatedLegacyMethod
