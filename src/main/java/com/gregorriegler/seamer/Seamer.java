@@ -46,7 +46,7 @@ public class Seamer {
     }
 
     public static Seamer create() {
-        return create(FileLocation.DEFAULT_BASE_PATH);
+        return create(FileLocation.basePath());
     }
 
     public static Seamer create(String basePath) {

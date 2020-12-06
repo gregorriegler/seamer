@@ -3,7 +3,11 @@ package com.gregorriegler.seamer.file;
 import java.io.File;
 
 public interface FileLocation {
-    String DEFAULT_BASE_PATH = "target/seamer";
+    static String basePath() {
+        return DEFAULT_BASE_PATH;
+    }
+
+    String DEFAULT_BASE_PATH = "src/test/java/seamer";
     String INVOCATIONS_FILE = "invocations";
     String SEAM_FILE = "seam";
 

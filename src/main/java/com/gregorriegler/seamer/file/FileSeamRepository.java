@@ -21,7 +21,7 @@ public class FileSeamRepository implements SeamRepository {
     private final String basePath;
 
     public FileSeamRepository(Serializer serializer) {
-        this(FileLocation.DEFAULT_BASE_PATH, serializer);
+        this(FileLocation.basePath(), serializer);
     }
 
     public FileSeamRepository(String basePath, Serializer serializer) {

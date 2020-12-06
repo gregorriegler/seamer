@@ -8,7 +8,7 @@ public class SeamerCglibFactory {
     public static <T> T createProxySeam(Class<T> clazz, String methodName, String seamId) {
         Enhancer enhancer = new Enhancer();
         enhancer.setSuperclass(clazz);
-        enhancer.setCallback(new SeamMethodInterceptor<T>(FileLocation.DEFAULT_BASE_PATH, methodName, seamId));
+        enhancer.setCallback(new SeamMethodInterceptor<T>(FileLocation.basePath(), methodName, seamId));
         return (T) enhancer.create();
     }
 

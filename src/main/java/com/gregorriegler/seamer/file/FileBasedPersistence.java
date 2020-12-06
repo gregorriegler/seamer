@@ -10,7 +10,7 @@ public class FileBasedPersistence implements Persistence {
     private final String basePath;
 
     public FileBasedPersistence() {
-        this(FileLocation.DEFAULT_BASE_PATH);
+        this(FileLocation.basePath());
     }
 
     public FileBasedPersistence(String basePath) {

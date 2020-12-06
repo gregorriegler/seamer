@@ -18,7 +18,7 @@ public class SeamMethodInterceptor<T> implements MethodInterceptor {
 
     // for deserialization
     public SeamMethodInterceptor() {
-        basePath = FileLocation.DEFAULT_BASE_PATH; // todo this could be a problem when the path is wrong
+        basePath = FileLocation.basePath(); // todo this could be a problem when the path is wrong
     }
 
     public SeamMethodInterceptor(String basePath, String methodName, String seamId) {

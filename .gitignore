@@ -1,3 +1,4 @@
 .idea
 seamer.iml
 target
+src/test/java/seamer

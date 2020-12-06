@@ -1,6 +1,5 @@
 package com.gregorriegler.seamer;
 
-import com.gregorriegler.seamer.file.FileLocation;
 import com.gregorriegler.seamer.sqlite.SqlitePersistence;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +16,7 @@ public class SeamerShould {
 
     @Test
     void be_created_with_custom_base_path() {
-        Seamer seamer = Seamer.create(FileLocation.DEFAULT_BASE_PATH);
+        Seamer seamer = Seamer.create("/tmp/seamer");
 
         assertThat(seamer).isNotNull();
     }
