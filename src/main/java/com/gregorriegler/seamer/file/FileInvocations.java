@@ -13,21 +13,26 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
+import static com.gregorriegler.seamer.file.FileLocation.createSeamDir;
+import static com.gregorriegler.seamer.file.FileLocation.invocationsFile;
+
 public class FileInvocations implements Invocations {
 
     private static final Logger LOG = LoggerFactory.getLogger(FileInvocations.class);
 
     private final Serializer serializer;
+    private final String basePath;
 
-    public FileInvocations(Serializer serializer) {
+    public FileInvocations(String basePath, Serializer serializer) {
         this.serializer = serializer;
+        this.basePath = basePath;
     }
 
     @Override
     public void record(String seamId, Invocation invocation) {
         try {
-            FileLocation.createSeamDir(seamId);
-            FileOutputStream outputStream = new FileOutputStream(FileLocation.invocationsFile(seamId), true);
+            createSeamDir(basePath, seamId);
+            FileOutputStream outputStream = new FileOutputStream(invocationsFile(basePath, seamId), true);
             serializer.serialize(invocation, outputStream);
         } catch (IOException e) {
             LOG.error("failed to record invocation", e);
@@ -37,7 +42,7 @@ public class FileInvocations implements Invocations {
     @Override
     public List<Invocation> getAll(String seamId) {
         try {
-            FileInputStream inputStream = new FileInputStream(FileLocation.invocationsFile(seamId));
+            FileInputStream inputStream = new FileInputStream(invocationsFile(basePath, seamId));
             return serializer.deserializeList(inputStream, Invocation.class);
         } catch (FileNotFoundException e) {
             LOG.error("found no recorded invocations for seam '{}'", seamId, e);
@@ -47,7 +52,6 @@ public class FileInvocations implements Invocations {
 
     @Override
     public void remove(String seamId) {
-        FileLocation.invocationsFile(seamId).delete();
+        invocationsFile(basePath, seamId).delete();
     }
-
 }

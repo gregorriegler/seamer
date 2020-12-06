@@ -3,6 +3,7 @@ package com.gregorriegler.seamer.cglib;
 import com.gregorriegler.seamer.Seamer;
 import com.gregorriegler.seamer.core.ProxyInvokable;
 import com.gregorriegler.seamer.core.Seam;
+import com.gregorriegler.seamer.file.FileLocation;
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
 
@@ -10,17 +11,20 @@ import java.lang.reflect.Method;
 
 public class SeamMethodInterceptor<T> implements MethodInterceptor {
 
+    private final String basePath;
     private String methodName;
     private String seamId;
     private Seam<T> seam;
 
     // for deserialization
     public SeamMethodInterceptor() {
+        basePath = FileLocation.DEFAULT_BASE_PATH; // todo this could be a problem when the path is wrong
     }
 
-    public SeamMethodInterceptor(String methodName, String seamId) {
+    public SeamMethodInterceptor(String basePath, String methodName, String seamId) {
         this.methodName = methodName;
         this.seamId = seamId;
+        this.basePath = basePath;
     }
 
     @Override
@@ -31,6 +35,7 @@ public class SeamMethodInterceptor<T> implements MethodInterceptor {
 
         if (seam == null) {
             seam = Seamer.createSeam(
+                basePath,
                 seamId,
                 ProxyInvokable.of(target, methodName)
             );

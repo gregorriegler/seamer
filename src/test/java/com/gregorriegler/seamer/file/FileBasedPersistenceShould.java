@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class FileBasedPersistenceShould {
 
-    private FileBasedPersistence persistence = new FileBasedPersistence();
+    private final FileBasedPersistence persistence = new FileBasedPersistence();
 
     @Test
     void create_FileSeamRepository() {

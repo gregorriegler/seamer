@@ -32,6 +32,7 @@ public class SeamerAspect {
         if (this.seam != null) return;
 
         this.seam = Seamer.createSeam(
+            seam.basePath(),
             seam.value(),
             ProxyInvokable.of(pjp.getTarget(), pjp.getSignature().getName())
         );

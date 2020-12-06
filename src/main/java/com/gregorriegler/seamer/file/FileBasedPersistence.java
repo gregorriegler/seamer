@@ -6,17 +6,24 @@ import com.gregorriegler.seamer.core.SeamRepository;
 import com.gregorriegler.seamer.core.Serializer;
 
 public class FileBasedPersistence implements Persistence {
+
+    private final String basePath;
+
     public FileBasedPersistence() {
+        this(FileLocation.DEFAULT_BASE_PATH);
+    }
+
+    public FileBasedPersistence(String basePath) {
+        this.basePath = basePath;
     }
 
     @Override
     public SeamRepository createSeams(Serializer serializer) {
-        return new FileSeamRepository(serializer);
+        return new FileSeamRepository(basePath, serializer);
     }
 
     @Override
     public Invocations createInvocations(Serializer serializer) {
-        return new FileInvocations(serializer);
+        return new FileInvocations(basePath, serializer);
     }
-
 }
