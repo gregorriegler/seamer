@@ -59,8 +59,18 @@ public class FileSeamRepository implements SeamRepository {
     }
 
     private Optional<FileInputStream> inputStream(String seamId) {
+        File file = FileLocation.seamFile(basePath, seamId);
+        if (file.exists()) {
+            return streamFile(file);
+        } else {
+            return Optional.empty();
+        }
+
+    }
+
+    private Optional<FileInputStream> streamFile(File file) {
         try {
-            return Optional.of(new FileInputStream(FileLocation.seamFile(basePath, seamId)));
+            return Optional.of(new FileInputStream(file));
         } catch (FileNotFoundException e) {
             LOG.error("failed to load seam", e);
             return Optional.empty();

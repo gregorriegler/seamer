@@ -6,6 +6,7 @@ import com.gregorriegler.seamer.core.Serializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -41,8 +42,17 @@ public class FileInvocations implements Invocations {
 
     @Override
     public List<Invocation> getAll(String seamId) {
+        File file = invocationsFile(basePath, seamId);
+        if(!file.exists()) {
+            return Collections.emptyList();
+        }
+
+        return loadInvocations(seamId, file);
+    }
+
+    private List<Invocation> loadInvocations(String seamId, File file) {
         try {
-            FileInputStream inputStream = new FileInputStream(invocationsFile(basePath, seamId));
+            FileInputStream inputStream = new FileInputStream(file);
             return serializer.deserializeList(inputStream, Invocation.class);
         } catch (FileNotFoundException e) {
             LOG.error("found no recorded invocations for seam '{}'", seamId, e);
