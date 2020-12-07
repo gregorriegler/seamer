@@ -25,7 +25,7 @@ public class ArgCandidatesDemoTest {
         demo = new ArgCandidatesDemo();
         demo.entrypoint(null, null, null); // persist seam
 
-        Seamer.customRecordings(SEAM_ID)
+        seamer.createCustomRecordings(SEAM_ID)
             .addArgCandidates(0, null, "hello", "world")
             .addArgCandidates(1, null, 1, 2, 3)
             .addArgCandidates(2, new SomeObject("hello", SomeObjectState.READY), new SomeObject("world", SomeObjectState.DONE))
@@ -41,10 +41,9 @@ public class ArgCandidatesDemoTest {
     public static class ArgCandidatesDemo {
 
         public void entrypoint(String arg1, Integer arg2, SomeObject arg3) {
-            String result = Seamer.createSeam(
-                SEAM_ID,
-                (InvokableWith3Arguments<String, Integer, SomeObject, String>) this::blackbox
-            ).invokeAndRecord(arg1, arg2, arg3);
+            String result = Seamer.create()
+                .define(SEAM_ID, (InvokableWith3Arguments<String, Integer, SomeObject, String>) this::blackbox)
+                .invokeAndRecord(arg1, arg2, arg3);
 
             LOG.info(result);
         }

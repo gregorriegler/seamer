@@ -33,13 +33,9 @@ public class ClosureSeamTest {
     public static class ClosureDemo {
 
         public void entryPoint(String arg1, Integer arg2) {
-            String result = Seamer.createSeam(
-                SEAM_ID,
-                a -> blackbox(
-                    (String) a[0],
-                    (Integer) a[1]
-                )
-            ).invokeAndRecord(arg1, arg2);
+            String result = Seamer.create()
+                .define(SEAM_ID, a -> blackbox((String) a[0], (Integer) a[1]))
+                .invokeAndRecord(arg1, arg2);
 
             LOG.info(result);
         }

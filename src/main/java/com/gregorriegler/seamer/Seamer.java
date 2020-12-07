@@ -12,21 +12,9 @@ import com.gregorriegler.seamer.kryo.KryoSerializer;
 
 public class Seamer {
 
-    public static <T> Seam<T> createSeam(String seamId, Invokable<T> invokable) {
-        return create().persist(seamId, invokable);
-    }
+    private final SeamRepository seams;
 
-    public static <T> Seam<T> createSeam(String basePath, String seamId, Invokable<T> invokable) {
-        return create(basePath).persist(seamId, invokable);
-    }
-
-    public static <T> SeamRecorder<T> customRecordings(String seamId) {
-        return create().createCustomRecordings(seamId);
-    }
-
-    public static <T> SeamRecorder<T> customRecordings(String basePath, String seamId) {
-        return create(basePath).createCustomRecordings(seamId);
-    }
+    private final Invocations invocations;
 
     public static Seamer create() {
         return create(new FileBasedPersistence());
@@ -43,10 +31,6 @@ public class Seamer {
         return new Seamer(seams, invocations);
     }
 
-    private final SeamRepository seams;
-
-    private final Invocations invocations;
-
     private Seamer(SeamRepository seams, Invocations invocations) {
         this.seams = seams;
         this.invocations = invocations;
@@ -56,13 +40,13 @@ public class Seamer {
         seams.remove(seamId);
     }
 
-    private <T> Seam<T> persist(String seamId, Invokable<T> invokable) {
+    public <T> Seam<T> define(String seamId, Invokable<T> invokable) {
         Seam<T> seam = new Seam<>(seamId, invokable, invocations);
         seams.persist(seam);
         return seam;
     }
 
-    private <T> SeamRecorder<T> createCustomRecordings(String seamId) {
+    public <T> SeamRecorder<T> createCustomRecordings(String seamId) {
         return seams.<T>byId(seamId, invocations)
             .map(SeamRecorder::new)
             .orElseThrow(FailedToLoad::new);

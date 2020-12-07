@@ -28,10 +28,9 @@ public class SingleArgumentSeamTest {
     public static class SomeClass {
 
         public void entryPoint(Integer arg1) {
-            Seamer.createSeam(
-                SEAM_ID,
-                (InvokableWith1Argument<Integer, Integer>) this::blackbox
-            ).invokeAndRecord(arg1);
+            Seamer.create()
+                .define(SEAM_ID, (InvokableWith1Argument<Integer, Integer>) this::blackbox)
+                .invokeAndRecord(arg1);
         }
 
         public Integer blackbox(Integer i) {
