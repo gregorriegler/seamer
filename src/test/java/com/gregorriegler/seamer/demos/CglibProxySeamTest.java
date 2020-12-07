@@ -24,7 +24,7 @@ public class CglibProxySeamTest {
 
     @Test
     void verify() {
-        Seamer.verify(SEAM_ID);
+        seamer.verify(SEAM_ID);
     }
 
     public static class ProxyDemo {
@@ -37,6 +37,5 @@ public class CglibProxySeamTest {
             String result = arg1 + arg2;
             return result;
         }
-
     }
 }

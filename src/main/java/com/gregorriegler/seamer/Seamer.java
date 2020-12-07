@@ -20,24 +20,12 @@ public class Seamer {
         return create(basePath).persist(seamId, invokable);
     }
 
-    public static void verify(String seamId) {
-        create().verifySeam(seamId);
-    }
-
-    public static void verify(String basePath, String seamId) {
-        create(basePath).verifySeam(seamId);
-    }
-
     public static <T> SeamRecorder<T> customRecordings(String seamId) {
         return create().createCustomRecordings(seamId);
     }
 
     public static <T> SeamRecorder<T> customRecordings(String basePath, String seamId) {
         return create(basePath).createCustomRecordings(seamId);
-    }
-
-    public static void reset(String basePath, String seamId) {
-        create(basePath).seams.remove(seamId);
     }
 
     public static Seamer create() {
@@ -80,7 +68,7 @@ public class Seamer {
             .orElseThrow(FailedToLoad::new);
     }
 
-    private void verifySeam(String seamId) {
+    public void verify(String seamId) {
         seams.byId(seamId, invocations)
             .orElseThrow(FailedToLoad::new)
             .verify();

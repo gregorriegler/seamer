@@ -25,7 +25,7 @@ public class TwoArgumentSeamTest {
 
     @Test
     void verify() {
-        Seamer.verify(SEAM_ID);
+        seamer.verify(SEAM_ID);
     }
 
     public static class SomeClass {
@@ -44,6 +44,5 @@ public class TwoArgumentSeamTest {
         public String blackbox(String arg1, Integer arg2) {
             return arg1 + arg2;
         }
-
     }
 }

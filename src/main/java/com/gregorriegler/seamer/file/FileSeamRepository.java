@@ -76,5 +76,4 @@ public class FileSeamRepository implements SeamRepository {
             return Optional.empty();
         }
     }
-
 }

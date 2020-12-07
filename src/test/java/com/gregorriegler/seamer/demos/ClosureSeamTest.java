@@ -27,7 +27,7 @@ public class ClosureSeamTest {
 
     @Test
     void verify() {
-        Seamer.verify(SEAM_ID);
+        seamer.verify(SEAM_ID);
     }
 
     public static class ClosureDemo {

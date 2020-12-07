@@ -22,7 +22,7 @@ public class SingleArgumentSeamTest {
 
     @Test
     void verify() {
-        Seamer.verify(SEAM_ID);
+        seamer.verify(SEAM_ID);
     }
 
     public static class SomeClass {
@@ -37,6 +37,5 @@ public class SingleArgumentSeamTest {
         public Integer blackbox(Integer i) {
             return i * 2;
         }
-
     }
 }

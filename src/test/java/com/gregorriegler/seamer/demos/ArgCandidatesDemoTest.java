@@ -35,7 +35,7 @@ public class ArgCandidatesDemoTest {
 
     @Test
     void verify() {
-        Seamer.verify(SEAM_ID);
+        seamer.verify(SEAM_ID);
     }
 
     public static class ArgCandidatesDemo {
@@ -84,7 +84,6 @@ public class ArgCandidatesDemoTest {
 
     public enum SomeObjectState {
         READY, DONE
-
     }
 
 }

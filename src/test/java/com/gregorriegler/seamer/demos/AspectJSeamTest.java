@@ -24,7 +24,7 @@ public class AspectJSeamTest {
 
     @Test
     void verify() {
-        Seamer.verify(SEAM_ID);
+        seamer.verify(SEAM_ID);
     }
 
     public static class AspectJDemo {
@@ -37,6 +37,5 @@ public class AspectJSeamTest {
         public String blackbox(String arg1, Integer arg2) {
             return arg1 + arg2;
         }
-
     }
 }
