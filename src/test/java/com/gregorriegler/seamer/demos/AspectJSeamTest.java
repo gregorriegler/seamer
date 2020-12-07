@@ -8,10 +8,11 @@ import org.junit.jupiter.api.Test;
 public class AspectJSeamTest {
 
     public static final String SEAM_ID = "AspectJ";
+    private final Seamer seamer = Seamer.create();
 
     @BeforeEach
     void recordInvocations() {
-        Seamer.reset(SEAM_ID);
+        seamer.reset(SEAM_ID);
 
         AspectJDemo aspectJDemo = new AspectJDemo();
         aspectJDemo.blackbox("hello", 1);

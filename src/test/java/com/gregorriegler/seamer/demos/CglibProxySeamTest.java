@@ -8,10 +8,11 @@ import org.junit.jupiter.api.Test;
 public class CglibProxySeamTest {
 
     public static final String SEAM_ID = CglibProxySeamTest.class.getName();
+    private final Seamer seamer = Seamer.create();
 
     @BeforeEach
     void recordInvocations() {
-        Seamer.reset(SEAM_ID);
+        seamer.reset(SEAM_ID);
 
         ProxyDemo proxyDemo = SeamerCglibFactory.createProxySeam(ProxyDemo.class, "blackbox", SEAM_ID);
         proxyDemo.blackbox("hello", 1);

@@ -7,7 +7,6 @@ import com.gregorriegler.seamer.core.Seam;
 import com.gregorriegler.seamer.core.SeamRecorder;
 import com.gregorriegler.seamer.core.SeamRepository;
 import com.gregorriegler.seamer.file.FileBasedPersistence;
-import com.gregorriegler.seamer.file.FileLocation;
 import com.gregorriegler.seamer.kryo.KryoFactory;
 import com.gregorriegler.seamer.kryo.KryoSerializer;
 
@@ -37,20 +36,16 @@ public class Seamer {
         return create(basePath).createCustomRecordings(seamId);
     }
 
-    public static void reset(String seamId) {
-        create().seams.remove(seamId);
-    }
-
     public static void reset(String basePath, String seamId) {
         create(basePath).seams.remove(seamId);
     }
 
     public static Seamer create() {
-        return create(FileLocation.basePath());
+        return create(new FileBasedPersistence());
     }
 
     public static Seamer create(String basePath) {
-        return create(fileBasedPersistence(basePath));
+        return create(new FileBasedPersistence(basePath));
     }
 
     public static Seamer create(Persistence persistence) {
@@ -60,10 +55,6 @@ public class Seamer {
         return new Seamer(seams, invocations);
     }
 
-    private static FileBasedPersistence fileBasedPersistence(String basePath) {
-        return new FileBasedPersistence(basePath);
-    }
-
     private final SeamRepository seams;
 
     private final Invocations invocations;
@@ -71,6 +62,10 @@ public class Seamer {
     private Seamer(SeamRepository seams, Invocations invocations) {
         this.seams = seams;
         this.invocations = invocations;
+    }
+
+    public void reset(String seamId) {
+        seams.remove(seamId);
     }
 
     private <T> Seam<T> persist(String seamId, Invokable<T> invokable) {

@@ -13,10 +13,11 @@ public class ClosureSeamTest {
 
     private static final Logger LOG = LoggerFactory.getLogger(ClosureSeamTest.class);
     private static final String SEAM_ID = ClosureSeamTest.class.getName();
+    private static final Seamer seamer = Seamer.create();
 
     @BeforeAll
     public static void recordInvocations() {
-        Seamer.reset(SEAM_ID);
+        seamer.reset(SEAM_ID);
 
         ClosureDemo closureDemo = new ClosureDemo();
         for (int i = 0; i < 5; i++) {

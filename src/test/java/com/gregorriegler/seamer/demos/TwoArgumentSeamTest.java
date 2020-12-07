@@ -10,10 +10,11 @@ import org.slf4j.LoggerFactory;
 public class TwoArgumentSeamTest {
 
     private static final String SEAM_ID = "TwoArgSeamTest";
+    private final Seamer seamer = Seamer.create();
 
     @BeforeEach
     public void recordInvocations() {
-        Seamer.reset(SEAM_ID);
+        seamer.reset(SEAM_ID);
 
         SomeClass someClass = new SomeClass();
 

@@ -15,12 +15,13 @@ public class ArgCandidatesDemoTest {
 
     private static final Logger LOG = LoggerFactory.getLogger(ArgCandidatesDemoTest.class);
     public static final String SEAM_ID = ArgCandidatesDemoTest.class.getName();
+    private final Seamer seamer = Seamer.create();
 
     private ArgCandidatesDemo demo;
 
     @BeforeAll
     void setUp() {
-        Seamer.reset(SEAM_ID);
+        seamer.reset(SEAM_ID);
         demo = new ArgCandidatesDemo();
         demo.entrypoint(null, null, null); // persist seam
 

@@ -8,10 +8,11 @@ import org.junit.jupiter.api.Test;
 public class SingleArgumentSeamTest {
 
     private static final String SEAM_ID = "SingleArgumentSeam";
+    private final Seamer seamer = Seamer.create();
 
     @BeforeEach
     public void recordInvocations() {
-        Seamer.reset(SEAM_ID);
+        seamer.reset(SEAM_ID);
 
         SomeClass someClass = new SomeClass();
         for (int i = 0; i < 5; i++) {
