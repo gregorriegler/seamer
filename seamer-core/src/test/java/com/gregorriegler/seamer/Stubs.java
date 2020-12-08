@@ -16,11 +16,7 @@ public class Stubs {
     }
 
     public static Invokable<String> invokable() {
-        return (Invokable<String>) args -> "hello world!";
-    }
-
-    public static Seam<String> seam() {
-        return new Seam<>(SEAM_ID, invokable(), invocations());
+        return args -> "hello world!";
     }
 
     public static Seam<String> seam(Invocations invocationsStub) {
