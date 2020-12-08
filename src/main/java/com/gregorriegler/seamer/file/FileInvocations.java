@@ -43,7 +43,7 @@ public class FileInvocations implements Invocations {
     @Override
     public List<Invocation> getAll(String seamId) {
         File file = invocationsFile(basePath, seamId);
-        if(!file.exists()) {
+        if (!file.exists()) {
             return Collections.emptyList();
         }
 
