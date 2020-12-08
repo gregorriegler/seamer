@@ -1,7 +1,8 @@
 Seamer - gets your legacy code under test
 ----------------------------------------
+[![Build Status](https://travis-ci.com/gregorriegler/seamer.svg?branch=master)](https://travis-ci.com/gregorriegler/seamer)
 
-Seamer is a tool that aims at making it easy to create characterization tests.
+Seamer aims at making it easy to create characterization tests.
 
 ### Usage
 
