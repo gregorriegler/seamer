@@ -7,7 +7,7 @@ public interface FileLocation {
         return DEFAULT_BASE_PATH;
     }
 
-    String DEFAULT_BASE_PATH = "src/test/java/seamer";
+    String DEFAULT_BASE_PATH = "src/test/seamer";
     String INVOCATIONS_FILE = "invocations";
     String SEAM_FILE = "seam";
 
