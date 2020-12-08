@@ -35,7 +35,7 @@ the recordings of this seam will be repeatable even if they depend on surroundin
 Suppose the method is incrementing an `int` field of the surrounding class, 
 that side effect will be repeated when we verify the seam.
 
-Check out the [ClosureSeamTest](src/test/java/com/gregorriegler/seamer/demos/ClosureSeamTest.java) which demonstrates this behavior.
+Check out the [ClosureSeamTest](seamer-core/src/test/java/com/gregorriegler/seamer/demos/ClosureSeamTest.java) which demonstrates this behavior.
 
 #### Recording some invocations
 You may now run your application. You would click around the UI and have this thing invoked a couple times with realistic arguments.
