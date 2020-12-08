@@ -33,7 +33,7 @@
         <dependency>
             <groupId>com.esotericsoftware</groupId>
             <artifactId>kryo</artifactId>
-            <version>5.0.0-RC5</version>
+            <version>5.0.2</version>
         </dependency>
 
         <dependency>
