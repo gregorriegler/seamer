@@ -6,7 +6,7 @@ Seamer aims at making it easy to create characterization tests.
 
 ### Usage
 
-Suppose you have a code like the following.
+Suppose you have a code like the following:
 
 ```java
 String result = someReallyComplicatedLegacyMethod(String param1, Integer param2);
@@ -27,6 +27,15 @@ String result = Seamer.create()
 doSometingWith(result);
 ```
 Now the code still does the same thing, plus it will record all invocations of the Seam.
+
+##### Taking advantage of closures
+
+As the lambda expression results in a closure that captures its surrounding state, 
+the recordings of this seam will be repeatable even if they depend on surrounding state.
+Suppose the method is incrementing an `int` field of the surrounding class, 
+that side effect will be repeated when we verify the seam.
+
+Check out the [ClosureSeamTest](src/test/java/com/gregorriegler.seamer/ClosureSeamTest.java) which demonstrates this behavior.
 
 #### Recording some invocations
 You may now run your application. You would click around the UI and have this thing invoked a couple times with realistic arguments.
