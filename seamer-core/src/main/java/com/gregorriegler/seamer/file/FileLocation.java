@@ -25,8 +25,7 @@ public interface FileLocation {
 
     static void createSeamDir(String basePath, String seamId) {
         File seamDir = seamDirAsFile(basePath, seamId);
-        if (!seamDir.exists()) seamDir.mkdirs();
-        seamDir.mkdirs();
+        if (!seamDir.exists() && !seamDir.mkdirs()) throw new RuntimeException("failed to create seamDir");
     }
 
     static File seamDirAsFile(String basePath, String seamId) {
