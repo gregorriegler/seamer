@@ -3,3 +3,4 @@
 target
 seamer-core/src/test/java/seamer
 seamer-aspectj/src/test/java/seamer
+seamer-cglib/src/test/java/seamer

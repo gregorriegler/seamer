@@ -1,7 +1,6 @@
-package com.gregorriegler.seamer.demos;
+package com.gregorriegler.seamer.cglib;
 
 import com.gregorriegler.seamer.Seamer;
-import com.gregorriegler.seamer.cglib.SeamerCglibFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

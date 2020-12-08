@@ -11,6 +11,7 @@
     <modules>
         <module>seamer-core</module>
         <module>seamer-aspectj</module>
+        <module>seamer-cglib</module>
     </modules>
 
     <properties>
