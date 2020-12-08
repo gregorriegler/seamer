@@ -1,6 +1,6 @@
 package com.gregorriegler.seamer.core;
 
-import com.gregorriegler.seamer.Stubs;
+import com.gregorriegler.seamer.contracts.Stubs;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

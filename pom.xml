@@ -10,7 +10,6 @@
     <packaging>pom</packaging>
     <modules>
         <module>seamer-core</module>
-        <module>seamer-contracts</module>
         <module>seamer-aspectj</module>
         <module>seamer-cglib</module>
         <module>seamer-sqlite</module>

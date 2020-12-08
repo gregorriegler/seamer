@@ -1,7 +1,7 @@
 package com.gregorriegler.seamer.file;
 
+import com.gregorriegler.seamer.contracts.SeamRepositoryShould;
 import com.gregorriegler.seamer.core.SeamRepository;
-import com.gregorriegler.seamer.core.SeamRepositoryShould;
 import com.gregorriegler.seamer.core.Serializer;
 
 public class FileSeamRepositoryShould extends SeamRepositoryShould {
