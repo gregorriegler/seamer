@@ -1,6 +1,6 @@
 package com.gregorriegler.seamer.sqlite;
 
-import com.gregorriegler.seamer.core.SeamRepositoryShould;
+import com.gregorriegler.seamer.contracts.SeamRepositoryShould;
 import com.gregorriegler.seamer.core.Serializer;
 import org.junit.jupiter.api.io.TempDir;
 

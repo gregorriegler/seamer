@@ -1,4 +1,4 @@
-package com.gregorriegler.seamer.demos;
+package com.gregorriegler.seamer.sqlite;
 
 import com.gregorriegler.seamer.Seamer;
 import com.gregorriegler.seamer.core.InvokableWith2Arguments;
@@ -7,10 +7,10 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TwoArgumentSeamTest {
+public class SqliteIntegratedTest {
 
     private static final String SEAM_ID = "TwoArgSeamTest";
-    private final Seamer seamer = Seamer.create();
+    private final Seamer seamer = Seamer.create(SqlitePersistence.atTmp());
 
     @BeforeEach
     public void recordInvocations() {
@@ -33,7 +33,7 @@ public class TwoArgumentSeamTest {
         private static final Logger LOG = LoggerFactory.getLogger(SomeClass.class);
 
         public void entryPoint(String string, Integer integer) {
-            String result = Seamer.create()
+            String result = Seamer.create(SqlitePersistence.atTmp())
                 .define("TwoArgSeamTest", (InvokableWith2Arguments<String, Integer, String>) this::blackbox)
                 .invokeAndRecord(string, integer);
 
