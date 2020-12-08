@@ -14,12 +14,12 @@ public class SeamerAspect {
     private Seam seam;
 
     @Pointcut("@annotation(seam) && execution(* *(..))")
-    public void callAt(com.gregorriegler.seamer.core.annotation.Seam seam) {
+    public void callAt(com.gregorriegler.seamer.aspectj.Seam seam) {
     }
 
     @SuppressWarnings("unchecked")
     @Around("callAt(seam)")
-    public Object around(ProceedingJoinPoint pjp, com.gregorriegler.seamer.core.annotation.Seam seam) throws Throwable {
+    public Object around(ProceedingJoinPoint pjp, com.gregorriegler.seamer.aspectj.Seam seam) throws Throwable {
         initializeInterceptor(pjp, seam);
 
         Object result = pjp.proceed();
@@ -28,7 +28,7 @@ public class SeamerAspect {
         return result;
     }
 
-    private void initializeInterceptor(ProceedingJoinPoint pjp, com.gregorriegler.seamer.core.annotation.Seam seam) {
+    private void initializeInterceptor(ProceedingJoinPoint pjp, com.gregorriegler.seamer.aspectj.Seam seam) {
         if (this.seam != null) return;
 
         this.seam = Seamer.create(seam.basePath())

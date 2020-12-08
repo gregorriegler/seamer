@@ -1,4 +1,4 @@
-package com.gregorriegler.seamer.core.annotation;
+package com.gregorriegler.seamer.aspectj;
 
 import com.gregorriegler.seamer.file.FileLocation;
 

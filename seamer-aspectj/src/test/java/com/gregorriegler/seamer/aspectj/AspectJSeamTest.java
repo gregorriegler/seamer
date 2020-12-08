@@ -1,7 +1,6 @@
 package com.gregorriegler.seamer.aspectj;
 
 import com.gregorriegler.seamer.Seamer;
-import com.gregorriegler.seamer.core.annotation.Seam;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
