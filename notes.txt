@@ -1,3 +1,9 @@
+- com.esotericsoftware.kryo.KryoException: Class cannot be created (missing no-arg constructor)
+
+- issues with @Transactional
+
+- issues with Hibernate relations
+
 - cglib proxy does not record first invocation?
 
 - cglib and aspectj proxy variant does not work with closures like lambdas do.
