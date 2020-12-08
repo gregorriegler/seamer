@@ -18,10 +18,10 @@ This is where Seamer comes in handy.
 Seamer allows you to intercept the method and record all invocations and results like the following:
 
 ```java
-String result = Seamer.create(
-    "MySeam",  // this is just an id of your choice
-    (InvokableWith2Arguments<String, Integer, String>) this::someReallyComplicatedLegacyMethod
-).invoke(param1, param2);
+String result = Seamer.create()
+    .define("MySeam",  // this is just an id of your choice
+        (InvokableWith2Arguments<String, Integer, String>) this::someReallyComplicatedLegacyMethod)
+    .invokeAndRecord(param1, param2);
 
 doSometingWith(result);
 ```
@@ -33,7 +33,8 @@ Or, you would record some invocations using the following code.
 
 ```java
 // shuffles given argument candidates, records all possible scenarios and its results.
-Seamer.customRecordings("MySeam")
+Seamer.create()
+    .customRecordings("MySeam")
     .addArgCandidates(0, "hello", "world", null)
     .addArgCandidates(1, () -> asList(1, 2, 3))
     .shuffleArgsAndExecute();
@@ -45,11 +46,31 @@ You may now setup a test that replays all recorded invocations and verifies if t
 ```java
 @Test
 void verify_everything_still_works() {
-    Seamer.verify("MySeam");
+    Seamer.create().verify("MySeam");
 }
 ```
 
 And that's it. you may now refactor the code using this test as a feedback tool.
+
+#### Persistence Configuration
+##### The default
+By default Seamer is using a file-based persistence that stores its data into `src/test/java/seamer`
+
+##### Custom Path
+If you wanted to store Seamers recorded data somewhere else, just define the path like so
+```java
+Seamer.create("/tmp/seamer")
+```
+
+##### Sqlite
+If you wanted to store Seamers recorded data in an Sqlite DB, create Seamer like the following
+```java
+Seamer.create(new SqlitePersistence("jdbc:sqlite:/tmp/seamer"))
+```
+or even shorter:
+```java
+Seamer.create(SqlitePersistence.atTmp())
+```
 
 #### Create a seam via Proxy
 ##### Spring+AspectJ
