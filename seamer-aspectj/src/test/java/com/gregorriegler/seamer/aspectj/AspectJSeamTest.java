@@ -1,4 +1,4 @@
-package com.gregorriegler.seamer.demos;
+package com.gregorriegler.seamer.aspectj;
 
 import com.gregorriegler.seamer.Seamer;
 import com.gregorriegler.seamer.core.annotation.Seam;

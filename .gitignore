@@ -2,3 +2,4 @@
 *.iml
 target
 seamer-core/src/test/java/seamer
+seamer-aspectj/src/test/java/seamer

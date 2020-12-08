@@ -10,6 +10,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>seamer-core</module>
+        <module>seamer-aspectj</module>
     </modules>
 
     <properties>
