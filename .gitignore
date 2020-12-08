@@ -1,4 +1,4 @@
 .idea
-seamer.iml
+*.iml
 target
-src/test/java/seamer
+seamer-core/src/test/java/seamer
