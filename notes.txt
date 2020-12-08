@@ -1,5 +1,3 @@
 - cglib proxy does not record first invocation?
 
-- can capturing class be stored as well?
-
 - cglib and aspectj proxy variant does not work with closures like lambdas do.
