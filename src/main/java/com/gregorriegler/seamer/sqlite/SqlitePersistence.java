@@ -8,6 +8,10 @@ import com.gregorriegler.seamer.core.Serializer;
 public class SqlitePersistence implements Persistence {
     private final String uri;
 
+    public static SqlitePersistence atTmp() {
+        return new SqlitePersistence("jdbc:sqlite:/tmp/seamer");
+    }
+
     public SqlitePersistence() {
         this("jdbc:sqlite::memory:");
     }

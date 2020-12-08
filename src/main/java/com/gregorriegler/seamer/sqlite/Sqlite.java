@@ -10,7 +10,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,7 +29,7 @@ public class Sqlite {
                 statement.executeUpdate(sql);
             }
         } catch (SQLException e) {
-            handleError(e);
+            throw new SqliteException("failed to execute sql command", e);
         }
     }
 
@@ -45,7 +44,7 @@ public class Sqlite {
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            handleError(e);
+            throw new SqliteException("failed to execute sql command: " + command, e);
         }
     }
 
@@ -78,17 +77,17 @@ public class Sqlite {
             }
             return result;
         } catch (SQLException e) {
-            handleError(e);
-            return Collections.emptyList();
+            throw new SqliteException("failed to query sql", e);
         }
     }
 
     public void close() {
         try {
-            if (this.connection != null)
+            if (this.connection != null) {
                 this.connection.close();
+            }
         } catch (SQLException e) {
-            handleError(e);
+            logWarn(e);
         }
     }
 
@@ -99,16 +98,21 @@ public class Sqlite {
     }
 
     private Connection connect(String url) {
-        Connection connection = null;
         try {
-            connection = DriverManager.getConnection(url);
+            Connection connection = DriverManager.getConnection(url);
+            return connection;
         } catch (SQLException e) {
-            handleError(e);
+            throw new SqliteException("failed to connect to sqlite " + url, e);
         }
-        return connection;
     }
 
-    private void handleError(SQLException e) {
+    private void logWarn(SQLException e) {
         LOG.warn("an error happened interacting with sqlite", e);
+    }
+
+    public static class SqliteException extends RuntimeException {
+        public SqliteException(String message, Throwable cause) {
+            super(message, cause);
+        }
     }
 }

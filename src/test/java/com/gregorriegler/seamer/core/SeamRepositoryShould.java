@@ -40,6 +40,19 @@ public abstract class SeamRepositoryShould {
     }
 
     @Test
+    void persist_seam_idempotent() {
+        repository.persist(expectedSeam);
+        repository.persist(expectedSeam);
+
+        Seam<String> seam = createRepository(KryoFactory.createSerializer()).<String>byId(Stubs.SEAM_ID, invocationsStub).get();
+
+        assertThat(seam.id()).isEqualTo(expectedSeam.id());
+        assertThat(seam.invocations()).isEqualTo(expectedSeam.invocations());
+        assertThat(seam.invokable().invoke()).isEqualTo(expectedSeam.invokable().invoke());
+    }
+
+
+    @Test
     void delete_a_seam() {
         repository.persist(expectedSeam);
 
