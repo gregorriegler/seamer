@@ -2,8 +2,7 @@ package com.gregorriegler.seamer.core;
 
 import java.util.Objects;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class Seam<T> {
 
@@ -49,7 +48,7 @@ public class Seam<T> {
     public void verify() {
         for (Invocation invocation : invocations.getAll(id)) {
             T actual = invoke(invocation.getArgs());
-            assertThat(actual, equalTo(invocation.getResult()));
+            assertThat(actual).isEqualTo(invocation.getResult());
         }
     }
 
