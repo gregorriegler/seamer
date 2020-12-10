@@ -35,7 +35,8 @@ public class ArgCandidatesDemoTest {
 
     @Test
     void verify() {
-        seamer.verify(SEAM_ID);
+        seamer.get(SEAM_ID)
+            .verify();
     }
 
     public static class ArgCandidatesDemo {

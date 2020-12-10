@@ -1,5 +1,11 @@
 - com.esotericsoftware.kryo.KryoException: Class cannot be created (missing no-arg constructor)
 
+- all deserialized classes need no-arg constructors
+
+- kryo referenced by default disabled (need to set setReferences to true)
+
+- very isEqualTo vs comparingFields
+
 - issues with @Transactional
 
 - issues with Hibernate relations

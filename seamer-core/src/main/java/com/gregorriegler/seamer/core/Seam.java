@@ -1,6 +1,11 @@
 package com.gregorriegler.seamer.core;
 
+import org.assertj.core.api.AbstractAssert;
+import org.assertj.core.api.AbstractObjectAssert;
+import org.assertj.core.api.ObjectAssert;
+
 import java.util.Objects;
+import java.util.function.BiConsumer;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -46,9 +51,22 @@ public class Seam<T> {
     }
 
     public void verify() {
+        verify(AbstractAssert::isEqualTo);
+    }
+
+    public void verifyComparingFields() {
+        verify(AbstractObjectAssert::isEqualToComparingFieldByFieldRecursively);
+    }
+
+    public void verifyComparingToString() {
+        verify((anAssert, expected) -> anAssert.asString().isEqualTo(expected.toString()));
+    }
+
+    public void verify(BiConsumer<ObjectAssert<T>, Object> verification) {
         for (Invocation invocation : invocations.getAll(id)) {
             T actual = invoke(invocation.getArgs());
-            assertThat(actual).isEqualTo(invocation.getResult());
+            ObjectAssert<T> objectAssert = assertThat(actual);
+            verification.accept(objectAssert, invocation.getResult());
         }
     }
 

@@ -22,7 +22,8 @@ public class SingleArgumentSeamTest {
 
     @Test
     void verify() {
-        seamer.verify(SEAM_ID);
+        seamer.get(SEAM_ID)
+            .verify();
     }
 
     public static class SomeClass {

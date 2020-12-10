@@ -52,10 +52,9 @@ public class Seamer {
             .orElseThrow(FailedToLoad::new);
     }
 
-    public void verify(String seamId) {
-        seams.byId(seamId, invocations)
-            .orElseThrow(FailedToLoad::new)
-            .verify();
+    public <T> Seam<T> get(String seamId) {
+        return seams.<T>byId(seamId, invocations)
+            .orElseThrow(FailedToLoad::new);
     }
 
     public static class FailedToLoad extends RuntimeException {

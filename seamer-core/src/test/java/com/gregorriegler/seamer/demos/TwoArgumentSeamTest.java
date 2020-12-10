@@ -25,7 +25,20 @@ public class TwoArgumentSeamTest {
 
     @Test
     void verify() {
-        seamer.verify(SEAM_ID);
+        seamer.get(SEAM_ID)
+            .verify();
+    }
+
+    @Test
+    void verifyComparingFields() {
+        seamer.get(SEAM_ID)
+            .verifyComparingFields();
+    }
+
+    @Test
+    void verifyComparingToString() {
+        seamer.get(SEAM_ID)
+            .verifyComparingToString();
     }
 
     public static class SomeClass {

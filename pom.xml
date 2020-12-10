@@ -13,6 +13,7 @@
         <module>seamer-aspectj</module>
         <module>seamer-cglib</module>
         <module>seamer-sqlite</module>
+        <module>seamer-demos</module>
     </modules>
 
     <distributionManagement>

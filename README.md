@@ -53,10 +53,37 @@ Seamer.create()
 #### Verifying the Seam in a test-harness
 You may now setup a test that replays all recorded invocations and verifies if the code is still doing what it is supposed to do.
 
+##### Verifying the results using Object equality
 ```java
 @Test
 void verify_everything_still_works() {
-    Seamer.create().verify("MySeam");
+    Seamer.create().get("MySeam").verify();
+}
+```
+
+##### Verifying the results comparing field by field
+```java
+@Test
+void verify_everything_still_works() {
+    Seamer.create().get("MySeam").verifyComparingFields();
+}
+```
+
+##### Verifying the results comparing the *toString* representations
+```java
+@Test
+void verify_everything_still_works() {
+    Seamer.create().get("MySeam").verifyComparingToString();
+}
+```
+
+##### Verifying the results providing a custom comparator
+```java
+@Test
+void verify_everything_still_works() {
+    // lambda signature:
+    // BiConsumer<ObjectAssert<T>, Object> verification
+    Seamer.create().get("MySeam").verify(AbstractAssert::isEqualTo);
 }
 ```
 
@@ -110,6 +137,11 @@ class SeamerConfig {
 SeamerCglibFactory.createProxySeam(ClassCaputringTheSeam.class, "legacyMethod", "MySeam")
 ```
 
+#### Limitations
+Seamer needs objects to have at least private no-arg constructors for deserialization.
+`final` fields that are initialized in another no-arg constructor won't be able to be properly initialized.
+
+*TBD, allow users to register [ObjectInstantiators](https://github.com/EsotericSoftware/kryo#object-creation)*
 
 #### Suture
 This tool is inspired by https://github.com/testdouble/suture which does a similar thing in ruby.
