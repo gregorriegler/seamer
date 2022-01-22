@@ -13,3 +13,5 @@
 - cglib proxy does not record first invocation?
 
 - cglib and aspectj proxy variant does not work with closures like lambdas do.
+
+...
